@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASTER ACTION LEARNING — Yêu Thương - Hiện Diện</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TINGTONG COLOR SYSTEM
+   ============================================================ */
+:root {
+  --primary: #2B296D;
+  --primary-light: #3d3a8c;
+  --white: #FFFFFF;
+  --accent: #FDB913;
+  --teal: #00A79D;
+  --gray-bg: #F4F4F6;
+  --gray-text: #3D3D3D;
+  --gray-mid: #9B9BAA;
+  --gray-border: #E0E0EA;
+  --danger: #E53935;
+  --success: #2e7d32;
+  --font: 'Be Vietnam Pro', sans-serif;
+  --radius: 10px;
+  --shadow: 0 2px 12px rgba(43,41,109,0.08);
+  --shadow-lg: 0 8px 32px rgba(43,41,109,0.14);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--gray-bg);
+  color: var(--gray-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+button { font-family: var(--font); cursor: pointer; border: none; }
+input, textarea, select { font-family: var(--font); }
+textarea { resize: none; overflow: hidden; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+  background: var(--primary);
+  color: var(--white);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+}
+@media (max-width: 600px) { .app-header { padding: 0 16px; height: 56px; } }
+.app-header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.app-logo {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px; color: var(--primary);
+  letter-spacing: -1px;
+}
+.app-title-text h1 { font-size: 17px; font-weight: 800; line-height: 1.2; letter-spacing: 0.02em; }
+.app-title-text p { font-size: 12px; opacity: 0.75; font-weight: 500; letter-spacing: 0.05em; }
+@media (max-width: 600px) {
+  .app-title-text h1 { font-size: 14px; }
+  .app-title-text p { font-size: 10px; }
+}
+.header-sync {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.sync-ok { background: rgba(0,167,157,0.2); color: #7ffffa; }
+.sync-pending { background: rgba(253,185,19,0.2); color: var(--accent); }
+.sync-error { background: rgba(229,57,53,0.2); color: #ff8a80; }
+
+/* ============================================================
+   MAIN CONTAINER
+   ============================================================ */
+.app-main { max-width: 100%; margin: 0; padding: 24px 32px; }
+@media (min-width: 1400px) { .app-main { padding: 24px 48px; } }
+@media (max-width: 900px) { .app-main { padding: 16px; } }
+
+/* ============================================================
+   HOME SCREEN
+   ============================================================ */
+.home-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  width: 100%;
+}
+.filter-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 140px; }
+.filter-label { font-size: 11px; font-weight: 600; color: var(--gray-mid); text-transform: uppercase; letter-spacing: 0.05em; }
+.filter-input {
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  background: var(--white);
+  color: var(--gray-text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.filter-input:focus { border-color: var(--primary); }
+
+.status-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.status-tab {
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--white);
+  color: var(--gray-mid);
+  border: 1.5px solid var(--gray-border);
+  transition: all 0.2s;
+}
+.status-tab.active { background: var(--primary); color: var(--white); border-color: var(--primary); }
+.status-tab:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+
+.btn-clear-filter {
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--white);
+  color: var(--gray-mid);
+  border: 1.5px solid var(--gray-border);
+}
+.btn-clear-filter:hover { color: var(--danger); border-color: var(--danger); }
+
+.btn-create {
+  padding: 10px 20px;
+  background: var(--accent);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(253,185,19,0.3);
+}
+.btn-create:hover { background: #f0a800; transform: translateY(-1px); }
+
+/* Session Cards */
+.session-list { display: flex; flex-direction: column; gap: 10px; }
+.session-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 4px solid transparent;
+}
+.session-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.session-card.status-draft { border-left-color: var(--gray-mid); }
+.session-card.status-in_progress { border-left-color: var(--accent); }
+.session-card.status-done { border-left-color: var(--teal); }
+
+.session-card-icon { font-size: 22px; flex-shrink: 0; }
+.session-card-info { flex: 1; min-width: 0; }
+.session-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
+.session-id { font-weight: 700; font-size: 14px; color: var(--primary); }
+.session-client { font-size: 15px; font-weight: 600; color: var(--gray-text); }
+.session-date { font-size: 12px; color: var(--gray-mid); }
+.session-card-bottom { font-size: 13px; color: var(--gray-mid); }
+.status-badge {
+  font-size: 11px; font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+}
+.badge-draft { background: var(--gray-bg); color: var(--gray-mid); }
+.badge-in_progress { background: rgba(253,185,19,0.15); color: #a07000; }
+.badge-done { background: rgba(0,167,157,0.12); color: var(--teal); }
+
+.session-card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.btn-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  background: var(--gray-bg);
+  transition: all 0.2s;
+}
+.btn-icon:hover { background: var(--primary); color: var(--white); }
+.btn-icon.danger:hover { background: var(--danger); color: var(--white); }
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--gray-mid);
+}
+.empty-state-icon { font-size: 48px; margin-bottom: 16px; }
+.empty-state h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--primary); }
+.empty-state p { font-size: 14px; }
+
+/* ============================================================
+   SESSION DETAIL
+   ============================================================ */
+.detail-header {
+  background: var(--primary);
+  color: var(--white);
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: -24px -32px 24px;
+}
+@media (max-width: 900px) {
+  .detail-header { padding: 12px 16px; margin: -16px -16px 16px; }
+}
+@media (min-width: 1400px) {
+  .detail-header { padding: 16px 48px; margin: -24px -48px 24px; }
+}
+.btn-back {
+  background: rgba(255,255,255,0.15);
+  color: var(--white);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-back:hover { background: rgba(255,255,255,0.25); }
+.detail-title { flex: 1; }
+.detail-title h2 { font-size: 16px; font-weight: 700; }
+.detail-title p { font-size: 12px; opacity: 0.7; }
+
+/* Tabs */
+.tab-nav {
+  display: flex;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  gap: 4px;
+}
+.tab-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: transparent;
+  color: var(--gray-mid);
+  transition: all 0.2s;
+  text-align: center;
+}
+.tab-btn.active { background: var(--primary); color: var(--white); }
+.tab-btn:hover:not(.active) { background: var(--gray-bg); color: var(--primary); }
+
+/* Form Sections */
+.form-section {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--gray-bg);
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title-note { font-size: 11px; color: var(--gray-mid); font-weight: 400; margin-left: auto; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.form-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-col { display: flex; flex-direction: column; gap: 5px; }
+.form-full { margin-bottom: 14px; }
+.form-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-text);
+}
+.form-label-note { font-size: 11px; color: var(--gray-mid); font-weight: 400; }
+.form-input {
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--gray-text);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-input:focus { border-color: var(--primary); }
+.form-input[readonly] { background: var(--gray-bg); color: var(--gray-mid); }
+.form-textarea {
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-border);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--gray-text);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  min-height: 60px;
+  line-height: 1.6;
+}
+.form-textarea:focus { border-color: var(--primary); }
+.form-textarea[readonly] { background: var(--gray-bg); color: var(--gray-mid); }
+
+/* Radio group */
+.radio-group { display: flex; gap: 16px; flex-wrap: wrap; }
+.radio-option {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; cursor: pointer;
+}
+.radio-option input[type="radio"] { accent-color: var(--primary); width: 16px; height: 16px; }
+
+/* Checklist */
+.checklist-item {
+  border: 1.5px solid var(--gray-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+.checklist-item.checked { border-color: var(--teal); background: rgba(0,167,157,0.04); }
+.checklist-top {
+  display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px;
+}
+.checklist-checkbox {
+  width: 20px; height: 20px;
+  accent-color: var(--teal);
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+}
+.checklist-label { font-size: 14px; font-weight: 500; flex: 1; line-height: 1.4; }
+.checklist-label .label-en { font-size: 11px; color: var(--gray-mid); font-weight: 400; display: block; }
+
+/* ============================================================
+   TRONG PHIÊN — BẢNG ĐIỀU PHỐI
+   ============================================================ */
+.session-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: var(--white);
+  width: 100%;
+}
+.session-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+  table-layout: auto;
+}
+.session-table th {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+.session-table th.member-header {
+  background: var(--primary-light);
+  text-align: center;
+  min-width: 140px;
+}
+.session-table th.col-stage { min-width: 140px; position: sticky; left: 0; z-index: 2; }
+.session-table th.col-time { min-width: 100px; position: sticky; left: 140px; z-index: 2; }
+.session-table th.col-questions { min-width: 220px; position: sticky; left: 240px; z-index: 2; }
+
+.session-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--gray-border);
+  border-right: 1px solid var(--gray-border);
+  vertical-align: top;
+  font-size: 13px;
+}
+.session-table td.col-stage {
+  background: var(--gray-bg);
+  position: sticky; left: 0; z-index: 1;
+  font-weight: 600; color: var(--primary);
+  min-width: 140px;
+}
+.session-table td.col-time {
+  background: var(--gray-bg);
+  position: sticky; left: 140px; z-index: 1;
+  min-width: 100px;
+}
+.session-table td.col-questions {
+  background: var(--white);
+  position: sticky; left: 240px; z-index: 1;
+  min-width: 220px;
+}
+.stage-name { font-size: 13px; font-weight: 700; color: var(--primary); }
+.stage-en { font-size: 11px; color: var(--gray-mid); font-weight: 400; }
+.stage-result { font-size: 11px; color: var(--teal); margin-top: 4px; line-height: 1.4; }
+
+.time-input-wrap { display: flex; flex-direction: column; gap: 4px; }
+.time-suggested-input {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background: transparent;
+  border: 1px dashed var(--gray-border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  width: 100%;
+  outline: none;
+}
+.time-suggested-input:focus { border-color: var(--primary); }
+.time-actual-wrap { display: flex; align-items: center; gap: 4px; }
+.time-actual-input {
+  width: 50px;
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1.5px solid var(--gray-border);
+  border-radius: 6px;
+  outline: none;
+  text-align: center;
+}
+.time-actual-input:focus { border-color: var(--accent); }
+.time-label { font-size: 11px; color: var(--gray-mid); }
+
+.questions-list { display: flex; flex-direction: column; gap: 6px; }
+.question-item {
+  display: flex; align-items: flex-start; gap: 6px;
+  background: var(--gray-bg);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+.question-text { flex: 1; line-height: 1.5; }
+.question-actions { display: flex; gap: 2px; flex-shrink: 0; }
+.btn-q {
+  width: 22px; height: 22px;
+  border-radius: 4px;
+  font-size: 12px;
+  background: transparent;
+  color: var(--gray-mid);
+  display: flex; align-items: center; justify-content: center;
+}
+.btn-q:hover { background: var(--primary); color: var(--white); }
+.btn-q.del:hover { background: var(--danger); color: var(--white); }
+.btn-add-q {
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 600;
+  background: transparent;
+  padding: 4px 0;
+  display: flex; align-items: center; gap: 4px;
+}
+.btn-add-q:hover { color: var(--primary); }
+
+.member-note-cell { min-width: 140px; }
+.member-header-name { font-size: 12px; font-weight: 700; }
+.member-header-comp {
+  font-size: 11px;
+  color: var(--accent);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   MEMBERS SECTION
+   ============================================================ */
+.members-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.member-card {
+  background: var(--gray-bg);
+  border-radius: 8px;
+  padding: 12px;
+  border: 1.5px solid var(--gray-border);
+}
+.member-card-role {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.member-card-role-en { font-size: 10px; color: var(--gray-mid); text-transform: none; letter-spacing: 0; font-weight: 400; }
+.comp-select-wrap { position: relative; margin-top: 8px; }
+.comp-dropdown {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1.5px solid var(--gray-border);
+  border-radius: 6px;
+  font-size: 12px;
+  background: var(--white);
+  color: var(--gray-text);
+  outline: none;
+  cursor: pointer;
+}
+.comp-dropdown:focus { border-color: var(--primary); }
+.comp-label { font-size: 11px; color: var(--gray-mid); margin-bottom: 3px; }
+
+.btn-add-member {
+  border: 2px dashed var(--gray-border);
+  border-radius: 8px;
+  padding: 12px;
+  background: transparent;
+  color: var(--gray-mid);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: all 0.2s;
+}
+.btn-add-member:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ============================================================
+   COMPETENCY PICKER MODAL
+   ============================================================ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(43,41,109,0.5);
+  z-index: 1000;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.modal-sheet {
+  background: var(--white);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+.modal-handle {
+  width: 40px; height: 4px;
+  background: var(--gray-border);
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+.modal-title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+.modal-note { font-size: 12px; color: var(--gray-mid); margin-bottom: 16px; }
+.comp-list { display: flex; flex-direction: column; gap: 6px; }
+.comp-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--gray-border);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+.comp-option:hover { border-color: var(--primary); background: rgba(43,41,109,0.04); }
+.comp-option.selected { border-color: var(--primary); background: rgba(43,41,109,0.08); font-weight: 600; }
+.comp-option input[type="radio"] { accent-color: var(--primary); }
+.comp-other-wrap { margin-top: 10px; display: flex; gap: 8px; }
+.comp-other-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-border);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+.comp-other-input:focus { border-color: var(--primary); }
+.btn-comp-add {
+  padding: 10px 16px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ============================================================
+   SAU PHIÊN
+   ============================================================ */
+.reflect-item { margin-bottom: 16px; }
+.reflect-q {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 6px;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.reflect-num {
+  width: 24px; height: 24px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* PALC Table */
+.palc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.palc-table th {
+  background: var(--primary);
+  color: var(--white);
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+}
+.palc-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--gray-border);
+}
+.palc-table tr:nth-child(even) td { background: var(--gray-bg); }
+.palc-table tfoot td {
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(43,41,109,0.06);
+}
+.btn-add-palc {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--teal);
+  font-weight: 600;
+  background: transparent;
+  display: flex; align-items: center; gap: 4px;
+}
+.btn-add-palc:hover { color: var(--primary); }
+
+/* ============================================================
+   ACTION BUTTONS BAR
+   ============================================================ */
+.action-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 16px 32px;
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(to top, var(--gray-bg) 80%, transparent);
+  margin: 0 -32px;
+  flex-wrap: wrap;
+  z-index: 10;
+}
+@media (max-width: 900px) {
+  .action-bar { padding: 12px 16px; margin: 0 -16px; }
+}
+@media (min-width: 1400px) {
+  .action-bar { padding: 16px 48px; margin: 0 -48px; }
+}
+.btn-save {
+  padding: 12px 24px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+  transition: all 0.2s;
+}
+.btn-save:hover { background: var(--primary-light); }
+.btn-complete {
+  padding: 12px 24px;
+  background: var(--teal);
+  color: var(--white);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+}
+.btn-complete:hover { opacity: 0.9; }
+.btn-next-tab {
+  padding: 12px 24px;
+  background: var(--accent);
+  color: var(--primary);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+}
+.btn-next-tab:hover { opacity: 0.9; }
+
+/* ============================================================
+   EXPORT MODAL
+   ============================================================ */
+.export-modal {
+  position: fixed; inset: 0;
+  background: rgba(43,41,109,0.5);
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.export-box {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-lg);
+}
+.export-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+.export-note { font-size: 13px; color: var(--gray-mid); margin-bottom: 20px; }
+.export-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--gray-border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.export-option:hover { border-color: var(--primary); }
+.export-option.selected { border-color: var(--primary); background: rgba(43,41,109,0.05); }
+.export-option input[type="radio"] { accent-color: var(--primary); }
+.export-date-row { display: flex; gap: 10px; margin-top: 12px; }
+.export-actions { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+.btn-cancel {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--gray-bg);
+  color: var(--gray-mid);
+}
+.btn-export {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* ============================================================
+   DELETE CONFIRM MODAL
+   ============================================================ */
+.delete-modal {
+  position: fixed; inset: 0;
+  background: rgba(43,41,109,0.5);
+  z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+}
+.delete-box {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-lg);
+}
+.delete-icon { font-size: 40px; text-align: center; margin-bottom: 12px; }
+.delete-title { font-size: 18px; font-weight: 700; color: var(--danger); margin-bottom: 8px; text-align: center; }
+.delete-info {
+  background: var(--gray-bg);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  text-align: center;
+}
+.delete-warning { font-size: 13px; color: var(--gray-mid); text-align: center; margin-bottom: 16px; }
+.delete-confirm-label { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.delete-actions { display: flex; gap: 10px; margin-top: 16px; }
+.btn-delete-confirm {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  background: var(--danger);
+  color: var(--white);
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+.btn-delete-confirm.ready { opacity: 1; }
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--primary);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  transition: transform 0.3s;
+  white-space: nowrap;
+  box-shadow: var(--shadow-lg);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { background: var(--teal); }
+.toast.error { background: var(--danger); }
+.toast.warning { background: #e65100; }
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+.loading-overlay {
+  position: fixed; inset: 0;
+  background: rgba(43,41,109,0.6);
+  z-index: 9998;
+  display: flex; align-items: center; justify-content: center;
+}
+.loading-box {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 32px 40px;
+  text-align: center;
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 4px solid var(--gray-bg);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 14px; color: var(--gray-text); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+/* Desktop lớn: tận dụng full màn hình */
+@media (min-width: 1200px) {
+  .form-row { grid-template-columns: 1fr 1fr 1fr; }
+  .members-grid { grid-template-columns: repeat(5, 1fr); }
+  .tab-btn { font-size: 14px; padding: 12px 16px; }
+  .session-card { padding: 18px 24px; }
+}
+
+/* Desktop thường */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .members-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Tablet */
+@media (min-width: 601px) and (max-width: 899px) {
+  .form-row { grid-template-columns: 1fr 1fr; }
+  .members-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; }
+  .form-row-3 { grid-template-columns: 1fr; }
+  .home-toolbar { flex-direction: column; }
+  .detail-header { flex-wrap: wrap; gap: 8px; }
+  .tab-btn { font-size: 11px; padding: 8px 4px; }
+  .members-grid { grid-template-columns: 1fr 1fr; }
+  .session-card { padding: 12px 14px; gap: 10px; }
+  .session-card-actions { flex-direction: column; gap: 4px; }
+  .action-bar { flex-direction: column; }
+  .btn-save, .btn-next-tab, .btn-complete { width: 100%; justify-content: center; }
+}
+
+/* Hidden utility */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="app-header-title">
+    <div class="app-logo">AL</div>
+    <div class="app-title-text">
+      <h1>MASTER ACTION LEARNING</h1>
+      <p>Yêu Thương · Hiện Diện</p>
+    </div>
+  </div>
+  <span id="syncStatus" class="header-sync sync-ok">✅ Đã đồng bộ</span>
+</header>
+
+<!-- MAIN -->
+<main class="app-main">
+
+  <!-- ========== HOME SCREEN ========== -->
+  <div id="homeScreen">
+    <!-- Toolbar -->
+    <div class="home-toolbar">
+      <div class="filter-group" style="min-width:200px;">
+        <span class="filter-label">🔍 Tìm kiếm (Keyword)</span>
+        <input id="filterKeyword" class="filter-input" type="text" placeholder="Tên KH, mã phiên, tên PP, tên Coach...">
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">📅 Từ ngày (From)</span>
+        <input id="filterDateFrom" class="filter-input" type="date">
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">📅 Đến ngày (To)</span>
+        <input id="filterDateTo" class="filter-input" type="date">
+      </div>
+      <div>
+        <span class="filter-label" style="display:block;margin-bottom:4px;">Trạng thái (Status)</span>
+        <div class="status-tabs">
+          <button class="status-tab active" data-status="all">Tất cả</button>
+          <button class="status-tab" data-status="draft">📝 Chuẩn bị</button>
+          <button class="status-tab" data-status="in_progress">🔄 Đang diễn ra</button>
+          <button class="status-tab" data-status="done">✅ Hoàn thành</button>
+        </div>
+      </div>
+      <button class="btn-clear-filter" onclick="clearFilters()">🔄 Xoá bộ lọc</button>
+      <button class="btn-create" onclick="createSession()">＋ Tạo phiên mới</button>
+    </div>
+
+    <!-- Session List -->
+    <div id="sessionList" class="session-list"></div>
+  </div>
+
+  <!-- ========== DETAIL SCREEN ========== -->
+  <div id="detailScreen" class="hidden">
+
+    <div class="detail-header">
+      <button class="btn-back" onclick="goHome()">← Quay lại</button>
+      <div class="detail-title">
+        <h2 id="detailSessionId">AL-001</h2>
+        <p id="detailStatusText">Đang chuẩn bị</p>
+      </div>
+      <button class="btn-icon" onclick="openExport()" title="Tải xuống Excel">📥</button>
+    </div>
+
+    <!-- Tab Nav -->
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('before')" id="tabBefore">📋 Trước phiên<br><small>Before Session</small></button>
+      <button class="tab-btn" onclick="switchTab('during')" id="tabDuring">⚡ Trong phiên<br><small>During Session</small></button>
+      <button class="tab-btn" onclick="switchTab('after')" id="tabAfter">🌿 Sau phiên<br><small>After Session</small></button>
+    </div>
+
+    <!-- ===== TAB BEFORE ===== -->
+    <div id="tabContentBefore">
+      <div class="form-section">
+        <div class="section-title">📋 Thông tin phiên <span class="section-title-note">Mã phiên tự sinh</span></div>
+        <div class="form-row">
+          <div class="form-col">
+            <label class="form-label">Mã phiên <span class="form-label-note">(Session ID)</span></label>
+            <input type="text" id="b_session_id" class="form-input" readonly>
+          </div>
+          <div class="form-col">
+            <label class="form-label">Ngày cập nhật <span class="form-label-note">(Updated)</span></label>
+            <input type="date" id="b_date" class="form-input">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <label class="form-label">Tên AL Coach <span class="form-label-note">(Nhà huấn luyện Học Hành Động)</span></label>
+            <input type="text" id="b_coach" class="form-input" placeholder="Họ và tên Coach">
+          </div>
+          <div class="form-col">
+            <label class="form-label">Tên Khách hàng <span class="form-label-note">(Client Name)</span></label>
+            <input type="text" id="b_client" class="form-input" placeholder="Tên tổ chức / cá nhân">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <label class="form-label">Giờ bắt đầu <span class="form-label-note">(Start time)</span></label>
+            <input type="time" id="b_time_start" class="form-input">
+          </div>
+          <div class="form-col">
+            <label class="form-label">Giờ kết thúc <span class="form-label-note">(End time)</span></label>
+            <input type="time" id="b_time_end" class="form-input">
+          </div>
+        </div>
+        <div class="form-full">
+          <label class="form-label">Hình thức <span class="form-label-note">(Format)</span></label>
+          <div class="radio-group" style="margin-top:8px;">
+            <label class="radio-option"><input type="radio" name="format" value="Trực tiếp"> Trực tiếp (On-site)</label>
+            <label class="radio-option"><input type="radio" name="format" value="Online"> Online</label>
+          </div>
+        </div>
+        <div class="form-full">
+          <label class="form-label">Địa điểm <span class="form-label-note">(Location)</span></label>
+          <input type="text" id="b_location" class="form-input" placeholder="Địa chỉ hoặc link họp online">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-title">✅ Checklist chuẩn bị trước phiên <span class="section-title-note">Before Session Checklist</span></div>
+        <div id="checklistBeforeList"></div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-save" onclick="saveSession()">💾 Lưu</button>
+        <button class="btn-next-tab" onclick="saveAndSwitchTab('during')">Trong phiên →</button>
+      </div>
+    </div>
+
+    <!-- ===== TAB DURING ===== -->
+    <div id="tabContentDuring" class="hidden">
+      <!-- Members -->
+      <div class="form-section">
+        <div class="section-title">👥 Thành viên tham dự <span class="section-title-note">Participants</span></div>
+        <div style="margin-bottom:14px;">
+          <div class="form-row">
+            <div class="form-col">
+              <label class="form-label">PP — Người trình bày vấn đề <span class="form-label-note">(Problem Presenter)</span></label>
+              <input type="text" id="d_pp" class="form-input" placeholder="Họ và tên PP">
+            </div>
+            <div class="form-col">
+              <label class="form-label">Coach — Nhà huấn luyện</label>
+              <input type="text" id="d_coach2" class="form-input" placeholder="Họ và tên Coach">
+            </div>
+          </div>
+        </div>
+        <div class="form-label" style="margin-bottom:8px;">Thành viên (Member) — tối đa 5 người</div>
+        <div id="membersList" class="members-grid"></div>
+        <button class="btn-add-member" onclick="addMember()" id="btnAddMember">＋ Thêm thành viên</button>
+        <div class="form-label" style="margin:14px 0 8px;">Người quan sát (Observer) — tối đa 5 người</div>
+        <div id="observersList" class="members-grid"></div>
+        <button class="btn-add-member" onclick="addObserver()" id="btnAddObserver">＋ Thêm người quan sát</button>
+      </div>
+
+      <!-- Session Table -->
+      <div class="form-section" style="padding:0;">
+        <div class="section-title" style="padding:16px 20px 10px;margin-bottom:0;">⚡ Bảng điều phối phiên <span class="section-title-note">← Kéo ngang để xem hết thành viên</span></div>
+        <div class="session-table-wrap">
+          <table class="session-table" id="sessionTable">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-save" onclick="saveSession()">💾 Lưu</button>
+        <button class="btn-next-tab" onclick="saveAndSwitchTab('after')">Sau phiên →</button>
+      </div>
+    </div>
+
+    <!-- ===== TAB AFTER ===== -->
+    <div id="tabContentAfter" class="hidden">
+      <div class="form-section">
+        <div class="section-title">✅ Checklist sau phiên <span class="section-title-note">After Session Checklist</span></div>
+        <div id="checklistAfterList"></div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-title">🌿 Lắng đọng học hỏi <span class="section-title-note">Learning Reflection</span></div>
+        <p style="font-size:13px;color:var(--gray-mid);margin-bottom:16px;">Hãy suy ngẫm về các câu hỏi sau khi nhìn lại tiến trình tổ chức phiên của bạn:</p>
+        <div class="reflect-item">
+          <div class="reflect-q"><span class="reflect-num">1</span>Đâu là những kết quả chính đã đạt được? (so với mục tiêu ban đầu)</div>
+          <textarea class="form-textarea" id="a_reflect1" placeholder="Viết suy ngẫm của bạn..." oninput="autoResize(this)"></textarea>
+        </div>
+        <div class="reflect-item">
+          <div class="reflect-q"><span class="reflect-num">2</span>Đâu là những điều bạn đã làm tốt?</div>
+          <textarea class="form-textarea" id="a_reflect2" placeholder="Viết suy ngẫm của bạn..." oninput="autoResize(this)"></textarea>
+        </div>
+        <div class="reflect-item">
+          <div class="reflect-q"><span class="reflect-num">3</span>Làm thế nào để phiên sau tốt hơn?</div>
+          <textarea class="form-textarea" id="a_reflect3" placeholder="Viết suy ngẫm của bạn..." oninput="autoResize(this)"></textarea>
+        </div>
+        <div class="reflect-item">
+          <div class="reflect-q"><span class="reflect-num">4</span>Điểm chính bạn đã học được từ phiên này?</div>
+          <textarea class="form-textarea" id="a_reflect4" placeholder="Viết suy ngẫm của bạn..." oninput="autoResize(this)"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-title">📚 Hồ sơ thực hành Học Hành Động <span class="section-title-note">AL Practices Record</span></div>
+        <div class="form-row" style="margin-bottom:14px;">
+          <div class="form-col">
+            <label class="form-label">Loại phiên (Session Type)</label>
+            <div class="radio-group" style="margin-top:8px;">
+              <label class="radio-option"><input type="radio" name="sessionType" value="MPAL"> MPAL <small style="color:var(--gray-mid)">(Phiên cá nhân)</small></label>
+              <label class="radio-option"><input type="radio" name="sessionType" value="SPAL"> SPAL <small style="color:var(--gray-mid)">(Phiên đội nhóm)</small></label>
+            </div>
+          </div>
+          <div class="form-col">
+            <label class="form-label">Số giờ coaching (Hours)</label>
+            <input type="number" id="a_hours" class="form-input" placeholder="VD: 1.5" step="0.5" min="0">
+          </div>
+        </div>
+        <div class="form-full">
+          <label class="form-label">Vấn đề trình bày (Problem Presented)</label>
+          <textarea class="form-textarea" id="a_problem" placeholder="Mô tả vấn đề PP đã trình bày..." oninput="autoResize(this)"></textarea>
+        </div>
+        <div class="form-full">
+          <label class="form-label">Lắng đọng cá nhân (Personal Learning)</label>
+          <textarea class="form-textarea" id="a_personal" placeholder="Những điều bản thân đã học được..." oninput="autoResize(this)"></textarea>
+        </div>
+        <div class="form-full">
+          <label class="form-label">Phản hồi từ người tham dự (Testimonials — Lời chứng thực)</label>
+          <textarea class="form-textarea" id="a_testimonial" placeholder="Ghi lại phản hồi từ thành viên..." oninput="autoResize(this)"></textarea>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-save" onclick="saveSession()">💾 Lưu</button>
+        <button class="btn-complete" onclick="completeSession()">✅ Hoàn thành phiên</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- COMPETENCY MODAL -->
+<div id="compModal" class="modal-overlay hidden">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Chọn năng lực rèn luyện</div>
+    <div class="modal-note">Chọn 1 năng lực lãnh đạo (Leadership Competency) cho phiên này</div>
+    <div class="comp-list" id="compList"></div>
+    <div class="comp-other-wrap">
+      <input type="text" class="comp-other-input" id="compOtherInput" placeholder="Năng lực khác (tự thêm)...">
+      <button class="btn-comp-add" onclick="addCustomComp()">＋ Thêm</button>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn-cancel" onclick="closeCompModal()">Huỷ</button>
+      <button class="btn-save" onclick="confirmComp()">Xác nhận</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="delete-modal hidden">
+  <div class="delete-box">
+    <div class="delete-icon">⚠️</div>
+    <div class="delete-title">Xác nhận xóa phiên</div>
+    <p style="font-size:13px;color:var(--gray-mid);text-align:center;">Bạn sắp xóa phiên:</p>
+    <div class="delete-info" id="deleteSessionInfo"></div>
+    <div class="delete-warning">Toàn bộ dữ liệu TRƯỚC · TRONG · SAU phiên sẽ bị xóa vĩnh viễn.<br>Hành động này <strong>KHÔNG THỂ hoàn tác</strong>.</div>
+    <div class="delete-confirm-label">Gõ mã phiên để xác nhận xóa:</div>
+    <input type="text" class="form-input" id="deleteConfirmInput" placeholder="VD: AL-003" oninput="checkDeleteConfirm()">
+    <div class="delete-actions">
+      <button class="btn-cancel" onclick="closeDeleteModal()" style="flex:1;">← Huỷ — giữ lại phiên</button>
+      <button class="btn-delete-confirm" id="btnDeleteConfirm" onclick="confirmDelete()">🗑 Xác nhận xóa</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div id="exportModal" class="export-modal hidden">
+  <div class="export-box">
+    <div class="export-title">📥 Tải xuống dữ liệu phiên</div>
+    <div class="export-note">Chọn phạm vi xuất file Excel (Export Session Data)</div>
+    <label class="export-option" id="expOpt1">
+      <input type="radio" name="exportType" value="current" checked onchange="updateExportUI()"> 1 phiên hiện tại
+    </label>
+    <label class="export-option" id="expOpt2">
+      <input type="radio" name="exportType" value="daterange" onchange="updateExportUI()"> Theo khoảng thời gian (Date Range)
+    </label>
+    <div id="exportDateRange" class="hidden">
+      <div class="export-date-row">
+        <div class="form-col" style="flex:1;">
+          <label class="form-label">Từ ngày</label>
+          <input type="date" id="expDateFrom" class="form-input">
+        </div>
+        <div class="form-col" style="flex:1;">
+          <label class="form-label">Đến ngày</label>
+          <input type="date" id="expDateTo" class="form-input">
+        </div>
+      </div>
+    </div>
+    <label class="export-option">
+      <input type="radio" name="exportType" value="all" onchange="updateExportUI()"> Tất cả phiên (All Sessions)
+    </label>
+    <div id="exportPreview" style="margin-top:12px;padding:10px 14px;background:var(--gray-bg);border-radius:8px;font-size:13px;color:var(--gray-mid);"></div>
+    <div class="export-actions">
+      <button class="btn-cancel" onclick="closeExport()">Huỷ</button>
+      <button class="btn-export" onclick="doExport()">📥 Tải xuống Excel</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<!-- LOADING -->
+<div id="loadingOverlay" class="loading-overlay hidden">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <div class="loading-text" id="loadingText">Đang tải dữ liệu...</div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const API_URL = 'https://script.google.com/macros/s/AKfycbzCwI5uUJ3krhwriOVIhS8T699z17JshO0LMFicNsLs45JesqBeSBhwqsUVBUpk3Y4BtA/exec';
+
+// ============================================================
+// STATE
+// ============================================================
+let sessions = [];
+let currentSession = null;
+let competencies = [];
+let filterStatus = 'all';
+let pendingSync = JSON.parse(localStorage.getItem('pendingSync') || '[]');
+let currentCompTarget = null; // {type: 'member'|'observer', index}
+let selectedComp = null;
+let sessionToDelete = null;
+
+// Dữ liệu giai đoạn mặc định
+const DEFAULT_STAGES = [
+  { id:'A', name:'Giới thiệu Học Hành Động', en:'Introduce Action Learning', time_suggested:'0\'–2\'',
+    result:'Cả nhóm hiểu AL, mỗi người chọn 1 năng lực lãnh đạo để rèn',
+    questions:['Giới thiệu & giải thích Học Hành Động đến nhóm, chia sẻ về các thành tố, quy trình, vai trò và quy tắc.','Yêu cầu mỗi thành viên chọn một năng lực lãnh đạo.'] },
+  { id:'B', name:'Chia sẻ vấn đề', en:'Share the Problem', time_suggested:'2\'–15\'',
+    result:'Nhóm nghe & hiểu vấn đề của PP. Bắt đầu vòng hỏi–đáp.',
+    questions:['PP dành 2-3 phút chia sẻ điều mình muốn nhóm giúp đỡ.','Ai có câu hỏi đầu tiên?'] },
+  { id:'C', name:'Đồng thuận vấn đề', en:'Consensus Intervention', time_suggested:'15\'–30\'',
+    result:'Nhóm soi lại cách làm việc. Mỗi người viết câu phát biểu vấn đề. Thống nhất một câu vấn đề.',
+    questions:['Chúng ta đang làm việc theo nhóm như thế nào? (1-10: 1-Kém; 10-Xuất sắc)','Chúng ta đang làm gì tốt?','Chúng ta có thể làm gì tốt hơn?','Chúng ta đã thống nhất về vấn đề chưa?','Hãy viết xuống câu phát biểu về vấn đề.','Ai có câu hỏi tiếp theo?'] },
+  { id:'D', name:'Can thiệp nhắc nhở', en:'Reminder Intervention', time_suggested:'30\'–35\'',
+    result:'Nhóm được nhắc về thời gian, mục tiêu cuối phiên; tăng sự tập trung.',
+    questions:['Chúng ta còn 5 phút nữa — hãy nhớ năng lực lãnh đạo mình đã chọn.','PP ơi, sau 5 phút nữa tôi sẽ hỏi bạn về những hành động sẽ thực hiện sau phiên.','Ai có câu hỏi tiếp theo?'] },
+  { id:'E', name:'Cam kết hành động', en:'Action Commitment', time_suggested:'35\'–45\'',
+    result:'PP nêu được vài hành động cụ thể sẽ làm. Nhận ra mình đã được giúp đỡ thế nào.',
+    questions:['Những hành động gì bạn sẽ thực hiện như là kết quả của phiên này?','Bạn được giúp đỡ ở điểm nào?','Như thế nào?'] },
+  { id:'F', name:'Lắng đọng học hỏi', en:'Learning Reflection', time_suggested:'45\'–65\'',
+    result:'Cả nhóm rút bài học về vấn đề, hiệu suất nhóm, sức mạnh câu hỏi, năng lực lãnh đạo.',
+    questions:['Nhóm chúng ta đã làm gì tốt nhất?','Có câu hỏi tốt nào đã được hỏi?','Chúng ta có thể học được gì về sức mạnh của câu hỏi?','Những điều gì chúng ta có thể học được từ phiên này?','Bạn đã thực hành năng lực lãnh đạo mà bạn đã chọn như thế nào?'] },
+  { id:'G', name:'Cảm ơn nhóm', en:'Close Session', time_suggested:'Mốc 65\'',
+    result:'Phiên được khép lại rõ ràng, ấm áp.',
+    questions:['Cảm ơn các bạn đã tham gia phiên huấn luyện này! (Vỗ tay — Kết thúc phiên)','PP chia sẻ cảm nhận — Điều gì hữu ích?'] }
+];
+
+const CHECKLIST_BEFORE = [
+  { label:'Xác định thành viên tham dự', en:'Identify participants' },
+  { label:'Xác định PP và khía cạnh vấn đề mà PP muốn được hỗ trợ', en:'Identify Problem Presenter (PP) & problem' },
+  { label:'Chuẩn bị nội dung trình bày về Học Hành Động (PPT / Slide)', en:'Prepare AL presentation materials' },
+  { label:'Chuẩn bị danh sách năng lực thực hành trong buổi gặp', en:'Prepare leadership competency list' },
+  { label:'Thông báo với thành viên về thời gian, địa điểm, những chuẩn bị', en:'Notify participants' },
+  { label:'Công cụ cho Nhà huấn luyện (Thẻ vấn đề, Sổ ghi chú, Coach Guide...)', en:'AL Coach tools' },
+  { label:'Vật dụng cho người tham dự (nếu tổ chức trực tiếp)', en:'Materials for participants (if on-site)' }
+];
+
+const CHECKLIST_AFTER = [
+  { label:'Coach tự lắng đọng về ĐÃ LÀM TỐT & LÀM SAO ĐỂ TỐT HƠN', en:'Self-reflection: What went well & how to improve' },
+  { label:'Gửi tóm tắt buổi gặp đến nhóm & Theo dõi tiếp (Follow up) với PP về các Hành động đã cam kết', en:'Send summary & follow up with PP on Actions' },
+  { label:'Cập nhật thông tin dẫn giảng (Nội dung, Slide trình bày...)', en:'Update facilitation notes & PPT' },
+  { label:'Cập nhật Hồ sơ Thực hành Học Hành Động (AL Practice Tracking)', en:'Update AL Practice Tracking' },
+  { label:'Viết bài tóm tắt (Recap) & chia sẻ trên kênh cá nhân / cộng đồng', en:'Write recap & share on personal/community channel' }
+];
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  loadData();
+  setupFilterListeners();
+});
+
+async function loadData() {
+  showLoading('Đang tải dữ liệu...');
+  try {
+    const [sessRes, compRes] = await Promise.all([
+      apiFetch('get_all_sessions'),
+      apiFetch('get_competencies')
+    ]);
+    sessions = sessRes.sessions || [];
+    competencies = compRes.competencies || [];
+    renderHome();
+    setSyncStatus('ok');
+  } catch(e) {
+    setSyncStatus('error');
+    showToast('Không thể tải dữ liệu. Kiểm tra kết nối!', 'error');
+    renderHome();
+  } finally {
+    hideLoading();
+  }
+}
+
+// ============================================================
+// API HELPERS
+// ============================================================
+async function apiFetch(action, params = {}) {
+  const url = new URL(API_URL);
+  url.searchParams.set('action', action);
+  Object.keys(params).forEach(k => url.searchParams.set(k, params[k]));
+  const res = await fetch(url.toString());
+  return res.json();
+}
+
+async function apiPost(body) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
+
+// ============================================================
+// HOME RENDER
+// ============================================================
+function renderHome() {
+  const keyword = document.getElementById('filterKeyword').value.toLowerCase();
+  const dateFrom = document.getElementById('filterDateFrom').value;
+  const dateTo = document.getElementById('filterDateTo').value;
+
+  let filtered = sessions.filter(s => {
+    // Keyword filter
+    if (keyword) {
+      const hay = [s.session_id, s.client_name, s.coach_name,
+        s.session_running?.pp_name || ''].join(' ').toLowerCase();
+      if (!hay.includes(keyword)) return false;
+    }
+    // Status filter
+    if (filterStatus !== 'all' && s.status !== filterStatus) return false;
+    // Date filter
+    if (dateFrom && s.session_date < dateFrom) return false;
+    if (dateTo && s.session_date > dateTo) return false;
+    return true;
+  });
+
+  const container = document.getElementById('sessionList');
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state">
+      <div class="empty-state-icon">📋</div>
+      <h3>Chưa có phiên nào</h3>
+      <p>${sessions.length === 0 ? 'Bấm "+ Tạo phiên mới" để bắt đầu' : 'Không có phiên nào phù hợp với bộ lọc. Thử điều chỉnh lại.'}</p>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(s => {
+    const icons = { draft:'📝', in_progress:'🔄', done:'✅' };
+    const labels = { draft:'Chuẩn bị (Draft)', in_progress:'Đang diễn ra (In Progress)', done:'Hoàn thành (Done)' };
+    const badges = { draft:'badge-draft', in_progress:'badge-in_progress', done:'badge-done' };
+    return `<div class="session-card status-${s.status}" onclick="openSession('${s.session_id}')">
+      <div class="session-card-icon">${icons[s.status] || '📋'}</div>
+      <div class="session-card-info">
+        <div class="session-card-top">
+          <span class="session-id">${s.session_id}</span>
+          <span class="session-client">${s.client_name || 'Chưa có tên KH'}</span>
+          <span class="status-badge ${badges[s.status]}">${labels[s.status]}</span>
+        </div>
+        <div class="session-card-bottom">
+          Coach: ${s.coach_name || '—'} &nbsp;·&nbsp; Ngày: ${s.session_date || '—'} &nbsp;·&nbsp; PP: ${s.session_running?.pp_name || '—'}
+        </div>
+      </div>
+      <div class="session-card-actions" onclick="event.stopPropagation()">
+        <button class="btn-icon" onclick="openSession('${s.session_id}')" title="Mở xem">👁</button>
+        <button class="btn-icon" onclick="openExportFor('${s.session_id}')" title="Tải Excel">📥</button>
+        <button class="btn-icon danger" onclick="openDeleteModal('${s.session_id}')" title="Xóa phiên">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// FILTER
+// ============================================================
+function setupFilterListeners() {
+  document.getElementById('filterKeyword').addEventListener('input', renderHome);
+  document.getElementById('filterDateFrom').addEventListener('change', renderHome);
+  document.getElementById('filterDateTo').addEventListener('change', renderHome);
+  document.querySelectorAll('.status-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.status-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterStatus = btn.dataset.status;
+      renderHome();
+    });
+  });
+}
+
+function clearFilters() {
+  document.getElementById('filterKeyword').value = '';
+  document.getElementById('filterDateFrom').value = '';
+  document.getElementById('filterDateTo').value = '';
+  filterStatus = 'all';
+  document.querySelectorAll('.status-tab').forEach(b => b.classList.remove('active'));
+  document.querySelector('.status-tab[data-status="all"]').classList.add('active');
+  renderHome();
+}
+
+// ============================================================
+// CREATE SESSION
+// ============================================================
+async function createSession() {
+  showLoading('Đang tạo phiên mới...');
+  try {
+    // Tính mã phiên tiếp theo
+    let maxNum = 0;
+    sessions.forEach(s => {
+      if (s.session_id && s.session_id.startsWith('AL-')) {
+        const n = parseInt(s.session_id.replace('AL-', ''), 10);
+        if (n > maxNum) maxNum = n;
+      }
+    });
+    const newId = 'AL-' + String(maxNum + 1).padStart(3, '0');
+    const today = new Date().toISOString().split('T')[0];
+
+    currentSession = {
+      session_id: newId,
+      coach_name: '',
+      client_name: '',
+      session_date: today,
+      format: 'Trực tiếp',
+      time_start: '',
+      time_end: '',
+      location: '',
+      status: 'draft',
+      checklist_before: initChecklistBefore(),
+      session_running: initSessionRunning(),
+      checklist_after: initChecklistAfter(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+
+    sessions.unshift(currentSession);
+    openDetailScreen('before');
+  } finally {
+    hideLoading();
+  }
+}
+
+// ============================================================
+// OPEN SESSION
+// ============================================================
+function openSession(sessionId) {
+  currentSession = sessions.find(s => s.session_id === sessionId);
+  if (!currentSession) return;
+  // Ensure objects exist
+  if (!currentSession.checklist_before) currentSession.checklist_before = initChecklistBefore();
+  if (!currentSession.session_running) currentSession.session_running = initSessionRunning();
+  if (!currentSession.checklist_after) currentSession.checklist_after = initChecklistAfter();
+  openDetailScreen('before');
+}
+
+function openDetailScreen(tab) {
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('detailScreen').classList.remove('hidden');
+  document.getElementById('detailSessionId').textContent = currentSession.session_id;
+  const statusLabels = { draft:'📝 Đang chuẩn bị', in_progress:'🔄 Đang diễn ra', done:'✅ Hoàn thành' };
+  document.getElementById('detailStatusText').textContent = statusLabels[currentSession.status] || '';
+  loadBeforeTab();
+  loadDuringTab();
+  loadAfterTab();
+  switchTab(tab);
+  window.scrollTo(0,0);
+}
+
+function goHome() {
+  document.getElementById('homeScreen').classList.remove('hidden');
+  document.getElementById('detailScreen').classList.add('hidden');
+  renderHome();
+}
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchTab(tab) {
+  ['before','during','after'].forEach(t => {
+    document.getElementById('tabContent' + capitalize(t)).classList.toggle('hidden', t !== tab);
+    document.getElementById('tab' + capitalize(t)).classList.toggle('active', t === tab);
+  });
+}
+
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function saveAndSwitchTab(tab) {
+  saveSession();
+  switchTab(tab);
+}
+
+// ============================================================
+// BEFORE TAB
+// ============================================================
+function initChecklistBefore() {
+  return CHECKLIST_BEFORE.map((item, i) => ({ id: i+1, label: item.label, en: item.en, checked: false, note: '' }));
+}
+
+function loadBeforeTab() {
+  const s = currentSession;
+  document.getElementById('b_session_id').value = s.session_id;
+  document.getElementById('b_date').value = s.session_date || '';
+  document.getElementById('b_coach').value = s.coach_name || '';
+  document.getElementById('b_client').value = s.client_name || '';
+  document.getElementById('b_time_start').value = s.time_start || '';
+  document.getElementById('b_time_end').value = s.time_end || '';
+  document.getElementById('b_location').value = s.location || '';
+  document.querySelectorAll('input[name="format"]').forEach(r => { r.checked = r.value === (s.format || 'Trực tiếp'); });
+
+  const list = s.checklist_before || initChecklistBefore();
+  document.getElementById('checklistBeforeList').innerHTML = list.map((item, i) => `
+    <div class="checklist-item ${item.checked ? 'checked' : ''}" id="cbItem${i}">
+      <div class="checklist-top">
+        <input type="checkbox" class="checklist-checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistBefore(${i}, this.checked)">
+        <div class="checklist-label">${i+1}. ${item.label}<span class="label-en">${item.en}</span></div>
+      </div>
+      <textarea class="form-textarea" placeholder="Ghi chú (Notes)..." oninput="autoResize(this); updateChecklistBeforeNote(${i}, this.value)">${item.note || ''}</textarea>
+    </div>`).join('');
+}
+
+function toggleChecklistBefore(i, v) {
+  currentSession.checklist_before[i].checked = v;
+  document.getElementById('cbItem'+i).classList.toggle('checked', v);
+}
+function updateChecklistBeforeNote(i, v) { currentSession.checklist_before[i].note = v; }
+
+function collectBefore() {
+  currentSession.session_date = document.getElementById('b_date').value;
+  currentSession.coach_name = document.getElementById('b_coach').value;
+  currentSession.client_name = document.getElementById('b_client').value;
+  currentSession.time_start = document.getElementById('b_time_start').value;
+  currentSession.time_end = document.getElementById('b_time_end').value;
+  currentSession.location = document.getElementById('b_location').value;
+  const fmt = document.querySelector('input[name="format"]:checked');
+  if (fmt) currentSession.format = fmt.value;
+}
+
+// ============================================================
+// DURING TAB — MEMBERS
+// ============================================================
+function initSessionRunning() {
+  return {
+    pp_name: '',
+    coach_name: '',
+    members: [],
+    observers: [],
+    stages: DEFAULT_STAGES.map(s => ({
+      id: s.id, name: s.name, en: s.en,
+      time_suggested: s.time_suggested,
+      result: s.result,
+      time_actual: '',
+      questions: [...s.questions],
+      notes: {}
+    }))
+  };
+}
+
+function loadDuringTab() {
+  const r = currentSession.session_running;
+  document.getElementById('d_pp').value = r.pp_name || '';
+  document.getElementById('d_coach2').value = r.coach_name || '';
+  renderMembers();
+  renderObservers();
+  renderSessionTable();
+}
+
+function collectDuring() {
+  const r = currentSession.session_running;
+  r.pp_name = document.getElementById('d_pp').value;
+  r.coach_name = document.getElementById('d_coach2').value;
+}
+
+function renderMembers() {
+  const members = currentSession.session_running.members;
+  const container = document.getElementById('membersList');
+  container.innerHTML = members.map((m, i) => `
+    <div class="member-card">
+      <div class="member-card-role">M${i+1} — Thành viên <span class="member-card-role-en">(Member)</span></div>
+      <input type="text" class="form-input" placeholder="Họ và tên" value="${m.name||''}" oninput="updateMember(${i},'name',this.value)" style="margin-bottom:8px;">
+      <div class="comp-label">Năng lực rèn luyện (Leadership Competency)</div>
+      <button class="comp-dropdown" onclick="openCompModal('member',${i})">${m.competency || '— Chọn năng lực —'}</button>
+      <button class="btn-icon danger" onclick="removeMember(${i})" style="margin-top:6px;width:auto;padding:4px 10px;font-size:12px;">🗑 Xóa</button>
+    </div>`).join('');
+  document.getElementById('btnAddMember').style.display = members.length >= 5 ? 'none' : 'flex';
+}
+
+function renderObservers() {
+  const observers = currentSession.session_running.observers;
+  const container = document.getElementById('observersList');
+  container.innerHTML = observers.map((o, i) => `
+    <div class="member-card">
+      <div class="member-card-role" style="color:var(--gray-mid);">O${i+1} — Người quan sát <span class="member-card-role-en">(Observer)</span></div>
+      <input type="text" class="form-input" placeholder="Họ và tên" value="${o.name||''}" oninput="updateObserver(${i},'name',this.value)">
+      <button class="btn-icon danger" onclick="removeObserver(${i})" style="margin-top:6px;width:auto;padding:4px 10px;font-size:12px;">🗑 Xóa</button>
+    </div>`).join('');
+  document.getElementById('btnAddObserver').style.display = observers.length >= 5 ? 'none' : 'flex';
+}
+
+function addMember() {
+  if (currentSession.session_running.members.length >= 5) return;
+  currentSession.session_running.members.push({ name:'', competency:'' });
+  renderMembers();
+  renderSessionTable();
+}
+function removeMember(i) {
+  currentSession.session_running.members.splice(i, 1);
+  renderMembers();
+  renderSessionTable();
+}
+function updateMember(i, key, val) {
+  currentSession.session_running.members[i][key] = val;
+  if (key === 'name') updateTableHeader();
+}
+
+function addObserver() {
+  if (currentSession.session_running.observers.length >= 5) return;
+  currentSession.session_running.observers.push({ name:'' });
+  renderObservers();
+  renderSessionTable();
+}
+function removeObserver(i) {
+  currentSession.session_running.observers.splice(i, 1);
+  renderObservers();
+  renderSessionTable();
+}
+function updateObserver(i, key, val) { currentSession.session_running.observers[i][key] = val; }
+
+// ============================================================
+// COMPETENCY MODAL
+// ============================================================
+function openCompModal(type, index) {
+  currentCompTarget = { type, index };
+  selectedComp = null;
+  const list = document.getElementById('compList');
+  list.innerHTML = competencies.map(c => `
+    <label class="comp-option">
+      <input type="radio" name="compPick" value="${c.name}" onchange="selectedComp='${c.name}'">
+      ${c.name}
+    </label>`).join('');
+  // Pre-select if already chosen
+  const current = type === 'member'
+    ? currentSession.session_running.members[index]?.competency
+    : '';
+  if (current) {
+    selectedComp = current;
+    const radio = list.querySelector(`input[value="${current}"]`);
+    if (radio) { radio.checked = true; radio.closest('.comp-option').classList.add('selected'); }
+  }
+  document.getElementById('compOtherInput').value = '';
+  document.getElementById('compModal').classList.remove('hidden');
+}
+
+function closeCompModal() { document.getElementById('compModal').classList.add('hidden'); }
+
+async function addCustomComp() {
+  const name = document.getElementById('compOtherInput').value.trim();
+  if (!name) return;
+  // Add to local list
+  if (!competencies.find(c => c.name === name)) {
+    competencies.push({ competency_id: 'CUSTOM-' + Date.now(), name, is_default: false });
+    // Sync to Sheets
+    try { await apiPost({ action: 'add_competency', name }); } catch(e) {}
+  }
+  selectedComp = name;
+  // Re-render list with new item selected
+  openCompModal(currentCompTarget.type, currentCompTarget.index);
+  // Set the new item selected
+  selectedComp = name;
+  const radios = document.querySelectorAll('input[name="compPick"]');
+  radios.forEach(r => { if (r.value === name) { r.checked = true; } });
+}
+
+function confirmComp() {
+  if (!selectedComp || !currentCompTarget) { closeCompModal(); return; }
+  if (currentCompTarget.type === 'member') {
+    currentSession.session_running.members[currentCompTarget.index].competency = selectedComp;
+    renderMembers();
+    renderSessionTable();
+  }
+  closeCompModal();
+}
+
+// ============================================================
+// SESSION TABLE
+// ============================================================
+function renderSessionTable() {
+  const r = currentSession.session_running;
+  const members = r.members || [];
+  const stages = r.stages || DEFAULT_STAGES.map(s => ({ ...s, questions: [...s.questions], notes: {}, time_actual: '' }));
+
+  // Build header
+  let headHtml = `<tr>
+    <th class="col-stage">Giai đoạn (Stage)</th>
+    <th class="col-time">Thời gian<br>(Time)</th>
+    <th class="col-questions">Câu hỏi gợi ý<br>(Coaching Questions)</th>
+    <th class="member-header">PP<br><small>${r.pp_name||'Người trình bày'}</small></th>`;
+  members.forEach((m, i) => {
+    headHtml += `<th class="member-header">M${i+1}<br><small>${m.name||'Thành viên'}</small>${m.competency?`<div style="font-size:10px;color:var(--accent);margin-top:2px;">${m.competency}</div>`:''}</th>`;
+  });
+  headHtml += '</tr>';
+  document.getElementById('tableHead').innerHTML = headHtml;
+
+  // Build body
+  let bodyHtml = '';
+  stages.forEach((stage, si) => {
+    const qHtml = stage.questions.map((q, qi) => `
+      <div class="question-item">
+        <span class="question-text">${q}</span>
+        <div class="question-actions">
+          <button class="btn-q" onclick="editQuestion(${si},${qi})" title="Sửa">✏️</button>
+          <button class="btn-q del" onclick="deleteQuestion(${si},${qi})" title="Xóa">🗑</button>
+        </div>
+      </div>`).join('');
+
+    let rowHtml = `<tr>
+      <td class="col-stage">
+        <div class="stage-name">${stage.id} — ${stage.name}</div>
+        <div class="stage-en">${stage.en}</div>
+        <div class="stage-result">${stage.result||''}</div>
+      </td>
+      <td class="col-time">
+        <div class="time-input-wrap">
+          <input class="time-suggested-input" value="${stage.time_suggested||''}" title="Mốc gợi ý — bấm để sửa" oninput="updateStageProp(${si},'time_suggested',this.value)" placeholder="VD: 0'-2'">
+          <div class="time-actual-wrap">
+            <input class="time-actual-input" type="number" min="0" placeholder="—" value="${stage.time_actual||''}" oninput="updateStageProp(${si},'time_actual',this.value)">
+            <span class="time-label">phút thực tế</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-questions">
+        <div class="questions-list">${qHtml}</div>
+        <button class="btn-add-q" onclick="addQuestion(${si})">＋ Thêm câu hỏi</button>
+      </td>
+      <td class="member-note-cell">
+        <textarea class="form-textarea" placeholder="Ghi chú..." oninput="autoResize(this);updateNote(${si},'pp',this.value)">${(stage.notes&&stage.notes['pp'])||''}</textarea>
+      </td>`;
+    members.forEach((m, mi) => {
+      rowHtml += `<td class="member-note-cell"><textarea class="form-textarea" placeholder="Ghi chú..." oninput="autoResize(this);updateNote(${si},'m${mi}',this.value)">${(stage.notes&&stage.notes['m'+mi])||''}</textarea></td>`;
+    });
+    rowHtml += '</tr>';
+    bodyHtml += rowHtml;
+  });
+  document.getElementById('tableBody').innerHTML = bodyHtml;
+  document.querySelectorAll('.form-textarea').forEach(ta => autoResize(ta));
+}
+function updateStageProp(si,prop,val){currentSession.session_running.stages[si][prop]=val;}
+function updateNote(si,who,val){if(!currentSession.session_running.stages[si].notes)currentSession.session_running.stages[si].notes={};currentSession.session_running.stages[si].notes[who]=val;}
+function addQuestion(si){const q=prompt('Nhập câu hỏi gợi ý mới:');if(q&&q.trim()){currentSession.session_running.stages[si].questions.push(q.trim());renderSessionTable();}}
+function editQuestion(si,qi){const old=currentSession.session_running.stages[si].questions[qi];const q=prompt('Sửa câu hỏi:',old);if(q!==null&&q.trim()){currentSession.session_running.stages[si].questions[qi]=q.trim();renderSessionTable();}}
+function deleteQuestion(si,qi){currentSession.session_running.stages[si].questions.splice(qi,1);renderSessionTable();}
+function initChecklistAfter(){return CHECKLIST_AFTER.map((item,i)=>({id:i+1,label:item.label,en:item.en,checked:false}));}
+function loadAfterTab(){
+  const ca=currentSession.checklist_after||initChecklistAfter();
+  document.getElementById('checklistAfterList').innerHTML=ca.map((item,i)=>`<div class="checklist-item ${item.checked?'checked':''}" id="caItem${i}"><div class="checklist-top"><input type="checkbox" class="checklist-checkbox" ${item.checked?'checked':''} onchange="toggleChecklistAfter(${i},this.checked)"><div class="checklist-label">${i+1}. ${item.label}<span class="label-en">${item.en}</span></div></div></div>`).join('');
+  document.getElementById('a_reflect1').value=currentSession.reflect_1||'';
+  document.getElementById('a_reflect2').value=currentSession.reflect_2||'';
+  document.getElementById('a_reflect3').value=currentSession.reflect_3||'';
+  document.getElementById('a_reflect4').value=currentSession.reflect_4||'';
+  document.getElementById('a_hours').value=currentSession.coaching_hours||'';
+  document.getElementById('a_problem').value=currentSession.problem_presented||'';
+  document.getElementById('a_personal').value=currentSession.personal_learning||'';
+  document.getElementById('a_testimonial').value=currentSession.testimonial||'';
+  const st=currentSession.session_type;
+  document.querySelectorAll('input[name="sessionType"]').forEach(r=>{r.checked=r.value===st;});
+  setTimeout(()=>{document.querySelectorAll('.form-textarea').forEach(ta=>autoResize(ta));},50);
+}
+function toggleChecklistAfter(i,v){currentSession.checklist_after[i].checked=v;document.getElementById('caItem'+i).classList.toggle('checked',v);}
+function collectAfter(){
+  currentSession.reflect_1=document.getElementById('a_reflect1').value;
+  currentSession.reflect_2=document.getElementById('a_reflect2').value;
+  currentSession.reflect_3=document.getElementById('a_reflect3').value;
+  currentSession.reflect_4=document.getElementById('a_reflect4').value;
+  currentSession.coaching_hours=document.getElementById('a_hours').value;
+  currentSession.problem_presented=document.getElementById('a_problem').value;
+  currentSession.personal_learning=document.getElementById('a_personal').value;
+  currentSession.testimonial=document.getElementById('a_testimonial').value;
+  const st=document.querySelector('input[name="sessionType"]:checked');
+  if(st)currentSession.session_type=st.value;
+}
+async function saveSession(){
+  collectBefore();collectDuring();collectAfter();
+  if(currentSession.status==='draft')currentSession.status='in_progress';
+  currentSession.updated_at=new Date().toISOString();
+  const idx=sessions.findIndex(s=>s.session_id===currentSession.session_id);
+  if(idx>=0)sessions[idx]=currentSession;
+  setSyncStatus('pending');
+  try{await apiPost({action:'upsert_session',session:currentSession});setSyncStatus('ok');showToast('✅ Đã lưu thành công!','success');document.getElementById('detailStatusText').textContent='🔄 Đang diễn ra';}
+  catch(e){setSyncStatus('error');const p=JSON.parse(localStorage.getItem('pendingSync')||'[]');p.push(currentSession);localStorage.setItem('pendingSync',JSON.stringify(p));showToast('⚠️ Lưu tạm — sẽ đồng bộ khi có mạng','warning');}
+}
+async function completeSession(){
+  collectBefore();collectDuring();collectAfter();
+  currentSession.status='done';currentSession.updated_at=new Date().toISOString();
+  const idx=sessions.findIndex(s=>s.session_id===currentSession.session_id);
+  if(idx>=0)sessions[idx]=currentSession;
+  showLoading('Đang hoàn thành phiên...');
+  try{await apiPost({action:'upsert_session',session:currentSession});setSyncStatus('ok');showToast('✅ Phiên đã hoàn thành!','success');setTimeout(()=>goHome(),1200);}
+  catch(e){showToast('⚠️ Lưu tạm thời — sẽ đồng bộ sau','warning');setTimeout(()=>goHome(),1200);}
+  finally{hideLoading();}
+}
+function openDeleteModal(sessionId){sessionToDelete=sessions.find(s=>s.session_id===sessionId);if(!sessionToDelete)return;document.getElementById('deleteSessionInfo').textContent=`${sessionToDelete.session_id} · ${sessionToDelete.client_name||'Chưa có tên'} · ${sessionToDelete.session_date||'—'}`;document.getElementById('deleteConfirmInput').value='';document.getElementById('btnDeleteConfirm').classList.remove('ready');document.getElementById('deleteModal').classList.remove('hidden');}
+function checkDeleteConfirm(){const val=document.getElementById('deleteConfirmInput').value.trim();document.getElementById('btnDeleteConfirm').classList.toggle('ready',val===sessionToDelete?.session_id);}
+function closeDeleteModal(){document.getElementById('deleteModal').classList.add('hidden');sessionToDelete=null;}
+async function confirmDelete(){
+  if(!sessionToDelete)return;
+  const val=document.getElementById('deleteConfirmInput').value.trim();
+  if(val!==sessionToDelete.session_id)return;
+  showLoading('Đang xóa phiên...');
+  try{await apiPost({action:'delete_session',session_id:sessionToDelete.session_id});sessions=sessions.filter(s=>s.session_id!==sessionToDelete.session_id);closeDeleteModal();renderHome();showToast('🗑 Phiên đã được xóa','success');}
+  catch(e){showToast('Xóa thất bại — kiểm tra kết nối!','error');}
+  finally{hideLoading();}
+}
+function openExport(){openExportFor(currentSession?.session_id);}
+function openExportFor(sessionId){document.querySelector('input[value="current"]').checked=true;updateExportUI();document.getElementById('exportModal').classList.remove('hidden');}
+function closeExport(){document.getElementById('exportModal').classList.add('hidden');}
+function updateExportUI(){const type=document.querySelector('input[name="exportType"]:checked')?.value;document.getElementById('exportDateRange').classList.toggle('hidden',type!=='daterange');let preview='';if(type==='current')preview=`Sẽ xuất: 1 phiên — ${currentSession?.session_id||'—'}`;else if(type==='all')preview=`Sẽ xuất: Tất cả ${sessions.length} phiên`;else if(type==='daterange')preview='Chọn khoảng thời gian phía trên';document.getElementById('exportPreview').textContent=preview;}
+function doExport(){
+  const type=document.querySelector('input[name="exportType"]:checked')?.value;
+  let data=[];
+  if(type==='current')data=currentSession?[currentSession]:[];
+  else if(type==='all')data=sessions;
+  else if(type==='daterange'){const from=document.getElementById('expDateFrom').value;const to=document.getElementById('expDateTo').value;data=sessions.filter(s=>(!from||s.session_date>=from)&&(!to||s.session_date<=to));}
+  if(data.length===0){showToast('Không có phiên nào để xuất!','warning');return;}
+  const rows=[['Ngày (Date)','Khách Hàng (Client)','Mã Phiên (Session ID)','Coach','Trạng thái (Status)','PP','Vấn Đề Được Trình Bày (Problem Presented)','Số Giờ (Hours)','Loại Phiên (Session Type)','Kết quả chính','Làm tốt','Cải thiện','Học được','Lắng đọng cá nhân','Phản hồi (Testimonials)']];
+  data.forEach(s=>{rows.push([s.session_date||'',s.client_name||'',s.session_id||'',s.coach_name||'',s.status||'',s.session_running?.pp_name||'',s.problem_presented||'',s.coaching_hours||'',s.session_type||'',s.reflect_1||'',s.reflect_2||'',s.reflect_3||'',s.reflect_4||'',s.personal_learning||'',s.testimonial||'']);});
+  const csv='\uFEFF'+rows.map(r=>r.map(cell=>'"'+String(cell).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;
+  a.download=`AL_Sessions_${new Date().toISOString().split('T')[0].replace(/-/g,'')}.csv`;
+  a.click();URL.revokeObjectURL(url);closeExport();showToast('📥 File đã được tải xuống!','success');
+}
+function autoResize(el){el.style.height='auto';el.style.height=Math.max(60,el.scrollHeight)+'px';}
+function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>{t.className='toast';},3000);}
+function showLoading(msg='Đang xử lý...'){document.getElementById('loadingText').textContent=msg;document.getElementById('loadingOverlay').classList.remove('hidden');}
+function hideLoading(){document.getElementById('loadingOverlay').classList.add('hidden');}
+function setSyncStatus(status){const el=document.getElementById('syncStatus');if(status==='ok'){el.className='header-sync sync-ok';el.textContent='✅ Đã đồng bộ';}else if(status==='pending'){el.className='header-sync sync-pending';el.textContent='⏳ Đang lưu...';}else{el.className='header-sync sync-error';el.textContent='⚠️ Chưa đồng bộ';}}
+window.addEventListener('online',async()=>{const pending=JSON.parse(localStorage.getItem('pendingSync')||'[]');if(pending.length===0)return;setSyncStatus('pending');for(const session of pending){try{await apiPost({action:'upsert_session',session});}catch(e){return;}}localStorage.removeItem('pendingSync');setSyncStatus('ok');showToast('✅ Đã đồng bộ dữ liệu offline!','success');});
+</script></body></html>
