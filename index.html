@@ -871,14 +871,29 @@ textarea { resize: none; overflow: hidden; }
 @media (max-width: 600px) {
   .form-row { grid-template-columns: 1fr; }
   .form-row-3 { grid-template-columns: 1fr; }
-  .home-toolbar { flex-direction: column; }
+  .home-toolbar { flex-direction: column; gap: 8px; }
+  .filter-group { min-width: unset; width: 100%; }
+  .status-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .status-tab { font-size: 12px; padding: 7px 8px; text-align: center; }
+  .btn-create { width: 100%; justify-content: center; padding: 14px; font-size: 15px; }
+  .btn-clear-filter { width: 100%; padding: 10px; }
   .detail-header { flex-wrap: wrap; gap: 8px; }
-  .tab-btn { font-size: 11px; padding: 8px 4px; }
+  .tab-btn { font-size: 11px; padding: 8px 2px; }
   .members-grid { grid-template-columns: 1fr 1fr; }
-  .session-card { padding: 12px 14px; gap: 10px; }
-  .session-card-actions { flex-direction: column; gap: 4px; }
+  .session-card { padding: 12px 14px; gap: 8px; flex-wrap: wrap; }
+  .session-card-info { width: 100%; }
+  .session-card-top { flex-wrap: wrap; gap: 6px; }
+  .session-card-actions {
+    flex-direction: row; gap: 6px; width: 100%;
+    justify-content: flex-end;
+    border-top: 1px solid var(--gray-border);
+    padding-top: 8px; margin-top: 4px;
+  }
+  .btn-icon { width: 38px; height: 38px; font-size: 18px; }
   .action-bar { flex-direction: column; }
-  .btn-save, .btn-next-tab, .btn-complete { width: 100%; justify-content: center; }
+  .btn-save, .btn-next-tab, .btn-complete { width: 100%; justify-content: center; padding: 14px; font-size: 15px; }
+  .session-id { font-size: 13px; }
+  .empty-state { padding: 40px 16px; }
 }
 
 /* Hidden utility */
@@ -944,7 +959,7 @@ textarea { resize: none; overflow: hidden; }
         <h2 id="detailSessionId">AL-001</h2>
         <p id="detailStatusText">Đang chuẩn bị</p>
       </div>
-      <button class="btn-icon" onclick="openExport()" title="Tải xuống Excel">📥</button>
+      <button class="btn-icon" onclick="openExport()" title="Xuất PDF">📥</button>
     </div>
 
     <!-- Tab Nav -->
@@ -1157,7 +1172,7 @@ textarea { resize: none; overflow: hidden; }
 <!-- EXPORT MODAL -->
 <div id="exportModal" class="export-modal hidden">
   <div class="export-box">
-    <div class="export-title">📥 Tải xuống dữ liệu phiên</div>
+    <div class="export-title">📥 Xuất PDF báo cáo phiên</div>
     <div class="export-note">Chọn phạm vi xuất file Excel (Export Session Data)</div>
     <label class="export-option" id="expOpt1">
       <input type="radio" name="exportType" value="current" checked onchange="updateExportUI()"> 1 phiên hiện tại
@@ -1183,7 +1198,7 @@ textarea { resize: none; overflow: hidden; }
     <div id="exportPreview" style="margin-top:12px;padding:10px 14px;background:var(--gray-bg);border-radius:8px;font-size:13px;color:var(--gray-mid);"></div>
     <div class="export-actions">
       <button class="btn-cancel" onclick="closeExport()">Huỷ</button>
-      <button class="btn-export" onclick="doExport()">📥 Tải xuống Excel</button>
+      <button class="btn-export" onclick="doExport()">📄 Xuất PDF</button>
     </div>
   </div>
 </div>
@@ -1218,6 +1233,14 @@ let selectedComp = null;
 let sessionToDelete = null;
 
 // Dữ liệu giai đoạn mặc định
+const DEFAULT_COMPETENCIES = [
+  'Lắng nghe','Tạo động lực','Đàm phán','Đối phó với nghịch lý','Kiên nhẫn',
+  'Lập kế hoạch','Tư duy hệ thống','Tập trung vào khách hàng','Nhạy bén trong Kinh doanh',
+  'Lòng trắc ẩn','Sáng tạo','Quản lý sự đa dạng','Hài hước','Thuyết phục',
+  'Cởi mở để thay đổi','Tư duy phản biện','Tự lắng đọng','Làm việc đội nhóm',
+  'Tập trung chiến lược','Huấn luyện (Coaching)'
+];
+
 const DEFAULT_STAGES = [
   { id:'A', name:'Giới thiệu Học Hành Động', en:'Introduce Action Learning', time_suggested:'0\'–2\'',
     result:'Cả nhóm hiểu AL, mỗi người chọn 1 năng lực lãnh đạo để rèn',
@@ -1295,16 +1318,20 @@ async function apiFetch(action, params = {}) {
   const url = new URL(API_URL);
   url.searchParams.set('action', action);
   Object.keys(params).forEach(k => url.searchParams.set(k, params[k]));
-  const res = await fetch(url.toString());
-  return res.json();
+  const res = await fetch(url.toString(), { redirect: 'follow' });
+  const text = await res.text();
+  try { return JSON.parse(text); } catch(e) { return {}; }
 }
 
 async function apiPost(body) {
   const res = await fetch(API_URL, {
     method: 'POST',
+    redirect: 'follow',
+    headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(body)
   });
-  return res.json();
+  const text = await res.text();
+  try { return JSON.parse(text); } catch(e) { return {}; }
 }
 
 // ============================================================
@@ -1358,7 +1385,8 @@ function renderHome() {
       </div>
       <div class="session-card-actions" onclick="event.stopPropagation()">
         <button class="btn-icon" onclick="openSession('${s.session_id}')" title="Mở xem">👁</button>
-        <button class="btn-icon" onclick="openExportFor('${s.session_id}')" title="Tải Excel">📥</button>
+        <button class="btn-icon" onclick="editSession('${s.session_id}')" title="Sửa phiên">✏️</button>
+        <button class="btn-icon" onclick="openExportFor('${s.session_id}')" title="Tải PDF">📥</button>
         <button class="btn-icon danger" onclick="openDeleteModal('${s.session_id}')" title="Xóa phiên">🗑</button>
       </div>
     </div>`;
@@ -1624,21 +1652,28 @@ function updateObserver(i, key, val) { currentSession.session_running.observers[
 function openCompModal(type, index) {
   currentCompTarget = { type, index };
   selectedComp = null;
-  const list = document.getElementById('compList');
-  list.innerHTML = competencies.map(c => `
-    <label class="comp-option">
-      <input type="radio" name="compPick" value="${c.name}" onchange="selectedComp='${c.name}'">
-      ${c.name}
-    </label>`).join('');
-  // Pre-select if already chosen
-  const current = type === 'member'
-    ? currentSession.session_running.members[index]?.competency
+
+  // Lấy năng lực đang chọn của member này
+  const currentComp = type === 'member'
+    ? (currentSession.session_running.members[index]?.competency || '')
     : '';
-  if (current) {
-    selectedComp = current;
-    const radio = list.querySelector(`input[value="${current}"]`);
-    if (radio) { radio.checked = true; radio.closest('.comp-option').classList.add('selected'); }
-  }
+  if (currentComp) selectedComp = currentComp;
+
+  // Danh sách mặc định nếu competencies chưa load
+  const displayList = competencies.length > 0 ? competencies : DEFAULT_COMPETENCIES.map((name, i) => ({
+    competency_id: 'DEF-' + i, name, is_default: true
+  }));
+
+  const list = document.getElementById('compList');
+  list.innerHTML = displayList.map(c => {
+    const isSelected = c.name === currentComp;
+    return `<label class="comp-option ${isSelected ? 'selected' : ''}">
+      <input type="radio" name="compPick" value="${c.name}" ${isSelected ? 'checked' : ''}
+        onchange="selectedComp='${c.name}'; document.querySelectorAll('.comp-option').forEach(el=>el.classList.remove('selected')); this.closest('.comp-option').classList.add('selected')">
+      ${c.name}
+    </label>`;
+  }).join('');
+
   document.getElementById('compOtherInput').value = '';
   document.getElementById('compModal').classList.remove('hidden');
 }
@@ -1780,6 +1815,20 @@ async function saveSession(){
   try{await apiPost({action:'upsert_session',session:currentSession});setSyncStatus('ok');showToast('✅ Đã lưu thành công!','success');document.getElementById('detailStatusText').textContent='🔄 Đang diễn ra';}
   catch(e){setSyncStatus('error');const p=JSON.parse(localStorage.getItem('pendingSync')||'[]');p.push(currentSession);localStorage.setItem('pendingSync',JSON.stringify(p));showToast('⚠️ Lưu tạm — sẽ đồng bộ khi có mạng','warning');}
 }
+function editSession(sessionId) {
+  const s = sessions.find(s => s.session_id === sessionId);
+  if (!s) return;
+  // Cho phép sửa dù phiên đã done
+  currentSession = s;
+  if (!currentSession.checklist_before) currentSession.checklist_before = initChecklistBefore();
+  if (!currentSession.session_running) currentSession.session_running = initSessionRunning();
+  if (!currentSession.checklist_after) currentSession.checklist_after = initChecklistAfter();
+  // Đưa về in_progress để edit được
+  if (currentSession.status === 'done') currentSession.status = 'in_progress';
+  openDetailScreen('before');
+  showToast('✏️ Đang chỉnh sửa phiên — nhớ Lưu sau khi sửa xong', 'warning');
+}
+
 async function completeSession(){
   collectBefore();collectDuring();collectAfter();
   currentSession.status='done';currentSession.updated_at=new Date().toISOString();
@@ -1813,13 +1862,107 @@ function doExport(){
   else if(type==='all')data=sessions;
   else if(type==='daterange'){const from=document.getElementById('expDateFrom').value;const to=document.getElementById('expDateTo').value;data=sessions.filter(s=>(!from||s.session_date>=from)&&(!to||s.session_date<=to));}
   if(data.length===0){showToast('Không có phiên nào để xuất!','warning');return;}
-  const rows=[['Ngày (Date)','Khách Hàng (Client)','Mã Phiên (Session ID)','Coach','Trạng thái (Status)','PP','Vấn Đề Được Trình Bày (Problem Presented)','Số Giờ (Hours)','Loại Phiên (Session Type)','Kết quả chính','Làm tốt','Cải thiện','Học được','Lắng đọng cá nhân','Phản hồi (Testimonials)']];
-  data.forEach(s=>{rows.push([s.session_date||'',s.client_name||'',s.session_id||'',s.coach_name||'',s.status||'',s.session_running?.pp_name||'',s.problem_presented||'',s.coaching_hours||'',s.session_type||'',s.reflect_1||'',s.reflect_2||'',s.reflect_3||'',s.reflect_4||'',s.personal_learning||'',s.testimonial||'']);});
-  const csv='\uFEFF'+rows.map(r=>r.map(cell=>'"'+String(cell).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;
-  a.download=`AL_Sessions_${new Date().toISOString().split('T')[0].replace(/-/g,'')}.csv`;
-  a.click();URL.revokeObjectURL(url);closeExport();showToast('📥 File đã được tải xuống!','success');
+
+  // Tạo nội dung HTML để in thành PDF
+  const dateStr = new Date().toLocaleDateString('vi-VN');
+  let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>AL Session Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; color: #2B296D; margin: 0; padding: 20px; }
+    h1 { font-size: 20px; color: #2B296D; border-bottom: 3px solid #FDB913; padding-bottom: 8px; }
+    h2 { font-size: 15px; color: #2B296D; background: #F4F4F6; padding: 8px 12px; margin-top: 24px; border-left: 4px solid #FDB913; }
+    h3 { font-size: 13px; color: #00A79D; margin: 12px 0 6px; }
+    .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 10px 0; }
+    .meta-item { padding: 6px 10px; background: #F4F4F6; border-radius: 4px; }
+    .meta-label { font-size: 10px; color: #9B9BAA; font-weight: bold; text-transform: uppercase; }
+    .meta-value { font-size: 13px; font-weight: 600; }
+    .reflect { margin: 8px 0; padding: 10px; background: #F4F4F6; border-radius: 6px; border-left: 3px solid #2B296D; }
+    .reflect-q { font-weight: bold; color: #2B296D; margin-bottom: 4px; }
+    .reflect-a { color: #3D3D3D; line-height: 1.5; }
+    table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 11px; }
+    th { background: #2B296D; color: white; padding: 6px 8px; text-align: left; }
+    td { padding: 6px 8px; border-bottom: 1px solid #E0E0EA; }
+    tr:nth-child(even) td { background: #F4F4F6; }
+    .page-break { page-break-after: always; }
+    .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:bold; }
+    .badge-done { background:#00A79D22; color:#00A79D; }
+    .badge-in_progress { background:#FDB91322; color:#a07000; }
+    .badge-draft { background:#F4F4F6; color:#9B9BAA; }
+    .header-bar { background:#2B296D; color:white; padding:16px 20px; margin:-20px -20px 20px; }
+    .header-bar h1 { color:white; border:none; margin:0; font-size:18px; }
+    .header-bar p { margin:4px 0 0; font-size:12px; opacity:0.75; }
+    .summary-table { margin-bottom: 24px; }
+    @media print { body { margin: 0; } .no-print { display: none; } }
+  </style></head><body>
+  <div class="header-bar">
+    <h1>MASTER ACTION LEARNING</h1>
+    <p>Yêu Thương · Hiện Diện &nbsp;|&nbsp; Báo cáo xuất ngày ${dateStr}</p>
+  </div>`;
+
+  // Sheet 4: Bảng tổng hợp coaching
+  html += `<h2>📊 Tổng hợp Phiên Huấn Luyện (Coaching Report)</h2>
+  <table class="summary-table"><thead><tr>
+    <th>Ngày (Date)</th><th>Khách Hàng (Client)</th><th>Mã Phiên</th>
+    <th>Vấn Đề Được Trình Bày (Problem Presented)</th><th>Số Giờ (Hours)</th><th>Loại Phiên</th>
+  </tr></thead><tbody>`;
+  let totalHours = 0;
+  data.forEach(s => {
+    const h = parseFloat(s.coaching_hours) || 0;
+    totalHours += h;
+    html += `<tr><td>${s.session_date||'—'}</td><td>${s.client_name||'—'}</td>
+      <td>${s.session_id||'—'}</td><td>${s.problem_presented||'—'}</td>
+      <td>${h>0?h:' —'}</td><td>${s.session_type||'—'}</td></tr>`;
+  });
+  html += `<tr style="font-weight:bold;background:#2B296D22;"><td colspan="4" style="text-align:right;padding-right:12px;">TỔNG CỘNG (Total)</td>
+    <td>${totalHours.toFixed(1)} giờ</td><td>${data.length} phiên</td></tr>`;
+  html += `</tbody></table>`;
+
+  // Chi tiết từng phiên
+  data.forEach((s, idx) => {
+    const statusLabel = {draft:'Chuẩn bị',in_progress:'Đang diễn ra',done:'Hoàn thành'}[s.status]||s.status;
+    const badgeCls = 'badge-'+s.status;
+    html += `${idx>0?'<div class="page-break"></div>':''}
+    <h2>📁 ${s.session_id} — ${s.client_name||'Chưa có tên KH'} <span class="badge ${badgeCls}">${statusLabel}</span></h2>
+    <div class="meta">
+      <div class="meta-item"><div class="meta-label">Ngày phiên</div><div class="meta-value">${s.session_date||'—'}</div></div>
+      <div class="meta-item"><div class="meta-label">AL Coach (Nhà huấn luyện)</div><div class="meta-value">${s.coach_name||'—'}</div></div>
+      <div class="meta-item"><div class="meta-label">PP (Người trình bày vấn đề)</div><div class="meta-value">${s.session_running?.pp_name||'—'}</div></div>
+      <div class="meta-item"><div class="meta-label">Hình thức</div><div class="meta-value">${s.format||'—'}</div></div>
+      <div class="meta-item"><div class="meta-label">Thời gian</div><div class="meta-value">${s.time_start||'—'} → ${s.time_end||'—'}</div></div>
+      <div class="meta-item"><div class="meta-label">Địa điểm</div><div class="meta-value">${s.location||'—'}</div></div>
+    </div>`;
+
+    // Thành viên
+    if(s.session_running?.members?.length>0){
+      html+=`<h3>👥 Thành viên (Members)</h3><table><thead><tr><th>Vai trò</th><th>Tên</th><th>Năng lực rèn luyện (Leadership Competency)</th></tr></thead><tbody>`;
+      s.session_running.members.forEach((m,i)=>{
+        html+=`<tr><td>M${i+1} — Thành viên</td><td>${m.name||'—'}</td><td>${m.competency||'—'}</td></tr>`;
+      });
+      html+=`</tbody></table>`;
+    }
+
+    // Lắng đọng
+    if(s.reflect_1||s.reflect_2||s.reflect_3||s.reflect_4){
+      html+=`<h3>🌿 Lắng đọng học hỏi (Learning Reflection)</h3>`;
+      if(s.reflect_1) html+=`<div class="reflect"><div class="reflect-q">1. Kết quả chính đã đạt được?</div><div class="reflect-a">${s.reflect_1}</div></div>`;
+      if(s.reflect_2) html+=`<div class="reflect"><div class="reflect-q">2. Đã làm tốt điều gì?</div><div class="reflect-a">${s.reflect_2}</div></div>`;
+      if(s.reflect_3) html+=`<div class="reflect"><div class="reflect-q">3. Làm sao để tốt hơn?</div><div class="reflect-a">${s.reflect_3}</div></div>`;
+      if(s.reflect_4) html+=`<div class="reflect"><div class="reflect-q">4. Điểm chính đã học được?</div><div class="reflect-a">${s.reflect_4}</div></div>`;
+    }
+
+    if(s.personal_learning) html+=`<h3>📚 Lắng đọng cá nhân (Personal Learning)</h3><div class="reflect"><div class="reflect-a">${s.personal_learning}</div></div>`;
+    if(s.testimonial) html+=`<h3>💬 Phản hồi người tham dự (Testimonials)</h3><div class="reflect"><div class="reflect-a">${s.testimonial}</div></div>`;
+  });
+
+  html += `</body></html>`;
+
+  // Mở cửa sổ in PDF
+  const win = window.open('','_blank');
+  win.document.write(html);
+  win.document.close();
+  win.onload = () => { win.focus(); win.print(); };
+  closeExport();
+  showToast('📄 Đang mở hộp thoại in PDF...','success');
 }
 function autoResize(el){el.style.height='auto';el.style.height=Math.max(60,el.scrollHeight)+'px';}
 function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>{t.className='toast';},3000);}
