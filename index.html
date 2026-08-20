@@ -560,7 +560,7 @@ textarea{resize:none;overflow:hidden;}
 // ============================================================
 // CONFIG
 // ============================================================
-const API_URL = 'https://script.google.com/macros/s/AKfycbzCwI5uUJ3krhwriOVIhS8T699z17JshO0LMFicNsLs45JesqBeSBhwqsUVBUpk3Y4BtA/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwa95OUb9OMDVbM9AeVgf2kRIM4wcLUEPeYn5FiV__HUS4aWf05PHCA6cGJ1GueLdU/exec';
 
 // 20 năng lực mặc định — luôn có sẵn, không phụ thuộc API
 const DEFAULT_COMPETENCIES = [
@@ -627,50 +627,23 @@ let currentCompTarget = null; // {type:'pp'|'member'|'observer', index}
 let selectedComp = null;
 
 // ============================================================
-// API — dùng JSONP để bypass CORS với Google Apps Script
+// API — fetch() với Content-Type text/plain (giống app mẫu)
+// Apps Script V2 đã hỗ trợ đúng chuẩn
 // ============================================================
-function apiGet(action, params = {}) {
-  return new Promise((resolve) => {
-    const cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    const url = new URL(API_URL);
-    url.searchParams.set('action', action);
-    url.searchParams.set('callback', cbName);
-    Object.keys(params).forEach(k => url.searchParams.set(k, params[k]));
-    window[cbName] = (data) => {
-      delete window[cbName];
-      document.getElementById(cbName)?.remove();
-      resolve(data);
-    };
-    const script = document.createElement('script');
-    script.id = cbName;
-    script.src = url.toString();
-    script.onerror = () => { delete window[cbName]; script.remove(); resolve({}); };
-    document.head.appendChild(script);
-    setTimeout(() => { if(window[cbName]){ delete window[cbName]; script.remove(); resolve({}); } }, 8000);
-  });
+async function apiGet(action) {
+  const res = await fetch(API_URL + '?action=' + action);
+  const json = await res.json();
+  return json;
 }
 
-function apiPost(body) {
-  return new Promise((resolve) => {
-    const cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    body.callback = cbName;
-    const url = new URL(API_URL);
-    url.searchParams.set('action', body.action);
-    url.searchParams.set('callback', cbName);
-    // Encode data vào URL param (Google Apps Script đọc từ GET params)
-    url.searchParams.set('data', JSON.stringify(body));
-    window[cbName] = (data) => {
-      delete window[cbName];
-      document.getElementById(cbName)?.remove();
-      resolve(data || {success:true});
-    };
-    const script = document.createElement('script');
-    script.id = cbName;
-    script.src = url.toString();
-    script.onerror = () => { delete window[cbName]; script.remove(); resolve({success:true}); };
-    document.head.appendChild(script);
-    setTimeout(() => { if(window[cbName]){ delete window[cbName]; script.remove(); resolve({success:true}); } }, 10000);
+async function apiPost(body) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(body)
   });
+  const json = await res.json();
+  return json;
 }
 
 // ============================================================
@@ -682,67 +655,120 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loadData() {
-  showLoading('Đang tải dữ liệu...');
+  // Bước 1: Load offline ngay — hiển thị tức thì không chờ mạng
+  loadOffline();
+  renderHome();
+
+  // Bước 2: Đồng bộ từ Cloud — giống app mẫu
   setSyncStatus('pending');
   try {
     const res = await apiGet('get_all_sessions');
-    if (res && res.sessions) {
+    if (res && res.status === 'success' && res.sessions) {
       sessions = res.sessions;
+      saveOffline(); // cập nhật local cache
+      renderHome();  // re-render với dữ liệu mới nhất
       setSyncStatus('ok');
     } else {
-      // Nếu API không trả về (JSONP chưa hỗ trợ callback phía server)
-      // Load từ localStorage backup
-      const local = localStorage.getItem('sessions_backup');
-      if (local) sessions = JSON.parse(local);
-      setSyncStatus('ok');
+      setSyncStatus('ok'); // dùng dữ liệu offline
     }
   } catch(e) {
-    const local = localStorage.getItem('sessions_backup');
-    if (local) sessions = JSON.parse(local);
-    setSyncStatus('ok');
-  } finally {
-    renderHome();
-    hideLoading();
+    console.warn('Cloud sync failed, dùng offline:', e);
+    setSyncStatus('offline');
   }
 }
 
+function loadOffline() {
+  try {
+    const local = localStorage.getItem('al_sessions_v3');
+    sessions = local ? JSON.parse(local) : [];
+  } catch(e) { sessions = []; }
+}
+
+function saveOffline() {
+  try {
+    localStorage.setItem('al_sessions_v3', JSON.stringify(sessions));
+  } catch(e) {}
+}
+
 // ============================================================
-// LƯU SESSION — dùng fetch với no-cors + backup localStorage
+// LƯU SESSION — Offline-first + Cloud sync (giống app mẫu)
 // ============================================================
 async function apiSave(session) {
-  // Luôn lưu localStorage trước — đảm bảo không mất dữ liệu
-  const backup = JSON.parse(localStorage.getItem('sessions_backup') || '[]');
-  const idx = backup.findIndex(s => s.session_id === session.session_id);
-  if (idx >= 0) backup[idx] = session; else backup.unshift(session);
-  localStorage.setItem('sessions_backup', JSON.stringify(backup));
+  // Bước 1: Lưu local ngay — không bao giờ thất bại
+  const idx = sessions.findIndex(s => s.session_id === session.session_id);
+  if (idx >= 0) sessions[idx] = session; else sessions.unshift(session);
+  saveOffline();
 
-  // Gửi lên Sheets (fire-and-forget, không chờ response)
+  // Bước 2: Gửi lên Sheets — fetch POST text/plain như app mẫu
+  setSyncStatus('pending');
   try {
-    const url = new URL(API_URL);
-    url.searchParams.set('action', 'upsert_session');
-    url.searchParams.set('data', JSON.stringify({action:'upsert_session', session}));
-    fetch(url.toString(), { mode: 'no-cors' });
-  } catch(e) {}
-
-  return { success: true };
+    const res = await apiPost({ action: 'upsert_session', session });
+    if (res && res.status === 'success') {
+      setSyncStatus('ok');
+    } else {
+      setSyncStatus('offline');
+    }
+  } catch(e) {
+    console.warn('Cloud save failed:', e);
+    setSyncStatus('offline');
+    // Đánh dấu pending để sync lại sau
+    markPendingSync(session.session_id);
+  }
 }
 
 async function apiDelete(sessionId) {
-  // Xóa khỏi localStorage
-  const backup = JSON.parse(localStorage.getItem('sessions_backup') || '[]');
-  const filtered = backup.filter(s => s.session_id !== sessionId);
-  localStorage.setItem('sessions_backup', JSON.stringify(filtered));
+  // Bước 1: Xóa local ngay
+  sessions = sessions.filter(s => s.session_id !== sessionId);
+  saveOffline();
 
-  // Gửi lên Sheets (fire-and-forget)
+  // Bước 2: Xóa trên Sheets
+  setSyncStatus('pending');
   try {
-    const url = new URL(API_URL);
-    url.searchParams.set('action', 'delete_session');
-    url.searchParams.set('data', JSON.stringify({action:'delete_session', session_id:sessionId}));
-    fetch(url.toString(), { mode: 'no-cors' });
-  } catch(e) {}
-
-  return { success: true };
+    await apiPost({ action: 'delete_session', session_id: sessionId });
+    setSyncStatus('ok');
+  } catch(e) {
+    setSyncStatus('offline');
+  }
 }
+
+// Pending sync — thử lại khi online
+function markPendingSync(sessionId) {
+  const pending = JSON.parse(localStorage.getItem('al_pending_v3') || '[]');
+  if (!pending.includes(sessionId)) pending.push(sessionId);
+  localStorage.setItem('al_pending_v3', JSON.stringify(pending));
+}
+
+async function retryPendingSync() {
+  const pending = JSON.parse(localStorage.getItem('al_pending_v3') || '[]');
+  if (pending.length === 0) return;
+  for (const sid of pending) {
+    const session = sessions.find(s => s.session_id === sid);
+    if (!session) continue;
+    try {
+      await apiPost({ action: 'upsert_session', session });
+    } catch(e) { return; } // dừng nếu vẫn lỗi
+  }
+  localStorage.removeItem('al_pending_v3');
+  setSyncStatus('ok');
+  showToast('✅ Đã đồng bộ dữ liệu pending!', 'success');
+}
+
+window.addEventListener('online', retryPendingSync);
+
+// Tự động re-sync từ cloud mỗi 30 giây khi app đang mở
+setInterval(async () => {
+  if (!document.hidden && navigator.onLine) {
+    try {
+      const res = await apiGet('get_all_sessions');
+      if (res && res.status === 'success' && res.sessions && res.sessions.length >= sessions.length) {
+        sessions = res.sessions;
+        saveOffline();
+        renderHome();
+        setSyncStatus('ok');
+      }
+    } catch(e) {}
+  }
+}, 30000);
 
 // ============================================================
 // HOME
@@ -752,8 +778,8 @@ function renderHome() {
   const dateFrom = document.getElementById('filterDateFrom').value;
   const dateTo = document.getElementById('filterDateTo').value;
 
-  // Ưu tiên sessions từ memory, fallback localStorage
-  let src = sessions.length > 0 ? sessions : JSON.parse(localStorage.getItem('sessions_backup') || '[]');
+  // Đọc từ sessions memory (đã được sync từ cloud hoặc offline cache)
+  let src = sessions;
 
   let filtered = src.filter(s => {
     if (keyword) {
@@ -823,7 +849,7 @@ function clearFilters() {
 // CREATE / OPEN SESSION
 // ============================================================
 function getNextSessionId() {
-  const src = sessions.length > 0 ? sessions : JSON.parse(localStorage.getItem('sessions_backup') || '[]');
+  const src = sessions;
   let maxNum = 0;
   src.forEach(s => {
     if (s.session_id && s.session_id.startsWith('AL-')) {
@@ -858,17 +884,14 @@ function createSession() {
 }
 
 function openSession(sessionId) {
-  // Tìm từ memory hoặc localStorage
-  let src = sessions.length > 0 ? sessions : JSON.parse(localStorage.getItem('sessions_backup') || '[]');
-  currentSession = JSON.parse(JSON.stringify(src.find(s => s.session_id === sessionId) || {}));
+  currentSession = JSON.parse(JSON.stringify(sessions.find(s => s.session_id === sessionId) || {}));
   if (!currentSession.session_id) return;
   ensureSessionStructure();
   openDetailScreen('before');
 }
 
 function editSession(sessionId) {
-  let src = sessions.length > 0 ? sessions : JSON.parse(localStorage.getItem('sessions_backup') || '[]');
-  currentSession = JSON.parse(JSON.stringify(src.find(s => s.session_id === sessionId) || {}));
+  currentSession = JSON.parse(JSON.stringify(sessions.find(s => s.session_id === sessionId) || {}));
   if (!currentSession.session_id) return;
   ensureSessionStructure();
   if (currentSession.status === 'done') currentSession.status = 'in_progress';
@@ -1289,8 +1312,7 @@ async function completeSession() {
 // DELETE
 // ============================================================
 function openDeleteModal(sessionId) {
-  let src = sessions.length > 0 ? sessions : JSON.parse(localStorage.getItem('sessions_backup') || '[]');
-  sessionToDelete = src.find(s => s.session_id === sessionId);
+  sessionToDelete = sessions.find(s => s.session_id === sessionId);
   if (!sessionToDelete) return;
   document.getElementById('deleteSessionInfo').textContent = `${sessionToDelete.session_id} · ${sessionToDelete.client_name||'Chưa có tên'} · ${sessionToDelete.session_date||'—'}`;
   document.getElementById('deleteConfirmInput').value = '';
@@ -1320,7 +1342,7 @@ function closeExport(){document.getElementById('exportModal').classList.add('hid
 function updateExportUI(){
   const type=document.querySelector('input[name="exportType"]:checked')?.value;
   document.getElementById('exportDateRange').classList.toggle('hidden',type!=='daterange');
-  let src = sessions.length>0?sessions:JSON.parse(localStorage.getItem('sessions_backup')||'[]');
+  let src = sessions;
   let preview='';
   if(type==='current')preview=`Sẽ xuất: 1 phiên — ${currentSession?.session_id||'—'}`;
   else if(type==='all')preview=`Sẽ xuất: Tất cả ${src.length} phiên`;
@@ -1330,7 +1352,7 @@ function updateExportUI(){
 
 function doExport(){
   const type=document.querySelector('input[name="exportType"]:checked')?.value;
-  let src=sessions.length>0?sessions:JSON.parse(localStorage.getItem('sessions_backup')||'[]');
+  let src=sessions;
   let data=[];
   if(type==='current')data=currentSession?[currentSession]:[];
   else if(type==='all')data=src;
@@ -1409,9 +1431,10 @@ function showLoading(msg='Đang xử lý...'){document.getElementById('loadingTe
 function hideLoading(){document.getElementById('loadingOverlay').classList.add('hidden');}
 function setSyncStatus(status){
   const el=document.getElementById('syncStatus');
-  if(status==='ok'){el.className='header-sync sync-ok';el.textContent='✅ Đã đồng bộ';}
+  if(status==='ok'){el.className='header-sync sync-ok';el.textContent='☁️ Đã đồng bộ';}
   else if(status==='pending'){el.className='header-sync sync-pending';el.textContent='⏳ Đang lưu...';}
-  else{el.className='header-sync sync-error';el.textContent='⚠️ Chưa đồng bộ';}
+  else if(status==='offline'){el.className='header-sync sync-error';el.textContent='📴 Offline — đã lưu máy';}
+  else{el.className='header-sync sync-error';el.textContent='⚠️ Lỗi kết nối';}
 }
 </script>
 </body>
