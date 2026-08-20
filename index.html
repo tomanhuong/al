@@ -1378,7 +1378,14 @@ function doExport(){
   tr:nth-child(even)td{background:#F4F4F6;}
   tfoot td{font-weight:700;background:#2B296D22;}
   .pb{page-break-after:always;}
-  @media print{body{margin:0;}}
+  @media print{
+    body{margin:0;}
+    h2{page-break-before:auto;}
+    .pb{page-break-after:always;}
+    table{page-break-inside:avoid;}
+    .ref{page-break-inside:avoid;}
+    .meta{page-break-inside:avoid;}
+  }
   </style></head><body>
   <h1>MASTER ACTION LEARNING — Yêu Thương · Hiện Diện &nbsp;|&nbsp; Xuất ngày ${dateStr}</h1>
   <h2>📊 Bảng tổng hợp huấn luyện (Coaching Report)</h2>
@@ -1416,10 +1423,36 @@ function doExport(){
   });
   html+=`</body></html>`;
 
-  const win=window.open('','_blank');
-  win.document.write(html);win.document.close();
-  win.onload=()=>{win.focus();win.print();};
-  closeExport();showToast('📄 Đang mở hộp thoại in PDF...','success');
+  // Thêm script tự động in khi trang load xong — giống app mẫu
+  html = html.replace('</body></html>', `
+    <script>
+      window.onload = function() {
+        setTimeout(function() {
+          window.focus();
+          window.print();
+        }, 300);
+      };
+    <\/script>
+  </body></html>`);
+
+  // Dùng Blob + createObjectURL — nhanh và ổn định trên mọi thiết bị
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
+
+  // Fallback nếu popup bị chặn
+  if (!win) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.click();
+  }
+
+  // Giải phóng memory sau 60 giây
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+  closeExport();
+  showToast('📄 Đang mở — chọn Save as PDF trong hộp thoại in', 'success');
 }
 
 // ============================================================
