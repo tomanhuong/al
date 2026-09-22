@@ -28,7 +28,7 @@ button{font-family:var(--font);cursor:pointer;border:none;}
 input,textarea,select{font-family:var(--font);}
 
 /* HEADER */
-.app-header{background:var(--primary);color:var(--white);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-lg);width:100%;}
+.app-header{background:var(--primary);color:var(--white);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-lg);width:100%;}
 .app-header-title{display:flex;align-items:center;gap:12px;}
 .app-logo{width:40px;height:40px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--primary);letter-spacing:-1px;flex-shrink:0;}
 .app-title-text h1{font-size:16px;font-weight:800;line-height:1.2;}
@@ -161,7 +161,8 @@ input,textarea,select{font-family:var(--font);}
 .foldable.folded .section-title{border-bottom:none;padding-bottom:0;}
 
 /* ===== STOPWATCH BAR ===== */
-.sw-bar{display:flex;align-items:center;gap:12px;padding:8px 16px 6px;background:var(--white);border-bottom:2px solid var(--gray-bg);position:sticky;top:64px;z-index:45;flex-wrap:wrap;border-radius:var(--radius) var(--radius) 0 0;}
+.sw-stack{position:sticky;top:0;z-index:60;background:var(--white);box-shadow:0 4px 14px rgba(43,41,109,.10);border-radius:var(--radius) var(--radius) 0 0;}
+.sw-bar{display:flex;align-items:center;gap:12px;padding:8px 16px 6px;background:var(--white);border-bottom:2px solid var(--gray-bg);flex-wrap:wrap;border-radius:var(--radius) var(--radius) 0 0;}
 .sw-time{font-size:27px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums;letter-spacing:-0.5px;min-width:104px;line-height:1;}
 .sw-time.over{color:var(--danger);}
 .sw-controls{display:flex;gap:5px;}
@@ -257,7 +258,7 @@ input,textarea,select{font-family:var(--font);}
 /* ===== NOTE CELL ===== */
 td.note-cell{padding:0;width:144px;}
 .note-box{position:relative;height:32px;overflow:hidden;}
-tr.cur .note-box{height:140px;}
+tr.cur .note-box{height:var(--active-note-h,180px);}
 .note-view{position:absolute;inset:0;overflow-y:auto;padding:5px 6px;cursor:text;font-size:var(--note-fs);line-height:var(--note-lh);}
 .note-view:hover{background:#fcfcfe;}
 .note-empty{color:#cfcfda;font-size:11px;}
@@ -296,7 +297,7 @@ tr.cur .note-box{height:140px;}
 .recog-seg button.on{background:var(--primary);color:#fff;}
 .btn-mini{font-size:11px;font-weight:700;padding:6px 11px;border-radius:8px;background:var(--gray-bg);color:var(--primary);}
 .btn-mini:hover{background:var(--primary);color:#fff;}
-.recog-body{max-height:210px;overflow-y:auto;padding:0 16px 14px;}
+.recog-body{max-height:min(44vh,360px);overflow-y:auto;padding:0 16px 12px;}
 .recog-panel.folded .recog-body{display:none;}
 .rg-person{margin-bottom:12px;}
 .rg-head{display:flex;align-items:baseline;gap:8px;border-bottom:1.5px solid var(--gray-bg);padding-bottom:4px;margin-bottom:6px;}
@@ -312,6 +313,30 @@ tr.cur .note-box{height:140px;}
 .rg-im.missing{color:#c0aa6b;}
 .rg-kind{font-size:9.5px;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.04em;font-weight:700;flex-shrink:0;}
 .recog-empty{font-size:12px;color:var(--gray-mid);font-style:italic;padding:6px 0 10px;}
+.rg-row{display:grid;grid-template-columns:58px 1fr;gap:2px 10px;font-size:12px;line-height:1.45;}
+.rg-lab{font-size:10px;font-weight:800;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.04em;padding-top:2px;}
+.rg-val{min-width:0;word-break:break-word;}
+.rg-val.impact{color:#7a5d00;font-style:italic;}
+.rg-val.impact.missing{color:#c0aa6b;}
+.rg-top{display:flex;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap;}
+.rg-badge{font-size:9.5px;font-weight:800;padding:1px 7px;border-radius:9px;background:var(--star-line);color:#fff;text-transform:uppercase;letter-spacing:.04em;}
+.rg-badge.answer{background:var(--teal);} .rg-badge.behavior{background:var(--primary-light);}
+.rg-who{font-size:12px;font-weight:800;color:var(--primary);}
+.rg-who small{font-weight:600;color:var(--teal);font-size:10.5px;}
+/* THỐNG KÊ */
+.st-table{width:100%;border-collapse:collapse;font-size:12px;}
+.st-table th{background:var(--gray-bg);color:var(--primary);font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.03em;padding:5px 8px;text-align:left;position:sticky;top:0;z-index:2;}
+.st-table th.num,.st-table td.num{text-align:center;width:66px;}
+.st-table td{padding:4px 8px;border-bottom:1px solid var(--gray-border);vertical-align:middle;line-height:1.35;}
+.st-name{font-weight:800;color:var(--primary);}
+.st-comp{font-size:10.5px;color:var(--teal);font-weight:600;}
+.st-bar{height:7px;border-radius:4px;background:var(--gray-bg);overflow:hidden;min-width:60px;}
+.st-bar i{display:block;height:100%;background:var(--q-line);border-radius:4px;}
+.st-q{font-weight:800;color:var(--q-line);font-size:14px;}
+.st-pend{font-weight:800;color:#e65100;}
+.st-star{font-weight:800;color:var(--star-line);}
+.st-mute{color:var(--gray-mid);}
+.st-foot td{background:#f7f7fb;font-weight:800;}
 
 /* AFTER TAB */
 .reflect-item{margin-bottom:14px;}
@@ -378,7 +403,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
 /* RESPONSIVE */
 @media(min-width:1200px){.members-grid{grid-template-columns:repeat(5,1fr);}}
 @media(min-width:900px)and(max-width:1199px){.members-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:899px){.app-main{padding:14px 14px;}.detail-header{padding:12px 14px;margin:-14px -14px 14px;}.sw-bar{top:56px;}}
+@media(max-width:899px){.app-main{padding:14px 14px;}.detail-header{padding:12px 14px;margin:-14px -14px 14px;}}
 @media(max-width:600px){
   .app-header{padding:0 14px;height:56px;}
   .app-title-text h1{font-size:13px;}
@@ -560,10 +585,11 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
     </div>
 
     <div class="form-section" style="padding:0;">
-      <!-- STOPWATCH -->
+      <!-- KHỐI GHIM: đồng hồ + dòng chảy -->
+      <div class="sw-stack">
       <div class="sw-bar">
         <div class="sw-controls">
-          <button class="sw-btn" id="swToggle" onclick="swToggle()" title="Chạy / Dừng (Alt+P)">▶</button>
+          <button class="sw-btn" id="swToggle" onclick="swToggle()" title="Chạy / Dừng">▶</button>
           <button class="sw-btn" onclick="swReset()" title="Đặt lại">⟲</button>
         </div>
         <div class="sw-time" id="swTime">00:00</div>
@@ -571,7 +597,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
           <span class="sw-stage-name" id="swStageName">—</span>
           <span class="sw-stage-meta" id="swStageMeta"></span>
         </div>
-        <button class="btn-lap" onclick="lapStage()">⏱ Chốt bước <span style="opacity:.6">(Alt+↵)</span></button>
+        <button class="btn-lap" onclick="lapStage()">⏱ Chốt bước <span style="opacity:.6" id="lapKeyHint">(Alt+↵)</span></button>
         <div class="sw-total" id="swTotal"></div>
         <div class="sw-chips" id="swChips">
           <span style="flex:1"></span>
@@ -584,10 +610,11 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
         <span><b>?</b> cuối dòng = câu hỏi · không có <b>?</b> = câu trả lời / cử chỉ</span>
         <span><b>@</b> = ghi nhận xuất sắc</span>
         <span><b>=</b> ngăn biểu hiện | tác động</span>
-        <span style="margin-left:auto"><kbd>Alt</kbd>+<kbd>1…6</kbd> nhảy cột · <kbd>Alt</kbd>+<kbd>↵</kbd> chốt bước · <kbd>Alt</kbd>+<kbd>P</kbd> đồng hồ · <kbd>Alt</kbd>+<kbd>/</kbd> dòng chảy</span>
+        <span style="margin-left:auto" id="helpKeys"></span>
       </div>
 
       <div class="flow-strip" id="flowStrip"></div>
+      </div><!-- /sw-stack -->
 
       <div class="session-table-wrap" id="tableWrap">
         <table class="session-table" id="sessionTable">
@@ -605,6 +632,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
           <div class="recog-seg">
             <button id="rgByPerson" class="on" onclick="setRecogView('person')">Theo người</button>
             <button id="rgByTime" onclick="setRecogView('time')">Theo thời gian</button>
+            <button id="rgByStats" onclick="setRecogView('stats')">📊 Thống kê</button>
           </div>
           <button class="btn-mini" onclick="copyRecog()">📋 Chép bản đọc</button>
           <button class="btn-mini" onclick="addRecogManual()">⊕ Thêm</button>
@@ -618,6 +646,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
       <button class="btn-save" onclick="saveSession()">💾 Lưu</button>
       <button class="btn-next-tab" onclick="saveAndSwitchTab('after')">Sau phiên →</button>
     </div>
+    <div id="pinSpacer" style="height:56px"></div>
   </div>
 
   <!-- TAB AFTER -->
@@ -889,7 +918,7 @@ function parseNote(note){
     out.push({idx:i, raw:ln, star, text, impact, kind, t: stamps[i]==null ? null : stamps[i]});
   });
 
-  return {lines: out, maxRun, qCount, starCount, unanswered: pendingQ};
+  return {lines: out, maxRun, qCount, starCount, unanswered: pendingQ, pendingCount: run};
 }
 
 const KIND_ICON  = {question:'❓', answer:'↳', behavior:'⋯'};
@@ -938,7 +967,7 @@ function swToggle(){
   const t = swState();
   t.running = !t.running;
   t.lastTick = new Date().toISOString();
-  if(t.running){ startTick(); toggleParticipants(true); } else stopTick();
+  if(t.running){ startTick(); toggleParticipants(true); setTimeout(pinTable, 80); } else stopTick();
   renderSw(); markDirty();
 }
 function swReset(){
@@ -996,7 +1025,7 @@ function lapStage(){
   r.lapAt[i] = swElapsed();
   r.stages[i].time_actual = Math.max(0, Math.round((r.lapAt[i]-prev)/60));
   if(i < r.stages.length-1) r.activeStage = i+1;
-  renderSessionTable(); renderSw(); markDirty();
+  renderSessionTable(); renderSw(); markDirty(); pinTable();
   showToast('⏱ Đã chốt bước ' + r.stages[i].id + ' — ' + r.stages[i].time_actual + ' phút', 'success');
 }
 
@@ -1289,7 +1318,7 @@ function switchTab(tab){
     document.getElementById('tabContent'+cap(t)).classList.toggle('hidden', t !== tab);
     document.getElementById('tab'+cap(t)).classList.toggle('active', t === tab);
   });
-  if(tab === 'during'){ renderSw(); renderRecog(); renderFlow(); }
+  if(tab === 'during'){ renderSw(); renderRecog(); renderFlow(); setTimeout(pinTable, 60); }
   if(tab === 'after') renderRecogCards();
 }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
@@ -1489,7 +1518,7 @@ function toggleHelp(){
   const el = document.getElementById('helpBar');
   el.classList.toggle('hidden');
   localStorage.setItem('al_help', el.classList.contains('hidden') ? '0' : '1');
-  fitTable();
+  fitTable(); setTimeout(pinTable, 60);
 }
 function toggleQCol(){
   hideQCol = !hideQCol;
@@ -1522,7 +1551,7 @@ function renderSessionTable(){
       const pp = parseNote(getNote(stages.indexOf(st), k));
       q += pp.qCount; star += pp.starCount; if(pp.maxRun >= 3) warn = true;
     });
-    head += `<th class="member-header" title="${esc(p.tag)} · ${esc(p.name)} — Alt+${ci+1}">
+    head += `<th class="member-header" title="${esc(p.tag)} · ${esc(p.name)} — ${MOD_KEY}+${ci+1}">
       <span class="mh-l1"><span class="mh-tag">${p.tag}</span> <span class="mh-name">${esc(p.name)}</span></span>
       <span class="mh-l2">${p.comp ? `<span class="mh-comp">${esc(p.comp)}</span>` : ''}${(q||star) ? `<span class="mh-stat ${warn?'warn':''}" title="${warn?'Đang hỏi liên tiếp mà chưa có câu trả lời — cân nhắc can thiệp':''}">Q·${q}${star?' ⭐'+star:''}</span>` : ''}</span>
     </th>`;
@@ -1610,13 +1639,24 @@ function renderSessionTable(){
 /* Bảng luôn là vùng cuộn dọc -> hàng tiêu đề mới dính được khi cuộn */
 function fitTable(){
   const wrap = document.getElementById('tableWrap');
-  if(!wrap || activeTab !== 'during') return;
+  const stack = document.querySelector('.sw-stack');
+  if(!wrap || !stack || activeTab !== 'during') return;
   requestAnimationFrame(() => {
-    const top = wrap.getBoundingClientRect().top;
     const panel = document.getElementById('recogPanel');
-    const reserve = (panel ? panel.getBoundingClientRect().height : 44) + 78;
-    const h = Math.max(240, window.innerHeight - top - reserve);
+    const bar = document.querySelector('#tabContentDuring .action-bar');
+    const reserve = stack.offsetHeight
+                  + (panel ? panel.offsetHeight : 44)
+                  + (bar ? bar.offsetHeight : 48) + 4;
+    const h = Math.max(220, window.innerHeight - reserve);
     wrap.style.maxHeight = h + 'px';
+
+    // Chỗ trống còn lại dồn hết cho ô ghi chú của bước đang chạy
+    const th = document.querySelector('#tableHead th');
+    const headH = th ? th.offsetHeight : 50;
+    const nStages = (currentSession && currentSession.session_running.stages.length) || 7;
+    const noteH = Math.max(120, Math.min(420, h - headH - (nStages-1)*39 - 4));
+    document.documentElement.style.setProperty('--active-note-h', noteH + 'px');
+
     scrollActiveRowIntoView();
   });
 }
@@ -1627,12 +1667,44 @@ function scrollActiveRowIntoView(){
   const row = document.querySelector('#tableBody tr.cur');
   if(!wrap || !row) return;
   const th = document.querySelector('#tableHead th');
-  const headH = th ? th.offsetHeight : 46;
+  const headH = th ? th.offsetHeight : 50;
   const top = row.offsetTop - headH;
   const bottom = row.offsetTop + row.offsetHeight;
   if(top < wrap.scrollTop) wrap.scrollTop = Math.max(0, top);
   else if(bottom > wrap.scrollTop + wrap.clientHeight) wrap.scrollTop = bottom - wrap.clientHeight;
 }
+
+/* Điểm ghim = mép trên của thẻ chứa bảng.
+   Phải đo trên phần tử TĨNH: Chrome trả offsetTop/rect của phần tử sticky đã bị dịch,
+   dùng chính .sw-stack sẽ khiến điểm ghim trôi theo khi cuộn. */
+function pinY(){
+  const stack = document.querySelector('.sw-stack');
+  const card = stack && stack.parentElement;
+  if(!card) return 0;
+  return Math.max(0, Math.round(card.getBoundingClientRect().top + window.scrollY));
+}
+
+/* Cuộn trang sao cho khối đồng hồ dính sát mép trên -> tối đa chỗ ghi chú */
+function pinTable(){
+  if(activeTab !== 'during') return;
+  const y = pinY();
+  if(Math.abs(y - window.scrollY) > 2) window.scrollTo(0, y);
+  fitTable();
+}
+
+/* Trang chỉ cuộn được tới đúng điểm ghim — quá đó bảng sẽ chui xuống dưới thanh đồng hồ.
+   Phần tiêu đề, tab, thành viên cuộn đi hết; từ đó trở xuống là vùng cuộn của bảng. */
+let clampRAF = null;
+window.addEventListener('scroll', () => {
+  if(activeTab !== 'during' || !currentSession) return;
+  if(clampRAF) return;
+  clampRAF = requestAnimationFrame(() => {
+    clampRAF = null;
+    const y = pinY();
+    if(window.scrollY > y + 1) window.scrollTo(0, y);
+  });
+}, {passive:true});
+
 window.addEventListener('resize', fitTable);
 
 function updateDuration(si,v){
@@ -1818,6 +1890,7 @@ function setRecogView(v){
   recogView = v;
   document.getElementById('rgByPerson').classList.toggle('on', v === 'person');
   document.getElementById('rgByTime').classList.toggle('on', v === 'time');
+  document.getElementById('rgByStats').classList.toggle('on', v === 'stats');
   renderRecog();
 }
 function toggleRecog(e){
@@ -1825,18 +1898,26 @@ function toggleRecog(e){
   const p = document.getElementById('recogPanel');
   p.classList.toggle('folded');
   document.getElementById('recogFoldBtn').textContent = p.classList.contains('folded') ? '▴' : '▾';
-  fitTable();
+  fitTable(); setTimeout(pinTable, 60);
 }
 
-function recogItemHTML(it){
-  const im = it.impact
-    ? `<div class="rg-im">→ ${esc(it.impact)}</div>`
-    : `<div class="rg-im missing">→ chưa ghi tác động — bấm để điền</div>`;
+function recogItemHTML(it, showWho){
+  const p = personInfo(it.credit);
   return `<div class="rg-item" onclick="recogClick(${it.si},'${it.srcWho}',${it.manual==null?-1:it.manual})">
     <span class="rg-t">${it.t}′</span>
-    <div class="rg-c"><div class="rg-x">${esc(it.text)}</div>${im}</div>
-    <span class="rg-kind">${KIND_LABEL[it.kind]}</span></div>`;
+    <div class="rg-c">
+      <div class="rg-top">
+        <span class="rg-badge ${it.kind}">${KIND_LABEL[it.kind]}</span>
+        ${showWho ? `<span class="rg-who">${esc(p.name)} <small>· ${esc(p.comp||'chưa chọn năng lực')}</small></span>` : ''}
+      </div>
+      <div class="rg-row">
+        <span class="rg-lab">Biểu hiện</span><span class="rg-val">${esc(it.text)}</span>
+        <span class="rg-lab">Tác động</span>
+        <span class="rg-val impact ${it.impact?'':'missing'}">${it.impact ? esc(it.impact) : 'chưa ghi — bấm để điền'}</span>
+      </div>
+    </div></div>`;
 }
+
 function recogClick(si, who, manualIdx){
   if(manualIdx >= 0){
     const r = currentSession.session_running;
@@ -1848,6 +1929,69 @@ function recogClick(si, who, manualIdx){
   switchTab('during'); setActiveStage(si); openEditor(si, who);
 }
 
+/* Thống kê từng người — suy ra từ chính ghi chú */
+function personStats(){
+  const r = currentSession.session_running;
+  const recs = collectRecognitions();
+  return colKeys().map(k => {
+    const p = personInfo(k);
+    let q=0, a=0, bhv=0, pending=0, first=null, last=null;
+    const stages = [];
+    r.stages.forEach((st, si) => {
+      const pn = parseNote(getNote(si, k));
+      let n = 0;
+      pn.lines.forEach(l => {
+        if(l.empty) return; n++;
+        if(l.kind === 'question') q++; else if(l.kind === 'answer') a++; else bhv++;
+        if(l.t != null){ if(first==null || l.t<first) first = l.t; if(last==null || l.t>last) last = l.t; }
+      });
+      pending += pn.pendingCount || 0;
+      if(n) stages.push(st.id);
+    });
+    return {k, name:p.name, comp:p.comp, tag:p.tag, q, a, bhv, pending, first, last,
+            stages, star: recs.filter(x => x.credit === k).length};
+  });
+}
+
+function renderStats(){
+  const rows = personStats();
+  const maxQ = Math.max(1, ...rows.map(r => r.q));
+  const tot = rows.reduce((o,r) => ({q:o.q+r.q, a:o.a+r.a, bhv:o.bhv+r.bhv, pending:o.pending+r.pending, star:o.star+r.star}),
+                          {q:0,a:0,bhv:0,pending:0,star:0});
+  return `<table class="st-table">
+    <thead><tr>
+      <th>Người · năng lực đang rèn</th>
+      <th style="width:120px">Mức hỏi</th>
+      <th class="num">Câu hỏi</th>
+      <th class="num">Lượt đáp</th>
+      <th class="num">Chưa đáp</th>
+      <th class="num">Cử chỉ</th>
+      <th class="num">⭐ Ghi nhận</th>
+      <th class="num" style="width:96px">Phút đầu→cuối</th>
+      <th>Bước có mặt</th>
+    </tr></thead><tbody>
+    ${rows.map(r => `<tr>
+      <td><span class="st-name">${esc(r.tag)} · ${esc(r.name)}</span> <span class="st-comp">${esc(r.comp||'— chưa chọn năng lực —')}</span></td>
+      <td><div class="st-bar"><i style="width:${Math.round(r.q/maxQ*100)}%"></i></div></td>
+      <td class="num"><span class="st-q">${r.q}</span></td>
+      <td class="num">${r.a || '<span class="st-mute">—</span>'}</td>
+      <td class="num">${r.pending ? `<span class="st-pend">${r.pending}</span>` : '<span class="st-mute">—</span>'}</td>
+      <td class="num">${r.bhv || '<span class="st-mute">—</span>'}</td>
+      <td class="num">${r.star ? `<span class="st-star">${r.star}</span>` : '<span class="st-mute">—</span>'}</td>
+      <td class="num">${r.first==null ? '<span class="st-mute">—</span>' : r.first+'′→'+r.last+'′'}</td>
+      <td><span class="st-mute">${r.stages.join(' ') || '—'}</span></td>
+    </tr>`).join('')}
+    </tbody>
+    <tfoot><tr class="st-foot"><td>Cả nhóm</td><td></td>
+      <td class="num">${tot.q}</td><td class="num">${tot.a}</td><td class="num">${tot.pending}</td>
+      <td class="num">${tot.bhv}</td><td class="num">${tot.star}</td><td class="num"></td><td></td></tr></tfoot>
+  </table>
+  <div style="font-size:11px;color:var(--gray-mid);margin-top:7px;line-height:1.5;">
+    <b>Chưa đáp</b> = câu hỏi người đó đặt mà chưa có dòng trả lời nào theo sau — từ 3 trở lên là lúc cân nhắc can thiệp.
+    <b>Lượt đáp</b> = số câu trả lời ghi trong cột của người đó (mặc định là PP trả lời).
+  </div>`;
+}
+
 function renderRecog(){
   if(!currentSession) return;
   const body = document.getElementById('recogBody');
@@ -1855,32 +1999,27 @@ function renderRecog(){
   const items = collectRecognitions();
   document.getElementById('recogCount').textContent = items.length;
 
+  if(recogView === 'stats'){ body.innerHTML = renderStats(); return; }
+
   if(!items.length){
     body.innerHTML = `<div class="recog-empty">Chưa có ghi nhận nào. Trong ô ghi chú, thêm <b>@</b> vào dòng, và dùng <b>=</b> để ghi tác động.<br>Ví dụ: <code>@ ko tin bản thân hay ko tin cậu? = Nam khựng lại, quay về chính mình</code></div>`;
     return;
   }
 
   if(recogView === 'time'){
-    body.innerHTML = `<div class="rg-person">` + items.map(it => {
-      const p = personInfo(it.credit);
-      return `<div class="rg-item" onclick="recogClick(${it.si},'${it.srcWho}',${it.manual==null?-1:it.manual})">
-        <span class="rg-t">${it.t}′</span>
-        <div class="rg-c"><div class="rg-x"><b style="color:var(--primary)">${esc(p.name)}</b> — ${esc(it.text)}</div>
-        ${it.impact ? `<div class="rg-im">→ ${esc(it.impact)}</div>` : `<div class="rg-im missing">→ chưa ghi tác động</div>`}</div>
-        <span class="rg-kind">${KIND_LABEL[it.kind]}</span></div>`;
-    }).join('') + `</div>`;
+    body.innerHTML = `<div class="rg-person">` + items.map(it => recogItemHTML(it, true)).join('') + `</div>`;
     return;
   }
 
-  const keys = colKeys();
-  body.innerHTML = keys.map(k => {
+  body.innerHTML = colKeys().map(k => {
     const mine = items.filter(i => i.credit === k);
     if(!mine.length) return '';
     const p = personInfo(k);
     return `<div class="rg-person">
-      <div class="rg-head"><span class="rg-name">${esc(p.name)}</span>
-        <span class="rg-comp">${esc(p.comp)}</span><span class="rg-n">${mine.length} ghi nhận</span></div>
-      ${mine.map(recogItemHTML).join('')}</div>`;
+      <div class="rg-head"><span class="rg-name">${esc(p.tag)} · ${esc(p.name)}</span>
+        <span class="rg-comp">đang rèn: ${esc(p.comp || '— chưa chọn năng lực —')}</span>
+        <span class="rg-n">${mine.length} ghi nhận</span></div>
+      ${mine.map(it => recogItemHTML(it, false)).join('')}</div>`;
   }).join('') || `<div class="recog-empty">—</div>`;
 }
 
@@ -1906,18 +2045,17 @@ function addRecogManual(){
 function recogReadText(){
   const items = collectRecognitions();
   if(!items.length) return '';
-  const keys = colKeys();
   const lines = [];
-  keys.forEach(k => {
+  colKeys().forEach(k => {
     const mine = items.filter(i => i.credit === k);
     if(!mine.length) return;
     const p = personInfo(k);
-    lines.push(`── ${p.name}${p.comp ? ' · ' + p.comp : ''} ──`);
+    lines.push(`━━ ${p.tag} · ${p.name} — đang rèn năng lực: ${p.comp || '(chưa chọn)'} ━━`);
     mine.forEach(it => {
-      const verb = it.kind === 'question' ? 'đưa ra câu hỏi' : (it.kind === 'answer' ? 'đưa ra câu trả lời' : 'có biểu hiện');
-      let s = `Ở phút ${it.t}, ${p.name} ${verb}: "${it.text}".`;
-      if(it.impact) s += ` ${it.impact.charAt(0).toUpperCase()+it.impact.slice(1)}.`;
-      lines.push('• ' + s);
+      const verb = it.kind === 'question' ? 'đưa ra câu hỏi'
+                 : (it.kind === 'answer' ? 'đưa ra câu trả lời' : 'có cử chỉ / hành vi');
+      lines.push(`• Phút ${it.t} — ${verb}: "${it.text}"`);
+      lines.push(`  Tác động: ${it.impact || '(chưa ghi)'}`);
     });
     lines.push('');
   });
@@ -1960,7 +2098,9 @@ function renderRecogCards(){
       </div>
       <div class="card3-lab">Coach ghi nhận <span style="font-weight:400;color:var(--gray-mid)">(tự lấy từ các dòng @)</span></div>
       <div class="card3-coach">${mine.length ? mine.map(it =>
-        `<div><b>${it.t}′</b> — ${esc(it.text)}${it.impact?` <i style="color:#7a5d00">→ ${esc(it.impact)}</i>`:''}</div>`).join('')
+        `<div><b>${it.t}′</b> <span class="rg-badge ${it.kind}">${KIND_LABEL[it.kind]}</span><br>
+          <b>Biểu hiện:</b> ${esc(it.text)}<br>
+          <b>Tác động:</b> <i style="color:#7a5d00">${it.impact ? esc(it.impact) : '(chưa ghi)'}</i></div>`).join('')
         : '<span style="color:var(--gray-mid);font-style:italic">Chưa có ghi nhận</span>'}</div>
     </div>`;
   }).join('');
@@ -2197,6 +2337,25 @@ function doExport(){
         <table><thead><tr><th>Phút</th><th>Bước</th><th>Người</th><th>Loại</th><th>Nội dung</th></tr></thead><tbody>${trows}</tbody></table>`;
     }
 
+    // THỐNG KÊ CÂU HỎI
+    (function(){
+      const keys = ['pp'].concat((r.members||[]).map((m,i)=>'m'+i));
+      const nm = k => k==='pp' ? {n:r.pp_name||'PP', c:r.pp_competency||''} :
+        (function(){const x=(r.members||[])[parseInt(k.slice(1),10)]||{}; return {n:x.name||k.toUpperCase(), c:x.competency||''};})();
+      let any=false, rws='', T={q:0,a:0,b:0};
+      keys.forEach(k=>{
+        let q=0,a=0,bv=0;
+        (r.stages||[]).forEach(st=>{ const pn=parseNote(normNote((st.notes||{})[k]));
+          pn.lines.forEach(l=>{ if(l.empty)return; any=true;
+            if(l.kind==='question')q++; else if(l.kind==='answer')a++; else bv++; }); });
+        T.q+=q; T.a+=a; T.b+=bv;
+        const p=nm(k);
+        rws += `<tr><td>${e(p.n)}</td><td>${e(p.c)}</td><td>${q}</td><td>${a}</td><td>${bv}</td></tr>`;
+      });
+      if(any) body += `<h3>Thống kê tham gia</h3><table><thead><tr><th>Người</th><th>Năng lực rèn luyện</th><th>Câu hỏi đã đặt</th><th>Lượt đáp</th><th>Cử chỉ / ghi chú</th></tr></thead>`
+        + `<tbody>${rws}</tbody><tfoot><tr><td colspan="2">Cả nhóm</td><td>${T.q}</td><td>${T.a}</td><td>${T.b}</td></tr></tfoot></table>`;
+    })();
+
     // GHI NHẬN
     const R = recogForSession(s);
     if(R.out.length){
@@ -2205,10 +2364,12 @@ function doExport(){
         const mine = R.out.filter(x => x.credit === k);
         if(!mine.length) return;
         const p = R.info(k);
-        body += `<p><b>${e(p.name)}</b> — ${e(p.comp)}</p>`;
+        body += `<p><b>${e(p.name)}</b> — đang rèn năng lực: ${e(p.comp)||'(chưa chọn)'}</p>`;
         mine.forEach(x => {
-          const verb = x.kind==='question' ? 'đưa ra câu hỏi' : (x.kind==='answer' ? 'đưa ra câu trả lời' : 'có biểu hiện');
-          body += `<div class="rg"><b>Phút ${x.t}</b> — ${e(p.name)} ${verb}: "${e(x.text)}"${x.impact?`<br><i>→ ${e(x.impact)}</i>`:''}</div>`;
+          const lab = {question:'Câu hỏi', answer:'Câu trả lời', behavior:'Cử chỉ / hành vi'}[x.kind];
+          body += `<div class="rg"><b>Phút ${x.t} · ${lab}</b><br>`
+                + `<b>Biểu hiện:</b> ${e(x.text)}<br>`
+                + `<b>Tác động:</b> <i>${x.impact ? e(x.impact) : '(chưa ghi)'}</i></div>`;
         });
         if((r.recogSelf||{})[k]) body += `<p><b>Tự nhận:</b> ${e(r.recogSelf[k])}</p>`;
         if((r.recogPeer||{})[k]) body += `<p><b>Anh em quan sát:</b> ${e(r.recogPeer[k])}</p>`;
@@ -2248,15 +2409,32 @@ function doExport(){
 // PHÍM TẮT — dùng Alt vì Ctrl+1..9 bị trình duyệt chiếm
 // và Ctrl+Space bị bộ gõ tiếng Việt chiếm
 // ============================================================
+/* macOS: Ctrl (⌃) — Cmd+1..9 bị Chrome chiếm để chuyển tab, Option làm lệch bộ gõ tiếng Việt.
+   Windows/Linux: Alt — vì Ctrl+1..9 mới là phím chuyển tab của Chrome.
+   Chỉ dùng số, Enter và "/" để tránh phím sửa văn bản kiểu emacs của macOS (Ctrl+P, Ctrl+A...). */
+const IS_MAC = /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent || '');
+const MOD_KEY = IS_MAC ? '⌃' : 'Alt';
+function hasMod(e){ return IS_MAC ? (e.ctrlKey && !e.metaKey) : (e.altKey && !e.ctrlKey); }
+
 function setupHotkeys(){
   document.addEventListener('keydown', e => {
     if(!currentSession || activeTab !== 'during') return;
-    if(!e.altKey) return;
+    if(!hasMod(e)) return;
     if(e.key >= '1' && e.key <= '6'){ e.preventDefault(); focusCol(parseInt(e.key,10)-1); return; }
     if(e.key === 'Enter'){ e.preventDefault(); closeEditor(true); lapStage(); return; }
-    if(e.key.toLowerCase() === 'p'){ e.preventDefault(); swToggle(); return; }
+    if(e.key === '0'){ e.preventDefault(); swToggle(); return; }
     if(e.key === '/'){ e.preventDefault(); toggleFlow(); return; }
   });
+  applyKeyLabels();
+}
+function applyKeyLabels(){
+  const k = MOD_KEY;
+  const lap = document.getElementById('lapKeyHint');  if(lap) lap.textContent = `(${k}+↵)`;
+  const hb = document.getElementById('helpKeys');
+  if(hb) hb.innerHTML = `<kbd>${k}</kbd>+<kbd>1…6</kbd> nhảy cột · <kbd>${k}</kbd>+<kbd>↵</kbd> chốt bước · `
+    + `<kbd>${k}</kbd>+<kbd>0</kbd> đồng hồ · <kbd>${k}</kbd>+<kbd>/</kbd> dòng chảy`
+    + (IS_MAC ? ' <span style="opacity:.7">(⌃ = phím Control trên MacBook)</span>' : '');
+  const t = document.getElementById('swToggle'); if(t) t.title = `Chạy / Dừng (${k}+0)`;
 }
 
 // ============================================================
