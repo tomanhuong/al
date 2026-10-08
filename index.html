@@ -1748,12 +1748,42 @@ async function loadData(){
   try {
     const res = await apiGet('get_all_sessions');
     if(res && res.status === 'success' && res.sessions){
-      sessions = res.sessions; saveOffline(); renderHome(); setSyncStatus('ok');
+      sessions = normAll(res.sessions); saveOffline(); renderHome(); setSyncStatus('ok');
     } else setSyncStatus('ok');
   } catch(e){ setSyncStatus('offline'); }
 }
+// Ô ngày/giờ từ Google Sheet có thể về dạng "2026-10-07T17:00:00.000Z".
+// Đổi lại theo múi giờ của máy để ra đúng ngày, nếu không ô ngày sẽ trống
+// rồi lần lưu sau ghi đè thành rỗng.
+const ISO_DT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/;
+function p2(n){ return String(n).padStart(2,'0'); }
+function toDateStr(v){
+  if(!v) return '';
+  if(/^\d{4}-\d{2}-\d{2}$/.test(v)) return v;
+  if(ISO_DT.test(v)){ const d = new Date(v);
+    if(!isNaN(d)) return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); }
+  return String(v);
+}
+function toTimeStr(v){
+  if(!v) return '';
+  if(/^\d{1,2}:\d{2}$/.test(v)) return v.length===4 ? '0'+v : v;
+  if(ISO_DT.test(v)){ const d = new Date(v);
+    if(!isNaN(d)) return p2(d.getHours())+':'+p2(d.getMinutes()); }
+  return String(v);
+}
+function normSession(s){
+  if(!s || typeof s !== 'object') return s;
+  s.session_date = toDateStr(s.session_date);
+  s.time_start   = toTimeStr(s.time_start);
+  s.time_end     = toTimeStr(s.time_end);
+  if(s.coaching_hours !== '' && s.coaching_hours != null) s.coaching_hours = String(s.coaching_hours);
+  ['created_at','updated_at'].forEach(k => { if(s[k] instanceof Date) s[k] = s[k].toISOString(); });
+  return s;
+}
+function normAll(list){ (list||[]).forEach(normSession); return list; }
+
 function loadOffline(){
-  try { const l = localStorage.getItem('al_sessions_v3'); sessions = l ? JSON.parse(l) : []; }
+  try { const l = localStorage.getItem('al_sessions_v3'); sessions = normAll(l ? JSON.parse(l) : []); }
   catch(e){ sessions = []; }
 }
 function saveOffline(){
@@ -1800,7 +1830,7 @@ setInterval(async () => {
   try {
     const res = await apiGet('get_all_sessions');
     if(res && res.status === 'success' && res.sessions && res.sessions.length >= sessions.length){
-      sessions = res.sessions; saveOffline(); renderHome(); setSyncStatus('ok');
+      sessions = normAll(res.sessions); saveOffline(); renderHome(); setSyncStatus('ok');
     }
   } catch(e){}
 }, 30000);
@@ -1927,6 +1957,7 @@ function editSession(id){
 }
 function ensureSessionStructure(){
   const s = currentSession;
+  normSession(s);
   if(!s.checklist_before || !s.checklist_before.length) s.checklist_before = initChecklistBefore();
   if(!s.session_running) s.session_running = initSessionRunning();
   const r = s.session_running;
@@ -3444,7 +3475,13 @@ function recogForSession(s){
 
 function doExport(){
   const type = (document.querySelector('input[name="exportType"]:checked')||{}).value;
-  const src = sessions.length ? sessions : JSON.parse(localStorage.getItem('al_sessions_v3')||'[]');
+  // lấy những gì đang gõ dở trên màn hình vào phiên đang mở, rồi mới dựng báo cáo
+  if(currentSession){
+    try { collectBefore(); collectDuring(); collectAfter(); } catch(e){ console.error(e); }
+    const k = sessions.findIndex(x => x.session_id === currentSession.session_id);
+    if(k >= 0) sessions[k] = currentSession;
+  }
+  const src = normAll(sessions.length ? sessions : JSON.parse(localStorage.getItem('al_sessions_v3')||'[]'));
   let data = [];
   if(type === 'current') data = currentSession ? [currentSession] : [];
   else if(type === 'all') data = src;
@@ -3481,12 +3518,15 @@ function doExport(){
     @media print{body{padding:8px;}h1,h2,h3{page-break-after:avoid;}.ref,.rg{page-break-inside:avoid;}tr{page-break-inside:avoid;}}
   `;
 
+  const dVN = v => { const x = toDateStr(v); if(!x) return '—';
+    const m = x.match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? m[3]+'/'+m[2]+'/'+m[1] : x; };
   let body = '';
   let total = 0, rows = '';
   data.forEach(s => {
     const h = parseFloat(s.coaching_hours) || 0; total += h;
-    rows += `<tr><td>${e(s.session_date)}</td><td>${e(s.client_name)}</td><td>${e(s.session_id)}</td>
-      <td>${e(s.problem_presented)}</td><td>${h||'—'}</td><td>${e(s.session_type)}</td></tr>`;
+    const gio = s.time_start ? ` <span style="color:#888">${e(toTimeStr(s.time_start))}</span>` : '';
+    rows += `<tr><td>${dVN(s.session_date)}${gio}</td><td>${e(s.client_name)||'—'}</td><td>${e(s.session_id)}</td>
+      <td>${e(s.problem_presented)||'—'}</td><td>${h? h : '<span style="color:#c00">thiếu</span>'}</td><td>${e(s.session_type)||'—'}</td></tr>`;
   });
   body += `<h2>Bảng tổng hợp huấn luyện (Coaching Report)</h2>
   <table><thead><tr><th>Ngày</th><th>Khách hàng</th><th>Mã phiên</th><th>Vấn đề trình bày</th><th>Số giờ</th><th>Loại</th></tr></thead>
@@ -3498,12 +3538,12 @@ function doExport(){
     const r = s.session_running || {};
     body += `<div class="pb"></div>
     <h2>${e(s.session_id)} — ${e(s.client_name)} (${stL})</h2>
-    <div class="row"><span class="lbl">Ngày phiên:</span><span class="val">${e(s.session_date)}</span></div>
+    <div class="row"><span class="lbl">Ngày phiên:</span><span class="val">${dVN(s.session_date)}</span></div>
     <div class="row"><span class="lbl">AL Coach:</span><span class="val">${e(s.coach_name)}</span></div>
     <div class="row"><span class="lbl">PP (Người trình bày):</span><span class="val">${e(r.pp_name)}</span></div>
-    <div class="row"><span class="lbl">Hình thức:</span><span class="val">${e(s.format)}${s.time_start?' · '+e(s.time_start)+' → '+e(s.time_end):''}</span></div>
+    <div class="row"><span class="lbl">Hình thức:</span><span class="val">${e(s.format)||'—'}${s.time_start?' · '+e(toTimeStr(s.time_start))+' → '+e(toTimeStr(s.time_end)):''}</span></div>
     <div class="row"><span class="lbl">Loại phiên:</span><span class="val">${e(s.session_type)}</span></div>
-    <div class="row"><span class="lbl">Số giờ:</span><span class="val">${e(s.coaching_hours)}</span></div>`;
+    <div class="row"><span class="lbl">Số giờ:</span><span class="val">${s.coaching_hours ? e(s.coaching_hours)+' giờ' : '<span style="color:#c00">chưa nhập ở tab Sau phiên</span>'}</span></div>`;
 
     if(r.members && r.members.length){
       body += `<h3>Thành viên tham dự</h3><table><thead><tr><th>Vai trò</th><th>Tên</th><th>Năng lực rèn luyện</th></tr></thead><tbody>`;
