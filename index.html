@@ -347,8 +347,8 @@ tr.cur .note-box{height:var(--active-note-h,180px);}
 .int-opt.sig{border-color:#e0a500;background:var(--star-bg);}
 .int-opt.on{border-color:var(--primary);background:rgba(43,41,109,.08);font-weight:700;}
 .int-opt .st{font-size:9.5px;font-weight:800;color:#fff;background:var(--primary-light);padding:1px 6px;border-radius:9px;flex-shrink:0;margin-top:1px;}
-.int-opt .st.Problem{background:#4F6BD6}.int-opt .st.Team{background:#00A79D}.int-opt .st.Question{background:#8a5cd6}
-.int-opt .st.Action{background:#e07b00}.int-opt .st.Learning{background:#2e7d32}.int-opt .st.Coach{background:#6b6b7a}
+.int-opt .st.Problem{background:#4F6BD6}.int-opt .st.Group{background:#00A79D}.int-opt .st.Question{background:#8a5cd6}
+.int-opt .st.Action{background:#e07b00}.int-opt .st.Learning{background:#2e7d32}.int-opt .st.Coach{background:#b3005c}
 .int-opt .ef{margin-left:auto;font-size:10px;color:var(--gray-mid);flex-shrink:0;}
 .int-sig-why{font-size:11px;color:#8a3b00;font-weight:600;display:block;}
 .int-ta{width:100%;padding:9px 11px;border:1.5px solid var(--gray-border);border-radius:8px;font-size:13px;line-height:1.5;outline:none;resize:vertical;min-height:54px;font-family:var(--font);}
@@ -993,39 +993,58 @@ const DEFAULT_COMPETENCIES = [
   'Tập trung chiến lược','Huấn luyện (Coaching)'
 ];
 
-// 29 điểm can thiệp — lấy từ bảng cuối file Sheet của anh
+// 44 điểm can thiệp — 6 thành tố WIAL Action Learning
+// Nguồn: Sheet ĐIỀU PHỐI QUY TRÌNH ACTION LEARNING · phiên THỰC HÀNH AL ANH TÚ 05.08.2026
+//        · khoá CALC K24 — nhận xét & huấn luyện trực tiếp của Thầy Minh
 const DEFAULT_INTERVENTIONS = [
-  {"id": "i_problem_pp_trinh_bay_qua_rong", "name": "Problem – PP trình bày quá rộng", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc làm rõ phạm vi vấn đề? 1 điểm: phạm vi rất rộng, ai cũng hiểu mỗi kiểu 5 điểm: phạm vi rất rõ, nhóm hiểu giống nhau", "so_what": "Tại sao làm rõ phạm vi vấn đề lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để làm rõ phạm vi vấn đề hiệu quả hơn?", "stages": "B"},
-  {"id": "i_problem_mong_muon_qua_nhieu_trong_1_phie", "name": "Problem – Mong muốn quá nhiều trong 1 phiên", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc làm rõ mong muốn trong phiên? 1 điểm: mong muốn dàn trải, chưa chốt ưu tiên 5 điểm: chốt 1 mong muốn ưu tiên rõ ràng", "so_what": "Nếu thiếu làm rõ mong muốn trong phiên thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để làm rõ mong muốn trong phiên rõ ràng hơn?", "stages": "B"},
-  {"id": "i_problem_van_de_qua_phuc_tap_voi_nhom", "name": "Problem – Vấn đề quá phức tạp với nhóm", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc chọn một điểm quan trọng? 1 điểm: chưa chọn được điểm nào, đi vòng quanh 5 điểm: chọn rõ 1 điểm quan trọng để xử lý", "so_what": "Tại sao chọn một điểm quan trọng lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn chọn một điểm quan trọng như thế nào để làm việc hiệu quả hơn?", "stages": "B,C"},
-  {"id": "i_problem_cang_lam_cang_khong_ro_van_de", "name": "Problem – Càng làm càng không rõ vấn đề", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc đặt một câu mô tả vấn đề? 1 điểm: chưa có 1 câu chung, mỗi người nói 1 kiểu 5 điểm: có 1 câu mô tả vấn đề rõ ràng, nhóm thống nhất", "so_what": "Nếu thiếu đặt một câu mô tả vấn đề thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để đặt một câu mô tả vấn đề rõ ràng hơn?", "stages": "C"},
-  {"id": "i_problem_van_de_dua_vao_phien_qua_de_de_r", "name": "Problem – Vấn đề đưa vào phiên (quá dễ, dễ ra nguyên nhân)", "stream": "Problem", "what": "Vấn đề bạn vừa mới nghĩ tới được mấy ngày nay? 1 điểm: vấn đề mới toanh/mới xuất hiện, dễ đưa nguyên nhân ngay → dễ tranh nhau đưa lời khuyên 5 điểm: vấn đề đã tồn tại đủ lâu, có dữ kiện/bối cảnh, không thể giải quyết bằng 1 lời khuyên nhanh", "so_what": "Nếu vấn đề quá dễ (dễ ra nguyên nhân) thì điều gì sẽ ảnh hưởng đến cách học của nhóm?", "now_what": "Bây giờ nhóm muốn làm thế nào để chọn/đặt lại vấn đề đủ phức tạp hơn cho phiên này?", "stages": "B"},
-  {"id": "i_problem_van_de_dua_vao_phien_thieu_boi_c", "name": "Problem – Vấn đề đưa vào phiên (thiếu bối cảnh cụ thể)", "stream": "Problem", "what": "Nhóm mình đang như thế nào về bối cảnh cụ thể của vấn đề? 1 điểm: bối cảnh chung chung, thiếu con số/mốc 5 điểm: bối cảnh rất cụ thể (doanh số cần đạt, số lượng vị trí cần tuyển, mốc thời gian…)", "so_what": "Tại sao bối cảnh cụ thể của vấn đề lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn bổ sung bối cảnh cụ thể của vấn đề như thế nào?", "stages": "B"},
-  {"id": "i_problem_than_trong_chon_van_de_pp_viet_x", "name": "Problem – Thận trọng chọn vấn đề (PP viết xuống trước khi vào phiên)", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc PP viết xuống vấn đề trước khi vào phiên? 1 điểm: PP chưa có câu viết rõ, đang nói miệng và đổi ý liên tục 5 điểm: PP có 1–2 câu viết rõ ràng để nhóm bám xuyên suốt", "so_what": "Nếu thiếu việc PP viết xuống vấn đề trước khi vào phiên thì điều gì sẽ ảnh hưởng?", "now_what": "Bây giờ nhóm muốn dành bao lâu để PP viết xuống vấn đề trước khi vào phiên và đọc lại cho nhóm?", "stages": "B"},
-  {"id": "i_problem_tai_cau_truc_van_de", "name": "Problem – TÁI CẤU TRÚC VẤN ĐỀ", "stream": "Problem", "what": "Nhóm mình đang như thế nào về tái cấu trúc vấn đề? 1 điểm: chỉ có 1 câu phát biểu của PP, nhóm chưa nghe nhiều góc nhìn 5 điểm: từng thành viên đã phát biểu, nhóm nghe được điều họ quan sát, và PP chốt được vấn đề thực sự là gì", "so_what": "Tại sao tái cấu trúc vấn đề lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn tái cấu trúc vấn đề như thế nào?", "stages": "C"},
-  {"id": "i_team_tham_gia_khong_can_bang", "name": "Team – Tham gia không cân bằng", "stream": "Team", "what": "Nhóm mình đang như thế nào về mức độ tham gia đặt câu hỏi của các thành viên? 1 điểm: rất ít người hỏi/phát biểu 5 điểm: tất cả đều có tham gia hỏi/phát biểu", "so_what": "Tại sao mức độ tham gia đặt câu hỏi của các thành viên lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn điều chỉnh thế nào để mức độ tham gia đặt câu hỏi của các thành viên cân bằng hơn?", "stages": "A,B,C,D,E,F,G"},
-  {"id": "i_team_khong_hien_dien_ra_ngoai_nghe_dien_", "name": "Team – Không hiện diện/ra ngoài nghe điện thoại", "stream": "Team", "what": "Nhóm mình đang như thế nào về hiện diện trong phiên? 1 điểm: nhiều người không hiện diện/gián đoạn liên tục 5 điểm: tất cả hiện diện đầy đủ, tập trung", "so_what": "Việc hiện diện trong phiên ảnh hưởng đến hiệu quả làm việc của nhóm như thế nào?", "now_what": "Bây giờ nhóm muốn làm thế nào để hiện diện trong phiên tốt hơn?", "stages": "A,B,C,D,E,F,G"},
-  {"id": "i_team_khong_coi_mo_ap_dat_nhau", "name": "Team – Không cởi mở/áp đặt nhau", "stream": "Team", "what": "Nhóm mình đang như thế nào về cởi mở trao đổi? 1 điểm: ngại nói thật, dễ phòng thủ/áp đặt 5 điểm: nói thẳng, nghe thật, tôn trọng nhau", "so_what": "Nếu thiếu cởi mở trao đổi thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để cởi mở trao đổi hiệu quả hơn?", "stages": "A,B,C,D,E,F,G"},
-  {"id": "i_team_khong_thich_nhau_kho_hop_tac", "name": "Team – Không thích nhau/khó hợp tác", "stream": "Team", "what": "Nhóm mình đang như thế nào về tôn trọng khác biệt? 1 điểm: dễ phản ứng, khó hợp tác 5 điểm: tôn trọng khác biệt, vẫn phối hợp tốt", "so_what": "Tại sao tôn trọng khác biệt lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn tôn trọng khác biệt như thế nào để làm việc tốt hơn?", "stages": "A,B,C,D,E,F,G"},
-  {"id": "i_question_cau_hoi_dong_ap_dat", "name": "Question – Câu hỏi đóng/áp đặt", "stream": "Question", "what": "Nhóm mình đang như thế nào về câu hỏi mở? 1 điểm: chủ yếu là câu hỏi đóng/áp đặt 5 điểm: đa số là câu hỏi mở, giúp PP suy nghĩ", "so_what": "Tại sao câu hỏi mở lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn đặt câu hỏi mở như thế nào để làm việc hiệu quả hơn?", "stages": "B,C,D"},
-  {"id": "i_question_cau_hoi_dan_dat", "name": "Question – Câu hỏi dẫn dắt", "stream": "Question", "what": "Nhóm mình đang như thế nào về tránh dẫn dắt? 1 điểm: nhiều câu hỏi dẫn dắt/cho lời khuyên ẩn 5 điểm: câu hỏi trung tính, không dẫn hướng", "so_what": "Nếu thiếu tránh dẫn dắt thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn tránh dẫn dắt như thế nào khi đặt câu hỏi?", "stages": "B,C,D"},
-  {"id": "i_question_cau_hoi_qua_rong_moi_nguoi_day_", "name": "Question – Câu hỏi quá rộng, mỗi người đẩy 1 hướng", "stream": "Question", "what": "Nhóm mình đang như thế nào về hội tụ câu hỏi? 1 điểm: mạnh ai nấy hỏi, tản mạn nhiều hướng 5 điểm: câu hỏi hội tụ vào 1 hướng ưu tiên", "so_what": "Tại sao hội tụ câu hỏi lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn hội tụ câu hỏi như thế nào để tránh bị tản mạn?", "stages": "B,C,D"},
-  {"id": "i_question_tranh_tranh_nhau_dua_loi_khuyen", "name": "Question – Tránh “tranh nhau đưa lời khuyên”", "stream": "Question", "what": "Nhóm mình đang như thế nào về việc giữ câu hỏi thay vì đưa lời khuyên? 1 điểm: nhiều lời khuyên/giải pháp xuất hiện sớm 5 điểm: nhóm giữ nhịp câu hỏi để PP tự khám phá", "so_what": "Nếu nhóm tranh nhau đưa lời khuyên thì điều gì sẽ ảnh hưởng đến sự học?", "now_what": "Từ bây giờ nhóm muốn giữ câu hỏi thay vì đưa lời khuyên như thế nào?", "stages": "B,C,D"},
-  {"id": "i_question_bam_sat_tu_khoa_pp", "name": "Question – Bám sát từ khoá PP", "stream": "Question", "what": "Nhóm mình đang như thế nào về việc bám sát những từ khoá PP đã trình bày? 1 điểm: hỏi lan sang chuyện khác, bỏ qua từ khoá PP 5 điểm: câu hỏi bám sát từ khoá PP, đào sâu đúng ý PP nói", "so_what": "Nếu thiếu việc bám sát những từ khoá PP đã trình bày thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn bám sát những từ khoá PP đã trình bày như thế nào khi đặt câu hỏi?", "stages": "B,C,D"},
-  {"id": "i_action_pp_khong_ra_action", "name": "Action – PP không ra action", "stream": "Action", "what": "Nhóm mình đang như thế nào về ra hành động cụ thể? 1 điểm: chưa có hành động sau phiên 5 điểm: có hành động cụ thể, rõ ai-làm gì-khi nào", "so_what": "Tại sao ra hành động cụ thể lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn ra hành động cụ thể như thế nào trong phần còn lại của phiên?", "stages": "E"},
-  {"id": "i_action_action_chung_chung", "name": "Action – Action chung chung", "stream": "Action", "what": "Nhóm mình đang như thế nào về làm rõ hành động cụ thể? 1 điểm: hành động mơ hồ, khó làm ngay 5 điểm: hành động rõ ràng, làm được ngay", "so_what": "Nếu thiếu làm rõ hành động cụ thể thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm rõ hành động cụ thể như thế nào để dễ làm ngay?", "stages": "E"},
-  {"id": "i_action_action_khong_lien_quan_nguyen_nha", "name": "Action – Action không liên quan nguyên nhân gốc", "stream": "Action", "what": "Nhóm mình đang như thế nào về liên kết hành động với nguyên nhân gốc? 1 điểm: action tách rời nguyên nhân gốc 5 điểm: mỗi action gắn rõ với nguyên nhân gốc", "so_what": "Tại sao liên kết hành động với nguyên nhân gốc lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn liên kết hành động với nguyên nhân gốc như thế nào khi chốt action?", "stages": "E"},
-  {"id": "i_action_van_de_nen_chon_a_hay_b", "name": "Action – Vấn đề nên chọn A hay B", "stream": "Action", "what": "Hãy hỏi PP, họ đã nghiêng về phương án nào chưa? 1 điểm: PP chưa rõ nghiêng hướng nào, nói chung chung 5 điểm: PP đã nghiêng rõ một hướng và nói được điều đang lăn khoăn", "so_what": "Nếu PP đã nghiêng mà nhóm vẫn hỏi lan man, điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để làm rõ điều PP đang lăn khoăn trong hướng đã nghiêng? TH1: PP đã lật hẳn sang 1 hướng → trong hướng đó có gì đang lăn khoăn? TH2: Tỉ lệ 4:6 → vậy phần “6” đang băn khoăn điều gì?", "stages": "E"},
-  {"id": "i_learning_chon_nang_luc_nhung_khong_thuc_", "name": "Learning – Chọn năng lực nhưng không thực hành", "stream": "Learning", "what": "Nhóm mình đang như thế nào về thực hành năng lực đã chọn? 1 điểm: không có thực hành trong phiên 5 điểm: có thực hành ngay, nhìn thấy hành vi", "so_what": "Nếu thiếu thực hành năng lực đã chọn thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn thực hành năng lực đã chọn như thế nào ngay trong phiên?", "stages": "D,F"},
-  {"id": "i_learning_thuc_hanh_nang_luc_lanh_dao", "name": "Learning – Thực hành năng lực lãnh đạo", "stream": "Learning", "what": "Nhóm mình đang như thế nào về thực hành năng lực lãnh đạo? 1 điểm: bị cuốn vào vấn đề, không nhìn thấy mình đang thực hành gì 5 điểm: mỗi người ý thức rõ mình đang thực hành và điều chỉnh ngay", "so_what": "Tại sao thực hành năng lực lãnh đạo lại quan trọng trong phiên này?", "now_what": "Từ bây giờ, mỗi thành viên tạo 1 câu hỏi dựa vào năng lực lãnh đạo để nhóm cùng suy ngẫm thêm.", "stages": "D,F"},
-  {"id": "i_learning_chi_noi_van_de_khong_quan_sat_n", "name": "Learning – Chỉ nói vấn đề, không quan sát người khác", "stream": "Learning", "what": "Nhóm mình đang như thế nào về quan sát cách người khác thực hành? 1 điểm: hầu như không có quan sát về cách làm 5 điểm: có quan sát rõ và học từ nhau", "so_what": "Tại sao quan sát cách người khác thực hành lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn quan sát cách người khác thực hành như thế nào để học sâu hơn?", "stages": "D,F"},
-  {"id": "i_learning_khong_ghi_chu_ai_noi_nguoi_ay_n", "name": "Learning – Không ghi chú, “ai nói người ấy nói”", "stream": "Learning", "what": "Nhóm mình đang như thế nào về ghi chú để học? 1 điểm: không ghi chú, cuối phiên khó đọng lại 5 điểm: có ghi chú, cuối phiên rút được bài học rõ", "so_what": "Nếu thiếu ghi chú để học thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn ghi chú để học như thế nào trong phần còn lại của phiên?", "stages": "D,F"},
-  {"id": "i_coach_logistics_thanh_vien_hoi_coach_gio", "name": "Coach & Logistics – Thành viên hỏi coach “giờ nên làm gì?”", "stream": "Coach & Logistics", "what": "Nhóm mình đang như thế nào về nhóm tự ra quyết định? 1 điểm: phụ thuộc coach để quyết định 5 điểm: nhóm tự đề xuất lựa chọn và tự chốt", "so_what": "Tại sao nhóm tự ra quyết định lại quan trọng?", "now_what": "Bây giờ nhóm muốn nhóm tự ra quyết định như thế nào để đi tiếp?", "stages": "A,B,C,D,E,F,G"},
-  {"id": "i_coach_logistics_gian_doan_coach_rot_mang", "name": "Coach & Logistics – Gián đoạn (coach rớt mạng/phát sinh việc)", "stream": "Coach & Logistics", "what": "Nhóm mình đang như thế nào về thống nhất cách tiếp tục phiên? 1 điểm: gián đoạn làm nhóm mất nhịp, không biết làm gì tiếp 5 điểm: nhóm thống nhất cách tiếp tục rõ ràng, giữ được nhịp", "so_what": "Nếu thiếu thống nhất cách tiếp tục phiên thì điều gì sẽ ảnh hưởng?", "now_what": "Bây giờ nhóm muốn thống nhất cách tiếp tục phiên như thế nào để không mất nhịp?", "stages": "A,B,C,D,E,F,G"},
-  {"id": "i_coach_logistics_nhom_lan_man_mat_cau_tru", "name": "Coach & Logistics – Nhóm lan man/mất cấu trúc", "stream": "Coach & Logistics", "what": "Nhóm mình đang như thế nào về bám theo trình tự can thiệp? 1 điểm: nhảy bước liên tục, không rõ đang ở đâu 5 điểm: rõ đang ở WHAT/SO WHAT/NOW WHAT và đi theo mạch", "so_what": "Tại sao bám theo trình tự can thiệp lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn bám theo trình tự can thiệp như thế nào để làm việc rõ ràng hơn?", "stages": "A,B,C,D,E,F,G"},
-  {"id": "i_coach_logistics_giu_su_tap_trung_dao_sau", "name": "Coach & Logistics – Giữ sự tập trung, đào sâu", "stream": "Coach & Logistics", "what": "Nhóm đang tập trung đào sâu điều gì? 1 điểm: chưa rõ đang đào sâu điểm nào, câu hỏi kéo ra nhiều hướng 5 điểm: cả nhóm đang đào sâu đúng 1 điểm rõ ràng, bám sát từ khoá PP", "so_what": "Tại sao việc nhóm tập trung đào sâu điều gì lại quan trọng?", "now_what": "Từ bây giờ nhóm thống nhất giữ sự tập trung và đào sâu như thế nào trong 5–10 phút tới?", "stages": "A,B,C,D,E,F,G"}
+  {"id": "i_problem_van_de_hoa_ra_la_mong_muon", "name": "Problem – Vấn đề hoá ra là mong muốn", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc phân biệt mong muốn và vấn đề? 1 điểm: đang làm việc với điều PP muốn có · 5 điểm: đã gọi tên được cái đang cản PP", "so_what": "Nếu nhầm mong muốn thành vấn đề thì điều gì sẽ xảy ra với 60 phút còn lại của chúng ta?", "now_what": "Từ bây giờ nhóm muốn hỏi thế nào để tìm ra cái đang NGĂN CẢN, chứ không phải cái PP mong có?", "stages": "B,C", "note": "Thầy Minh: “Mong muốn là đạt được hay không thì có cũng tốt, không có cũng không sao. Vấn đề là không đạt được thì sẽ ảnh hưởng.”"},
+  {"id": "i_problem_van_de_khong_co_boi_canh_pp_den_", "name": "Problem – Vấn đề không có bối cảnh — PP đến từ hư vô", "stream": "Problem", "what": "Nhóm mình đang như thế nào về bối cảnh của vấn đề? 1 điểm: chung chung, không mốc không số · 5 điểm: rõ công việc, thời gian, con số, mức độ đau", "so_what": "Tại sao bối cảnh cụ thể lại quan trọng với chất lượng câu hỏi của chúng ta?", "now_what": "Từ bây giờ nhóm muốn làm rõ bối cảnh bằng những câu hỏi nào — ai, ở đâu, bao lâu rồi, ảnh hưởng ra sao?", "stages": "B", "note": "Thầy Minh: “PP bạn có 2 phút chia sẻ — đang gặp trong bối cảnh nào, công việc hay cuộc sống, gặp bao lâu rồi, sự đau khổ đến từ đâu.” · 5W-1H ngay từ đầu"},
+  {"id": "i_problem_van_de_o_ngoai_kia_khong_phai_tr", "name": "Problem – Vấn đề ở ngoài kia, không phải trong này", "stream": "Problem", "what": "Nhóm mình đang như thế nào về quyền kiểm soát vấn đề? 1 điểm: vấn đề nằm ngoài tầm tay PP · 5 điểm: vấn đề thuộc trách nhiệm và quyền quyết của PP", "so_what": "Nếu làm việc với thứ PP không kiểm soát được thì cuối phiên PP sẽ ra được hành động gì?", "now_what": "Từ bây giờ nhóm muốn hỏi thế nào để kéo vấn đề về đúng phần PP có quyền thay đổi?", "stages": "B,C", "note": "Thầy Minh: “PP, đâu là vấn đề cụ thể mà cá nhân em đang gặp trong này?” · Tiêu chí Trách nhiệm trong 5 đặc trưng"},
+  {"id": "i_problem_van_de_qua_de_ai_cung_ra_duoc_ng", "name": "Problem – Vấn đề quá dễ — ai cũng ra được nguyên nhân", "stream": "Problem", "what": "Nhóm mình đang như thế nào về độ phức tạp của vấn đề? 1 điểm: ai cũng ra ngay nguyên nhân, đang tranh nhau khuyên · 5 điểm: chưa ai chắc, cần trí tuệ cả nhóm", "so_what": "Nếu vấn đề dễ tới mức ai cũng giải được thì chúng ta học được gì từ phiên này?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để đào xuống tầng mà chưa ai nhìn thấy?", "stages": "B,C", "note": "Thầy Minh: “Tất cả vấn đề dễ dàng đưa ra nguyên nhân thì không đủ phức tạp → cách học sẽ tranh nhau đưa lời khuyên.” · Problem vs Puzzle"},
+  {"id": "i_problem_pp_ke_van_de_ma_mat_rat_binh_tha", "name": "Problem – PP kể vấn đề mà mặt rất bình thản", "stream": "Problem", "what": "Nhóm mình đang như thế nào về mức độ quan trọng của vấn đề với chính PP? 1 điểm: kể cho có, không thấy nặng · 5 điểm: thấy rõ đây là điều PP đang trăn trở", "so_what": "Nếu vấn đề chưa đủ nặng với PP thì điều gì sẽ xảy ra ở phần cam kết hành động?", "now_what": "Bây giờ nhóm muốn hỏi gì để biết điều này thực sự quan trọng với PP tới đâu?", "stages": "B", "note": "Thầy Minh: “Khi PP chia sẻ vấn đề mà mặt rất tươi, rất bình thản → không nên chọn vấn đề, không có sự suy tư.”"},
+  {"id": "i_problem_pp_dung_chuyen_vo_tinh_hoac_co_y", "name": "Problem – PP dựng chuyện — vô tình hoặc cố ý", "stream": "Problem", "what": "Nhóm mình đang như thế nào về khoảng cách giữa câu chuyện và thực tại? 1 điểm: đang bàn chuyện chưa xảy ra · 5 điểm: bám sát việc đang diễn ra", "so_what": "Nếu cả nhóm đi theo một câu chuyện chưa xảy ra thì hành động cuối phiên sẽ giúp được gì cho PP?", "now_what": "Từ bây giờ nhóm muốn hỏi thế nào để kéo về điều đang thực sự diễn ra ngay lúc này?", "stages": "B,C", "note": "Thầy Minh: “Vô tình dựng chuyện là người overthinking, đưa họ quá xa thực tại; cố ý thì giúp họ nhận ra điều này có giúp gì cho họ không.”"},
+  {"id": "i_problem_mong_muon_qua_nhieu_trong_mot_ph", "name": "Problem – Mong muốn quá nhiều trong một phiên", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc chốt một ưu tiên? 1 điểm: mong muốn dàn trải, chưa chốt · 5 điểm: một mong muốn ưu tiên rõ ràng", "so_what": "Trong thời lượng còn lại, nếu không chốt một thứ thì chúng ta sẽ kết thúc ở đâu?", "now_what": "Bây giờ PP muốn nhóm giúp mình nhất ở điều nào — và rào cản lớn nhất của điều đó là gì?", "stages": "B,C", "note": "Thầy Minh: “PP mong muốn đủ thứ → hỏi mong muốn quan trọng nhất → rào cản lớn nhất.”"},
+  {"id": "i_problem_nhom_chua_phan_biet_duoc_tinh_tr", "name": "Problem – Nhóm chưa phân biệt được tình trạng và nguyên nhân gốc rễ", "stream": "Problem", "what": "Nhóm mình đang như thế nào về câu phát biểu vấn đề? 1 điểm: mới nói được triệu chứng bề mặt · 5 điểm: chạm được nguyên nhân gốc rễ", "so_what": "Tại sao gọi đúng nguyên nhân gốc rễ lại quyết định chất lượng của giải pháp?", "now_what": "Từ bây giờ mỗi người viết lại theo cấu trúc: PP đang gặp vấn đề về tình trạng… vì nguyên nhân gốc rễ là…", "stages": "C", "note": "Ngộ nhận trong Sheet: phát biểu triệu chứng · phát biểu mong muốn · gợi ý giải pháp sớm = “kê đơn khi chưa khám bệnh”"},
+  {"id": "i_group_tham_gia_khong_can_bang_vai_nguoi_", "name": "Group – Tham gia không cân bằng — vài người chiếm sóng", "stream": "Group", "what": "Nhóm mình đang như thế nào về mức độ tham gia của các thành viên? 1 điểm: rất ít người hỏi · 5 điểm: tất cả đều có hỏi và phát biểu", "so_what": "Chúng ta mời đủ 4–8 người vào phiên này để làm gì — nếu chỉ hai người nói thì mất đi điều gì?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để tất cả cùng vào được?", "stages": "B,C,D,E,F", "note": "WIAL: nhóm 4–8 người, đa dạng góc nhìn · “Hiệu ứng người giao Pizza” — cần người ngoài cuộc"},
+  {"id": "i_group_nhom_chi_hoi_pp_khong_hoi_nhau", "name": "Group – Nhóm chỉ hỏi PP, không hỏi nhau", "stream": "Group", "what": "Nhóm chúng ta đang tương tác với nhau như thế nào? 1 điểm: câu hỏi chỉ dồn về PP · 5 điểm: các thành viên hỏi chéo nhau", "so_what": "Tại sao việc các thành viên đặt câu hỏi cho nhau lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn làm gì khác đi để việc tương tác hiệu quả hơn?", "stages": "B,C", "note": "Mô hình can thiệp chuẩn trong Sheet — ví dụ gốc của Thầy · Quy tắc 1: bất kỳ ai cũng có thể hỏi bất kỳ ai"},
+  {"id": "i_group_co_nguoi_khong_hien_dien_ra_ngoai_", "name": "Group – Có người không hiện diện — ra ngoài, tắt cam, làm việc khác", "stream": "Group", "what": "Nhóm mình đang như thế nào về sự hiện diện trong phiên? 1 điểm: nhiều người gián đoạn · 5 điểm: tất cả hiện diện đầy đủ", "so_what": "Việc hiện diện ảnh hưởng tới chất lượng câu hỏi của chúng ta như thế nào?", "now_what": "Bây giờ nhóm muốn thống nhất với nhau điều gì để giữ sự hiện diện trong phần còn lại?", "stages": "A,B,C,D,E,F", "note": "Tình huống can thiệp trong Sheet · Thầy Minh: “Việc 1 thành viên rời khỏi phiên” — trao cho nhóm tự quyết"},
+  {"id": "i_group_nhom_dua_loi_khuyen_thay_vi_dat_ca", "name": "Group – Nhóm đưa lời khuyên thay vì đặt câu hỏi", "stream": "Group", "what": "Nhóm mình đang như thế nào về việc giữ Quy tắc 1? 1 điểm: nhiều lời khuyên, ít câu hỏi · 5 điểm: phát biểu chỉ xuất hiện khi hồi đáp một câu hỏi", "so_what": "Nếu chúng ta kê đơn khi chưa khám bệnh thì PP nhận được gì?", "now_what": "Từ bây giờ nhóm muốn giữ Quy tắc 1 như thế nào trong những phút tới?", "stages": "B,C", "note": "Ngộ nhận trong Sheet: “gợi ý giải pháp sớm = kê đơn khi chưa biết bệnh”"},
+  {"id": "i_group_nhom_tuong_da_dong_thuan_nhung_chu", "name": "Group – Nhóm tưởng đã đồng thuận nhưng chưa", "stream": "Group", "what": "Nhóm mình đang như thế nào về sự đồng thuận vấn đề? 1 điểm: mỗi người một cách hiểu · 5 điểm: cùng một câu vấn đề, hiểu giống nhau", "so_what": "Điều gì sẽ xảy ra nếu chưa đúng vấn đề mà đã đi tìm giải pháp?", "now_what": "Bây giờ mời mỗi người viết xuống câu phát biểu vấn đề và đọc chính xác điều mình đã viết.", "stages": "C", "note": "Thầy Minh: “Liệu nhóm chúng ta đã xác định đúng vấn đề chưa? Điều gì sẽ xảy ra nếu chưa đúng vấn đề mà đã tìm giải pháp?” · PP không đọc đầu tiên hoặc cuối cùng"},
+  {"id": "i_group_pp_xuc_dong_nhom_khong_biet_lam_gi", "name": "Group – PP xúc động, nhóm không biết làm gì", "stream": "Group", "what": "Nhóm mình đang như thế nào trong việc ở cùng PP lúc này? 1 điểm: lúng túng, ai cũng chờ coach · 5 điểm: nhóm chủ động tạo không gian cho PP", "so_what": "Lúc này điều gì là cần nhất cho PP?", "now_what": "Nhóm chúng ta nên làm gì ngay bây giờ? — và PP, điều gì khiến bạn đang xúc động?", "stages": "B,C,E", "note": "Thầy Minh: “PP khóc trên 3 lần là do Coach can thiệp không hiệu quả nên lặp lại. Can thiệp nhiều điểm cùng lúc → không hiệu quả.”"},
+  {"id": "i_group_nhom_day_trach_nhiem_cho_coach", "name": "Group – Nhóm đẩy trách nhiệm cho Coach", "stream": "Group", "what": "Nhóm mình đang như thế nào về quyền tự quyết? 1 điểm: chờ coach chỉ đường · 5 điểm: nhóm tự tìm cách vượt qua", "so_what": "Nếu coach quyết thay thì chúng ta học được gì về cách làm việc nhóm của mình?", "now_what": "Bây giờ nhóm chúng ta muốn làm gì tiếp theo — nhóm tự quyết định.", "stages": "A,B,C,D,E,F", "note": "Thầy Minh: “Trao mọi quyền cho nhóm — đưa điểm can thiệp để nhóm giải quyết” · “Bất cứ tình huống nào, thành viên có trách nhiệm tìm cách vượt qua, không phải coach.”"},
+  {"id": "i_question_cau_hoi_dong_ap_dat", "name": "Question – Câu hỏi đóng, áp đặt", "stream": "Question", "what": "Nhóm mình đang như thế nào về câu hỏi mở? 1 điểm: chủ yếu câu hỏi đóng · 5 điểm: đa số câu hỏi mở, giúp PP tự nghĩ", "so_what": "Tại sao câu hỏi mở lại quan trọng với việc làm sáng tỏ vấn đề?", "now_what": "Từ bây giờ nhóm muốn đặt câu hỏi mở như thế nào — thử viết lại câu vừa rồi thành câu mở?", "stages": "B,C,D", "note": "Tình huống can thiệp trong Sheet: “Câu hỏi: đóng, mở”"},
+  {"id": "i_question_cau_hoi_dan_dat_loi_khuyen_nup_", "name": "Question – Câu hỏi dẫn dắt — lời khuyên núp bóng câu hỏi", "stream": "Question", "what": "Nhóm mình đang như thế nào về sự trung tính khi hỏi? 1 điểm: nhiều câu hỏi dẫn hướng · 5 điểm: câu hỏi trung tính, không gài đáp án", "so_what": "Thông qua câu hỏi vừa rồi, bạn đang muốn giúp PP nhận ra điều gì?", "now_what": "Từ bây giờ nhóm muốn hỏi thế nào để không dẫn PP về phía mình đã nghĩ sẵn?", "stages": "B,C", "note": "Thầy Minh: “Đặt câu hỏi theo cách mà mình muốn, thay vì cách mà team cần” · Giữ trung tính"},
+  {"id": "i_question_hoi_lien_tiep_nhieu_cau_pp_khon", "name": "Question – Hỏi liên tiếp nhiều câu, PP không kịp đáp", "stream": "Question", "what": "Nhóm mình đang như thế nào về nhịp hỏi — đáp? 1 điểm: hỏi dồn, chưa nghe hết đã hỏi tiếp · 5 điểm: hỏi một câu, nghe trọn câu đáp rồi mới đi tiếp", "so_what": "Nếu không nghe hết câu trả lời thì câu hỏi tiếp theo của chúng ta dựa trên điều gì?", "now_what": "Nếu chốt lại một câu hỏi quan trọng nhất lúc này, đó sẽ là câu gì?", "stages": "B,C", "note": "Phiên anh Tú 05.08.2026, phút 48 — anh can thiệp sau 6 câu hỏi liên tiếp"},
+  {"id": "i_question_cau_hoi_roi_rac_khong_noi_voi_c", "name": "Question – Câu hỏi rời rạc, không nối với câu trước", "stream": "Question", "what": "Nhóm mình đang như thế nào về việc nối tiếp câu hỏi? 1 điểm: mỗi câu một hướng · 5 điểm: câu sau xây trên câu trả lời trước", "so_what": "Câu hỏi vừa rồi của bạn nối tiếp thế nào với điều nhóm vừa làm sáng tỏ?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để mỗi câu hỏi đào sâu thêm chỗ vừa mở ra?", "stages": "B,C", "note": "WIAL: “Câu hỏi sau xây dựng dựa trên câu hỏi/câu trả lời trước”"},
+  {"id": "i_question_khong_bam_tu_khoa_pp_da_noi", "name": "Question – Không bám từ khoá PP đã nói", "stream": "Question", "what": "Nhóm mình đang như thế nào về việc bám từ khoá của PP? 1 điểm: hỏi sang chuyện khác · 5 điểm: đào thẳng vào từ PP vừa nói", "so_what": "Tại sao việc hỏi lại chính từ khoá của PP lại giúp làm sáng tỏ nhanh hơn?", "now_what": "Từ khoá nào PP vừa nói mà chúng ta chưa hỏi tới?", "stages": "B,C", "note": "Thầy Minh: “Đừng hỏi đi cái khác, hãy tập trung LẮNG NGHE và hỏi những TỪ KHOÁ PP đã trình bày. Coach chuyên nghiệp luôn kéo về rất sát.”"},
+  {"id": "i_question_nhieu_huong_cung_luc_nhom_tan_m", "name": "Question – Nhiều hướng cùng lúc, nhóm tản mát", "stream": "Question", "what": "Nhóm mình đang như thế nào về sự tập trung? 1 điểm: mỗi người một hướng · 5 điểm: cả nhóm đào cùng một điểm", "so_what": "Nếu cứ mở thêm hướng mới thì trong thời gian còn lại chúng ta đào sâu được tới đâu?", "now_what": "Nhóm chúng ta đang tập trung đào sâu vào điều gì?", "stages": "B,C", "note": "Thầy Minh: câu can thiệp nguyên văn — “Nhóm chúng ta đang tập trung đào sâu vào điều gì?”"},
+  {"id": "i_question_khong_ro_cau_hoi_danh_cho_ai", "name": "Question – Không rõ câu hỏi dành cho ai", "stream": "Question", "what": "Nhóm mình đang như thế nào về việc hỏi rõ người? 1 điểm: hỏi trống, ai cũng tưởng không phải mình · 5 điểm: luôn rõ câu hỏi dành cho ai", "so_what": "Khi không rõ câu hỏi dành cho ai thì điều gì xảy ra với nhịp làm việc của nhóm?", "now_what": "Từ bây giờ nhóm muốn gọi tên người mình hỏi như thế nào?", "stages": "B,C", "note": "Checklist năng lực Coach, mục 13: “Rõ ràng trong việc câu hỏi được dành cho ai”"},
+  {"id": "i_question_im_lang_keo_dai_khong_ro_dang_n", "name": "Question – Im lặng kéo dài — không rõ đang nghĩ hay đang bí", "stream": "Question", "what": "Nhóm mình đang như thế nào trong khoảng lặng vừa rồi? 1 điểm: bí, không biết hỏi gì · 5 điểm: đang cùng suy ngẫm một điều", "so_what": "Khoảng lặng này đang nói với chúng ta điều gì?", "now_what": "Nhóm chúng ta đang tập trung đào sâu vào điều gì?", "stages": "B,C,F", "note": "Thầy Minh: “KHI IM LẶNG TRÙNG XUỐNG → NHÓM ĐANG TẬP TRUNG ĐÀO SÂU VÀO ĐIỀU GÌ?”"},
+  {"id": "i_action_pp_chua_ra_duoc_hanh_dong_nao", "name": "Action – PP chưa ra được hành động nào", "stream": "Action", "what": "Nhóm mình đang như thế nào về việc ra hành động cụ thể? 1 điểm: chưa có hành động nào · 5 điểm: hành động rõ ai làm, làm gì, khi nào", "so_what": "Nếu rời phiên mà không có hành động thì phiên này để lại gì cho PP?", "now_what": "Những hành động gì bạn sẽ thực hiện như là kết quả của phiên này?", "stages": "E", "note": "Câu hỏi chuẩn bước E · WIAL: “Không học nếu không hành động”"},
+  {"id": "i_action_hanh_dong_chung_chung_khong_ai_la", "name": "Action – Hành động chung chung, không ai làm gì khi nào", "stream": "Action", "what": "Nhóm mình đang như thế nào về độ cụ thể của hành động? 1 điểm: chung chung, không mốc · 5 điểm: rõ việc, rõ người, rõ ngày", "so_what": "Nếu thiếu mốc thời gian thì điều gì sẽ xảy ra với hành động này sau khi rời phiên?", "now_what": "Kết quả đầu ra bạn mong muốn của hành động này là gì, và khi nào bạn hoàn thành?", "stages": "E", "note": "Tình huống can thiệp trong Sheet: “Action: chung chung” · phiên anh Tú: coach hỏi đủ hành động → kết quả đầu ra → hạn → người hỗ trợ"},
+  {"id": "i_action_hanh_dong_khong_gan_voi_nguyen_nh", "name": "Action – Hành động không gắn với nguyên nhân gốc rễ", "stream": "Action", "what": "Nhóm mình đang như thế nào về việc nối hành động với nguyên nhân gốc? 1 điểm: hành động tách rời · 5 điểm: mỗi hành động gắn rõ với nguyên nhân gốc", "so_what": "Tại sao liên kết hành động với nguyên nhân gốc rễ lại quan trọng?", "now_what": "Hành động này xử lý nguyên nhân gốc rễ nào mà chúng ta vừa gọi tên?", "stages": "E", "note": "Công thức phát biểu chuẩn: “PP đang gặp vấn đề về tình trạng… vì nguyên nhân gốc rễ là…”"},
+  {"id": "i_action_pp_om_het_khong_nho_ai_ho_tro", "name": "Action – PP ôm hết, không nhờ ai hỗ trợ", "stream": "Action", "what": "Nhóm mình đang như thế nào về việc huy động nguồn lực? 1 điểm: PP ôm hết · 5 điểm: có người hỗ trợ cụ thể cho từng việc", "so_what": "Nếu một mình PP làm hết thì rủi ro lớn nhất là gì?", "now_what": "Ai có thể giúp bạn, và bạn muốn nhờ họ điều gì?", "stages": "E", "note": "Câu hỏi chuẩn bước E: “Ai có thể sẽ giúp anh để câu chuyện của anh giảm bớt khó khăn?”"},
+  {"id": "i_action_van_de_nen_chon_a_hay_b", "name": "Action – Vấn đề nên chọn A hay B", "stream": "Action", "what": "Nhóm mình đang như thế nào khi PP đứng giữa hai phương án? 1 điểm: nhóm đang bỏ phiếu hộ PP · 5 điểm: nhóm làm rõ điều PP còn băn khoăn", "so_what": "Nếu chúng ta chọn thay thì PP học được gì?", "now_what": "PP đã nghiêng về hướng nào rồi — và ở hướng đó còn điều gì đang băn khoăn?", "stages": "C,E", "note": "Thầy Minh: “Hầu hết họ đã nghiêng rồi. TH1: lật hẳn 1 hướng → có gì đang băn khoăn. TH2: 4:6 → vậy hướng đó có gì đang băn khoăn.”"},
+  {"id": "i_action_chua_cho_pp_khoang_lang_truoc_khi", "name": "Action – Chưa cho PP khoảng lắng trước khi chốt hành động", "stream": "Action", "what": "Nhóm mình đang như thế nào về khoảng lắng trước khi PP chốt? 1 điểm: hỏi là đòi trả lời ngay · 5 điểm: PP có thời gian sắp xếp lại suy nghĩ", "so_what": "Khoảng lắng 30 giây này giúp gì cho chất lượng hành động PP sắp nói?", "now_what": "PP, bạn đã có sẵn chia sẻ hay cần 30 giây để lắng đọng?", "stages": "E", "note": "Thầy Minh: “Cho PP thời gian lắng đọng 30s–1p trước khi nói: Hello team, bây giờ… PP liệu bạn đã có sẵn hay cần 30s?”"},
+  {"id": "i_learning_chon_nang_luc_nhung_ca_phien_kh", "name": "Learning – Chọn năng lực nhưng cả phiên không ai thực hành", "stream": "Learning", "what": "Hiện tại bạn đang thực hành năng lực lãnh đạo của mình ở mức mấy trên 10?", "so_what": "Nếu rời phiên mà không thực hành năng lực đã chọn thì chúng ta mất đi phần nào của Action Learning?", "now_what": "Mỗi người hãy tạo một câu hỏi dựa trên năng lực mình đang rèn — từ bây giờ tới cuối phiên.", "stages": "D,F", "note": "Thầy Minh: “Khi thành viên bị cuốn vào vấn đề, cần cho họ nhận ra mình đang thực hành năng lực lãnh đạo thế nào.”"},
+  {"id": "i_learning_khong_ai_ghi_chu_ai_noi_nguoi_a", "name": "Learning – Không ai ghi chú — “ai nói người ấy nói”", "stream": "Learning", "what": "Nhóm mình đang như thế nào về việc nắm bắt thông tin của nhau? 1 điểm: không ai ghi, hay hỏi lặp · 5 điểm: có ghi, có nhắc lại được ý người trước", "so_what": "Nếu không giữ được điều người trước vừa nói thì câu hỏi của chúng ta dựa trên gì?", "now_what": "Từ bây giờ nhóm muốn ghi lại và dùng lại ghi chú của mình như thế nào?", "stages": "B,C,F", "note": "Tình huống can thiệp: “Learning: không ghi chú, không nắm bắt thông tin” · Checklist Coach mục 21"},
+  {"id": "i_learning_chi_lo_giai_quyet_van_de_quen_p", "name": "Learning – Chỉ lo giải quyết vấn đề, quên phần học", "stream": "Learning", "what": "Nhóm mình đang như thế nào về việc vừa giải quyết vừa học? 1 điểm: chỉ chạy theo giải pháp · 5 điểm: vừa gỡ vấn đề vừa gọi tên bài học", "so_what": "Nếu phiên này chỉ chữa cháy cho một người thì tổ chức được gì?", "now_what": "Chúng ta học được gì về cách giải quyết vấn đề mà có thể áp dụng cho tổ chức?", "stages": "C,F", "note": "Trách nhiệm Coach số 3 — Name the learning: “Biến vấn đề riêng thành bài học chung cho tổ chức”"},
+  {"id": "i_learning_khong_co_khoang_lang_dong_trong", "name": "Learning – Không có khoảng lắng đọng trong phiên", "stream": "Learning", "what": "Nhóm mình đang như thế nào về khoảng lặng để suy ngẫm? 1 điểm: chạy liên tục không dừng · 5 điểm: có dừng, có viết, có đối chiếu", "so_what": "Chạy theo người nhanh nhất thì những người còn lại đang ở đâu?", "now_what": "Bây giờ nhóm muốn dành bao lâu để mỗi người viết xuống điều mình đang nghĩ?", "stages": "C,F", "note": "Trách nhiệm Coach số 4 — Create pauses: “đồng bộ hoá trí tuệ tập thể, rèn tư duy chậm và sâu”"},
+  {"id": "i_learning_bai_hoc_dung_o_ca_nhan_chua_tha", "name": "Learning – Bài học dừng ở cá nhân, chưa thành bài học cho tổ chức", "stream": "Learning", "what": "Nhóm mình đang như thế nào về việc rút bài học dùng được rộng? 1 điểm: chỉ là chuyện của từng người · 5 điểm: thành nguyên lý mang về tổ chức được", "so_what": "Điều gì ở phiên này mà chúng ta mang về áp dụng được cho công việc ngày mai?", "now_what": "Chúng ta đã học được gì về sức mạnh của câu hỏi — và thực hành năng lực lãnh đạo như thế nào?", "stages": "F", "note": "Checklist Coach mục 25 · Learning có 3 cấp: cá nhân — nhóm — tổ chức"},
+  {"id": "i_learning_can_thiep_xong_nhom_khong_nhan_", "name": "Learning – Can thiệp xong nhóm không nhận ra bài học", "stream": "Learning", "what": "Nhóm mình vừa nhận ra điều gì sau khoảng dừng vừa rồi?", "so_what": "Nếu mỗi lần dừng lại mà không rút được gì thì những lần dừng sau có ý nghĩa gì?", "now_what": "Từ bây giờ nhóm muốn giữ điều vừa nhận ra bằng cách nào?", "stages": "C,D,F", "note": "Thầy Minh: “Liệu sự can thiệp có đang tạo ra sự học cho nhóm? Sau mỗi can thiệp team có thực sự nhận ra bài học?”"},
+  {"id": "i_coach_mat_trung_tinh_trong_ngon_tu_coach", "name": "Coach – Mất trung tính trong ngôn từ — “Coach muốn…”", "stream": "Coach", "what": "[Tự vấn] Câu vừa rồi mình nói vì nhóm cần, hay vì mình muốn?", "so_what": "Khi coach nói “coach muốn”, nhóm sẽ làm theo coach hay tự nghĩ?", "now_what": "Bỏ chữ “coach muốn” — thay bằng “Xin mời!” và trả câu hỏi về cho nhóm.", "stages": "A,B,C,D,E,F", "note": "Thầy Minh: “Bỏ chữ COACH MUỐN vì sẽ điều hướng phụ thuộc vào coach — mà XIN MỜI luôn!” · Trung tính gồm ngôn từ · hành vi · can thiệp"},
+  {"id": "i_coach_can_thiep_qua_sau_noi_nhieu_hon_mo", "name": "Coach – Can thiệp quá sâu — nói nhiều hơn một câu", "stream": "Coach", "what": "[Tự vấn] Mình vừa nói mấy câu trong lần can thiệp này?", "so_what": "Mỗi câu mình nói thêm thì nhóm mất đi bao nhiêu không gian tự nghĩ?", "now_what": "Rút lui dứt khoát — một câu rồi trả sân cho nhóm, không nán lại giải thích.", "stages": "A,B,C,D,E,F", "note": "Thầy Minh: “COACH KHÔNG CAN THIỆP SÂU QUÁ — 1 CÂU LÀ TUYỆT VỜI, 3 CÂU HƠI TỆ” · Bước 5 Lean Out: “rút lui dứt khoát”"},
+  {"id": "i_coach_can_thiep_nhieu_diem_cung_mot_luc", "name": "Coach – Can thiệp nhiều điểm cùng một lúc", "stream": "Coach", "what": "[Tự vấn] Lần can thiệp này mình đang xử mấy điểm?", "so_what": "Nếu gộp nhiều điểm vào một lần thì nhóm nhớ được điểm nào?", "now_what": "Chọn đúng một điểm nổi cộm nhất, để các điểm còn lại cho lần sau.", "stages": "A,B,C,D,E,F", "note": "Thầy Minh: “Vừa xúc động, vừa hiệu suất nhóm, vừa đồng thuận vấn đề → không hiệu quả” · Bước 0: “Chỉ chọn 1 điểm duy nhất tại 1 thời điểm”"},
+  {"id": "i_coach_can_thiep_vi_coach_thay_quan_trong", "name": "Coach – Can thiệp vì coach thấy quan trọng, không phải nhóm cần", "stream": "Coach", "what": "[Tự vấn] Điểm can thiệp cụ thể là gì — và nó đang cản trở việc làm việc của nhóm ở chỗ nào?", "so_what": "Mình thấy nó quan trọng, hay team thực sự cần?", "now_what": "Nếu nhóm vẫn chạy được thì ngồi yên, ghi lại, chờ điểm rõ hơn.", "stages": "A,B,C,D,E,F", "note": "Thầy Minh: “Can thiệp xuất hiện quá nhiều thì nguy hiểm. Tôi thấy nó quan trọng, hay team cần, thực sự cần?”"},
+  {"id": "i_coach_tuong_tac_voi_mot_ca_nhan_ma_khong", "name": "Coach – Tương tác với một cá nhân mà không tạo sự học cho cả nhóm", "stream": "Coach", "what": "[Tự vấn] Mình làm cái này vì ai — vì một người hay vì đội nhóm?", "so_what": "Nếu chỉ một người được lợi thì năm người còn lại đang làm gì?", "now_what": "Mở câu hỏi ra cho cả nhóm, hoặc nói rõ điều cả nhóm học được từ trao đổi này.", "stages": "B,C,F", "note": "Thầy Minh: “Tương tác bất kỳ cái gì cho 1 cá nhân thì đều nhằm cung cấp sự học cho cả nhóm. Vì cả nhóm là OK.”"},
+  {"id": "i_coach_bi_keo_vao_giai_quyet_van_de_hoac_", "name": "Coach – Bị kéo vào giải quyết vấn đề, hoặc được hỏi lời khuyên", "stream": "Coach", "what": "[Tự vấn] Mình sắp trả lời nội dung hay sắp điều phối quy trình?", "so_what": "Nếu coach giải hộ thì trí tuệ tập thể còn chỗ nào?", "now_what": "Điều hướng câu hỏi về cho nhóm: “Theo nhóm chúng ta thì sao?”", "stages": "B,C,E", "note": "Thầy Minh: “Công việc của mình không phải tham gia giải quyết vấn đề, mà là điều hành khiến nó diễn ra theo 1 quy trình” · Checklist mục 12"},
+  {"id": "i_coach_su_co_rot_mang_viec_dot_xuat_phat_", "name": "Coach – Sự cố — rớt mạng, việc đột xuất phát sinh", "stream": "Coach", "what": "[Giao lại cho nhóm] Trong thời gian này, nhóm chúng ta sẽ làm gì?", "so_what": "Nếu phiên dừng lại mỗi khi coach vắng thì nhóm đang phụ thuộc vào điều gì?", "now_what": "Nhóm tự quyết định và tiếp tục — mình quay lại sau.", "stages": "A,B,C,D,E,F", "note": "Thầy Minh: “Khi mất mạng → can thiệp thì hỏi: trong thời gian này nhóm chúng ta sẽ làm gì? Nhóm tự quyết định.”"},
+  {"id": "i_coach_vuot_gio_thoi_gian_phan_bo_lech", "name": "Coach – Vượt giờ — thời gian phân bổ lệch", "stream": "Coach", "what": "[Tự vấn + báo nhóm] Chúng ta còn bao nhiêu phút, và còn phải đi qua những gì?", "so_what": "Nếu phần lắng đọng bị cắt thì chúng ta mất đi phần nào của phiên?", "now_what": "Thông báo rõ mốc còn lại và chốt bước, bảo vệ thời gian cho phần học.", "stages": "B,C,D,E", "note": "Thầy Minh: “Toàn buổi 65p — PP 2 phút giới thiệu, 40p làm sáng tỏ vấn đề, 20p lắng đọng học tập. Thông báo rõ.” · Trách nhiệm Coach số 2 — Hold the time"},
+  {"id": "i_coach_nhom_chua_chot_ma_minh_da_cho_di_t", "name": "Coach – Nhóm chưa chốt mà mình đã cho đi tiếp", "stream": "Coach", "what": "[Tự vấn] Mình đã cho nhóm tự xác định họ có đồng thuận chưa?", "so_what": "Nếu bỏ qua bước này thì phần sau của phiên dựng trên nền gì?", "now_what": "Quay lại ba tiêu chuẩn: nhóm đang làm việc thế nào · làm gì tốt · làm gì để tốt hơn.", "stages": "C", "note": "Checklist Coach mục 8 và 9 · Thầy Minh: “SHU 100%” — làm đủ, làm đúng trình tự trước khi sáng tạo"},
 ];
-const STREAMS = ['Problem','Team','Question','Action','Learning','Coach & Logistics'];
+const STREAMS = ['Problem','Group','Question','Action','Learning','Coach'];
+const STREAM_VI = {Problem:'Vấn đề thực tế', Group:'Nhóm 4–8 người', Question:'Câu hỏi tươi mới',
+                   Action:'Hành động', Learning:'Học tập', Coach:'Nhà huấn luyện'};
 
 const DEFAULT_STAGES = [
   {id:'A',name:'Giới thiệu Học Hành Động',en:'Introduce Action Learning',duration:3,
@@ -1420,8 +1439,39 @@ function mergeLibrary(server){
   const map = {};
   seed.competencies.concat(seed.interventions).forEach(x => map[x.id] = x);
   const sv = (server && server.competencies || []).concat(server && server.interventions || []);
-  sv.forEach(x => { if(x && x.id) map[x.id] = Object.assign({}, map[x.id] || {}, x); });
+  /* Quy tắc gộp:
+     - Mục MẶC ĐỊNH chưa bị sửa  -> NỘI DUNG lấy theo bộ trong app (để bản cập nhật mới có hiệu lực),
+                                    chỉ lấy từ Sheet phần TRẠNG THÁI: đã dùng mấy lần, hiệu quả, đã ẩn.
+     - Mục đã sửa / của tôi / đã xoá -> bản trên Sheet thắng hoàn toàn. */
+  sv.forEach(x => {
+    if(!x || !x.id) return;
+    const seedIt = map[x.id];
+    if(seedIt && x.origin === 'default'){
+      map[x.id] = Object.assign({}, seedIt, {
+        hidden      : !!x.hidden,
+        used        : Number(x.used) || 0,
+        ok          : Number(x.ok)   || 0,
+        created_at  : x.created_at  || seedIt.created_at,
+        updated_at  : x.updated_at  || seedIt.updated_at,
+        from_session: x.from_session || ''
+      });
+    } else {
+      map[x.id] = Object.assign({}, seedIt || {}, x);
+    }
+  });
   const all = Object.keys(map).map(k => map[k]);
+
+  // Dọn điểm can thiệp của BỘ MẶC ĐỊNH ĐỜI CŨ (không còn trong bộ hiện tại).
+  // Chưa dùng lần nào -> xoá hẳn. Đã dùng rồi -> giữ lại nhưng ẩn đi, để phiên cũ vẫn tra được.
+  const curIds = {};
+  DEFAULT_INTERVENTIONS.forEach(x => curIds[x.id] = 1);
+  all.forEach(x => {
+    if(x.type !== 'intervention' || curIds[x.id]) return;
+    if(x.origin !== 'default' && x.origin !== 'edited') return;
+    if((Number(x.used)||0) > 0){ x.hidden = true; x.note = '[bộ cũ] ' + (x.note||''); }
+    else x.origin = 'removed';
+  });
+
   return {
     competencies : all.filter(x => x.type === 'competency'),
     interventions: all.filter(x => x.type === 'intervention')
@@ -1443,10 +1493,11 @@ async function libLoad(){
   try {
     const res = await apiGet('get_library');
     if(res && res.status === 'success' && res.library){
-      const hasServer = (res.library.interventions||[]).length > 0;
+      const nServer = (res.library.competencies||[]).length + (res.library.interventions||[]).length;
       LIB = mergeLibrary(res.library);
       libSaveOffline();
-      if(!hasServer) libPush();          // lần đầu: đẩy bộ mặc định lên Sheet
+      // Sheet thiếu mục so với bộ hiện tại (lần đầu, hoặc app vừa bổ sung điểm mới) -> đẩy lên luôn
+      if(nServer !== LIB.competencies.length + LIB.interventions.length) libPush();
       setLibStatus('ok');
     } else setLibStatus('local');
   } catch(e){ setLibStatus('local'); }
@@ -1473,8 +1524,8 @@ function setLibStatus(st){
 }
 
 /* danh sách đang dùng được (bỏ mục đã ẩn) */
-function libComps(){ return LIB.competencies.filter(x => !x.hidden); }
-function libInters(){ return LIB.interventions.filter(x => !x.hidden); }
+function libComps(){ return LIB.competencies.filter(x => !x.hidden && x.origin !== 'removed'); }
+function libInters(){ return LIB.interventions.filter(x => !x.hidden && x.origin !== 'removed'); }
 function libFind(id){ return LIB.competencies.concat(LIB.interventions).find(x => x.id === id); }
 
 function libAddComp(name, fromSession){
@@ -1531,7 +1582,8 @@ function libToggleEdit(id){ libEditing = (libEditing === id ? null : id); render
 function libField(id, key, v){
   const it = libFind(id); if(!it) return;
   it[key] = v; it.updated_at = nowISO();
-  if(it.origin === 'default') it.edited = true;
+  // đánh dấu đã sửa qua chính cột origin -> đi được qua Sheet, không cần thêm cột
+  if(it.origin === 'default') it.origin = 'edited';
   libSaveSoon();
 }
 function libToggleHide(id){
@@ -1541,20 +1593,37 @@ function libToggleHide(id){
 }
 function libDelete(id){
   const it = libFind(id); if(!it) return;
-  if(it.origin === 'default'){ showToast('Mục mặc định chỉ ẩn được, không xoá','warning'); return; }
-  if(!confirm('Xoá hẳn "' + it.name + '" khỏi thư viện?')) return;
-  ['competencies','interventions'].forEach(k => {
-    const i = LIB[k].findIndex(x => x.id === id); if(i >= 0) LIB[k].splice(i,1);
-  });
+  const used = Number(it.used) || 0;
+  if(used > 0){
+    if(!confirm('"' + it.name + '" đã được dùng ' + used + ' lần trong các phiên trước.\n\n' +
+       'Xoá hẳn sẽ mất phần thống kê đó. Nên ẩn đi thay vì xoá.\n\nVẫn xoá hẳn?')) return;
+  } else if(!confirm('Xoá "' + it.name + '" khỏi thư viện?')) return;
+
+  if(it.origin === 'custom'){
+    // mục của mình -> xoá hẳn khỏi danh sách
+    ['competencies','interventions'].forEach(k => {
+      const i = LIB[k].findIndex(x => x.id === id); if(i >= 0) LIB[k].splice(i,1);
+    });
+  } else {
+    // mục mặc định -> đánh dấu đã xoá để lần mở sau không mọc lại
+    it.origin = 'removed'; it.hidden = true; it.updated_at = nowISO();
+  }
   libEditing = null; libSaveSoon(); renderLibraryScreen();
+  showToast('🗑 Đã xoá khỏi thư viện', 'success');
+}
+function libUndelete(id){
+  const it = libFind(id); if(!it) return;
+  it.origin = 'default'; it.hidden = false; it.updated_at = nowISO();
+  libSaveSoon(); renderLibraryScreen();
+  showToast('↩ Đã khôi phục', 'success');
 }
 function libRestore(id){
-  const it = libFind(id); if(!it || it.origin !== 'default') return;
+  const it = libFind(id); if(!it || it.origin !== 'edited') return;
   const src = (it.type === 'competency')
     ? {name: it.name}
     : DEFAULT_INTERVENTIONS.find(x => x.id === it.id);
   if(!src){ showToast('Không tìm thấy bản gốc','warning'); return; }
-  Object.assign(it, src); it.edited = false; it.updated_at = nowISO();
+  Object.assign(it, src); it.origin = 'default'; it.updated_at = nowISO();
   libSaveSoon(); renderLibraryScreen();
   showToast('↩ Đã về bản mặc định','success');
 }
@@ -1580,7 +1649,7 @@ function renderLibraryScreen(){
   const sort = (document.getElementById('libSort')||{}).value || 'name';
   const showHidden = (document.getElementById('libShowHidden')||{}).checked;
   let list = (libTab === 'competency' ? LIB.competencies : LIB.interventions).slice();
-  if(!showHidden) list = list.filter(x => !x.hidden);
+  if(!showHidden) list = list.filter(x => !x.hidden && x.origin !== 'removed');
   if(q) list = list.filter(x => noAccent(x.name + ' ' + (x.what||'') + ' ' + (x.so_what||'') + ' ' + (x.now_what||'')).indexOf(q) >= 0);
   const rate = x => (Number(x.used)||0) ? (Number(x.ok)||0)/(Number(x.used)||1) : -1;
   list.sort((a,b) => {
@@ -1591,8 +1660,8 @@ function renderLibraryScreen(){
     return a.name.localeCompare(b.name, 'vi');
   });
 
-  document.getElementById('libTabC').innerHTML = `⚡ Năng lực (${LIB.competencies.filter(x=>!x.hidden).length})`;
-  document.getElementById('libTabI').innerHTML = `🎯 Điểm can thiệp (${LIB.interventions.filter(x=>!x.hidden).length})`;
+  document.getElementById('libTabC').innerHTML = `⚡ Năng lực (${libComps().length})`;
+  document.getElementById('libTabI').innerHTML = `🎯 Điểm can thiệp (${libInters().length})`;
 
   if(!list.length){ box.innerHTML = '<div class="recog-empty">Không thấy mục nào.</div>'; return; }
 
@@ -1604,15 +1673,18 @@ function renderLibraryScreen(){
     const editing = libEditing === x.id;
     let h = `<div class="lib-item ${x.hidden?'off':''}">
       <div class="lib-h">
-        <span class="lib-name">${x.hidden?'⊘ ':''}${esc(x.name)}</span>
-        <span class="lib-badge ${x.origin==='custom'?'custom':''}">${x.origin==='custom'?'của tôi':'mặc định'}</span>
-        ${x.edited?'<span class="lib-badge edited">đã sửa</span>':''}
+        <span class="lib-name">${x.origin==='removed'?'🗑 ':(x.hidden?'⊘ ':'')}${esc(x.name)}</span>
+        <span class="lib-badge ${x.origin==='custom'?'custom':''}">${
+          {removed:'đã xoá', custom:'của tôi', edited:'mặc định'}[x.origin] || 'mặc định'}</span>
+        ${x.origin==='edited'?'<span class="lib-badge edited">đã sửa</span>':''}
+        ${x.stream?`<span class="lib-badge">${esc(x.stream)}</span>`:''}
         <span class="lib-use">${use}</span>
-        <span class="lib-acts">
-          <button class="btn-mini" onclick="libToggleEdit('${x.id}')">${editing?'▴ đóng':'✎ sửa'}</button>
-          ${x.edited?`<button class="btn-mini" onclick="libRestore('${x.id}')" title="Về bản gốc">↩</button>`:''}
-          <button class="btn-mini" onclick="libToggleHide('${x.id}')">${x.hidden?'↩ hiện lại':'⊘ ẩn'}</button>
-          ${x.origin==='custom'?`<button class="btn-mini" style="color:var(--danger)" onclick="libDelete('${x.id}')">🗑</button>`:''}
+        <span class="lib-acts">${ x.origin==='removed'
+          ? `<button class="btn-mini" onclick="libUndelete('${x.id}')">↩ Khôi phục</button>`
+          : `<button class="btn-mini" onclick="libToggleEdit('${x.id}')">${editing?'▴ đóng':'✎ sửa'}</button>
+             ${x.origin==='edited'?`<button class="btn-mini" onclick="libRestore('${x.id}')" title="Về bản gốc">↩ gốc</button>`:''}
+             <button class="btn-mini" onclick="libToggleHide('${x.id}')">${x.hidden?'↩ hiện lại':'⊘ ẩn'}</button>
+             <button class="btn-mini" style="color:var(--danger)" onclick="libDelete('${x.id}')">🗑 xoá</button>` }
         </span>
       </div>`;
     if(x.type === 'intervention' && !editing){
@@ -2528,6 +2600,14 @@ const SAY_KEYS = [
   ['nowWhat', 'NOW WHAT',    'Định hướng hành động ngay'],
   ['leanOut', '🫲 Lean Out', 'Trao lại không gian, rút lui dứt khoát']
 ];
+/* Nhóm Coach là TỰ VẤN — không nói ra với nhóm nên bỏ Lean In / Lean Out */
+const SAY_KEYS_SELF = [
+  ['what',    '① Tự vấn', 'Câu mình tự soi mình'],
+  ['soWhat',  '② Vì sao', 'Điều này ảnh hưởng gì tới nhóm'],
+  ['nowWhat', '③ Tự sửa', 'Mình làm khác đi ngay bây giờ']
+];
+function isSelfCard(c){ return !!(c && c.point && c.point.stream === 'Coach'); }
+function sayKeysFor(c){ return isSelfCard(c) ? SAY_KEYS_SELF : SAY_KEYS; }
 
 function newCard(point){
   const c = {
@@ -2764,7 +2844,7 @@ function renderIntCard(){
     const opt = x => {
       const ef = x.used ? `${x.used} lần · ${Math.round((x.ok/x.used)*100)}% ✓` : '';
       return `<div class="int-opt ${c.point&&c.point.id===x.id?'on':''}" onclick="intChoosePoint('${x.id}')">
-        <span class="st ${esc(x.stream.split(' ')[0])}">${esc(x.stream.split(' ')[0])}</span>
+        <span class="st ${esc(x.stream)}" title="${esc(STREAM_VI[x.stream]||'')}">${esc(x.stream)}</span>
         <span>${esc(x.name.split('–').slice(1).join('–').trim() || x.name)}</span>
         <span class="ef">${ef}</span></div>`;
     };
@@ -2780,7 +2860,7 @@ function renderIntCard(){
     if(!q && sig.length){
       h += `<div class="int-group">💡 Đang xảy ra ngay lúc này</div>` + sig.map(x =>
         `<div class="int-opt sig" onclick="intChoosePoint('${x.point.id}')">
-           <span class="st ${esc(x.point.stream.split(' ')[0])}">${esc(x.point.stream.split(' ')[0])}</span>
+           <span class="st ${esc(x.point.stream)}">${esc(x.point.stream)}</span>
            <span><span class="int-sig-why">⚠ ${esc(x.why)}</span>${esc(x.point.name)}</span></div>`).join('');
     }
     h += `<div class="int-group">${q ? 'Kết quả tìm' : (near.length ? 'Hay gặp ở bước '+stageId+' đang chạy' : 'Tất cả')} · ${show.length} mục</div>`;
@@ -2801,16 +2881,19 @@ function renderIntCard(){
   }
 
   if(c.step === 3){
-    h += `<div class="int-sec-lab">③ Can thiệp bằng gì — tích dần lúc đang nói</div>
-      <div class="int-hint">Ba câu lấy từ thư viện, sửa thẳng tại đây được.</div>`;
-    h += SAY_KEYS.map(([k, lab, hint]) => `
+    const self = isSelfCard(c);
+    h += `<div class="int-sec-lab">③ ${self ? 'Tự sửa — tích dần khi làm được' : 'Can thiệp bằng gì — tích dần lúc đang nói'}</div>
+      <div class="int-hint">${self
+        ? 'Nhóm Coach là điểm tự vấn của chính mình, không nói ra với nhóm — nên không có Lean In / Lean Out.'
+        : 'Ba câu lấy từ thư viện, sửa thẳng tại đây được.'}</div>`;
+    h += sayKeysFor(c).map(([k, lab, hint]) => `
       <label class="int-say ${c.ticks[k]?'done':''}">
         <input type="checkbox" ${c.ticks[k]?'checked':''} onchange="intTick('${k}',this.checked)">
         <span class="int-say-c"><span class="int-say-k">${lab} — ${hint}</span>
           <textarea class="int-say-t" rows="2" oninput="intSay('${k}',this.value);this.style.height='auto';this.style.height=this.scrollHeight+'px'"
             placeholder="…">${esc(c.says[k])}</textarea></span></label>`).join('');
     h += c.doneAt == null
-      ? `<button class="int-go" onclick="intGo()">▶ ĐÃ CAN THIỆP XONG — ghi mốc ${curMinute()}′</button>`
+      ? `<button class="int-go" onclick="intGo()">▶ ${self?'ĐÃ TỰ SỬA XONG':'ĐÃ CAN THIỆP XONG'} — ghi mốc ${curMinute()}′</button>`
       : `<div class="int-hint" style="margin-top:10px">Đã can thiệp lúc <b>${c.doneAt}′</b>.</div>
          <button class="int-go watch" onclick="intStep(4)">👁 Sang bước theo dõi</button>`;
   }
@@ -3034,7 +3117,7 @@ function renderIntStats(){
   </div>`;
 
   h += cs.map((c,i) => {
-    const says = SAY_KEYS.filter(([k]) => (c.says[k]||'').trim())
+    const says = sayKeysFor(c).filter(([k]) => (c.says[k]||'').trim())
       .map(([k,lab]) => `<div class="is-say"><span class="is-k">${lab}</span> ${esc(c.says[k])}${c.ticks[k]?' <span class="is-tick">✓ đã nói</span>':''}</div>`).join('');
     return `<div class="is-card ${c.doneAt==null?'wait':''}">
       <div class="is-h">
@@ -3061,7 +3144,7 @@ function intReadText(){
     L.push(`── Thẻ ${i+1} · bước ${c.stage||'?'} · định ${c.createdAt}′${c.doneAt!=null?` → can thiệp ${c.doneAt}′`:' · CHƯA LÀM'} ──`);
     if(c.point) L.push(`Điểm can thiệp : ${c.point.name}`);
     if(c.want)  L.push(`Muốn thấy      : ${c.want}`);
-    SAY_KEYS.forEach(([k,lab]) => { if((c.says[k]||'').trim()) L.push(`${lab.padEnd(12)} : ${c.says[k]}`); });
+    sayKeysFor(c).forEach(([k,lab]) => { if((c.says[k]||'').trim()) L.push(`${lab.padEnd(12)} : ${c.says[k]}`); });
     if(c.verdict) L.push(`Kết quả        : ${VERDICT_LABEL[c.verdict]}`);
     if(c.followNote) L.push(`Ghi thêm       : ${c.followNote}`);
     L.push('');
