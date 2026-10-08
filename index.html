@@ -209,6 +209,7 @@ input,textarea,select{font-family:var(--font);}
 .sw-total b{color:var(--primary);font-size:13px;}
 .sw-chips{display:flex;gap:4px;flex-wrap:wrap;width:100%;padding-top:2px;align-items:center;}
 .fs-group{display:inline-flex;gap:2px;}
+.sw-chip-list{display:contents;}
 .fs-btn{padding:2px 7px!important;font-size:10px!important;min-width:26px;}
 .sw-chip{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;background:var(--gray-bg);color:var(--gray-mid);border:1.5px solid transparent;}
 .sw-chip.done{background:rgba(0,167,157,.12);color:var(--teal);}
@@ -764,6 +765,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
           <div id="swLeft"></div>
         </div>
         <div class="sw-chips" id="swChips">
+          <span class="sw-chip-list" id="swStageChips"></span>
           <span style="flex:1"></span>
           <span class="fs-group">
             <button class="btn-mini fs-btn" onclick="stepNoteFs(-1)" title="Chữ nhỏ hơn">A⁻</button>
@@ -1390,7 +1392,7 @@ function renderSw(){
   document.getElementById('swLeft').innerHTML =
     `còn <b style="color:var(--primary)">${Math.max(0, totalPlan-elapsedMin)}′</b>`;
 
-  document.getElementById('swChips').innerHTML = r.stages.map((s,k) => {
+  document.getElementById('swStageChips').innerHTML = r.stages.map((s,k) => {
     const done = r.lapAt && r.lapAt[k] != null;
     const cls = k===i ? 'cur' : (done ? 'done' : '');
     const lbl = done ? `${s.id}✓${s.time_actual||0}′` : `${s.id} ${s.duration||0}′`;
@@ -1946,23 +1948,41 @@ function ensureSessionStructure(){
   });
   if(!s.checklist_after || !s.checklist_after.length) s.checklist_after = initChecklistAfter();
 }
+// phiên nào đang thực sự hiển thị trên từng tab — chống ghi nhầm dữ liệu sang phiên khác
+let tabLoadedFor = {before:null, during:null, after:null};
+function sameSession(k){ return currentSession && tabLoadedFor[k] === currentSession.session_id; }
 function openDetailScreen(tab){
   document.getElementById('homeScreen').classList.add('hidden');
   document.getElementById('detailScreen').classList.remove('hidden');
   document.getElementById('detailSessionId').textContent = currentSession.session_id;
   const L = {draft:'📝 Đang chuẩn bị', in_progress:'🔄 Đang diễn ra', done:'✅ Hoàn thành'};
   document.getElementById('detailStatusText').textContent = L[currentSession.status] || '';
-  loadBeforeTab(); loadDuringTab(); loadAfterTab();
+  // mỗi tab nạp độc lập: một tab lỗi KHÔNG được chặn tab sau,
+  // nếu không các ô của phiên trước còn nguyên trên màn hình và bị ghi sang phiên này
+  tabLoadedFor = {before:null, during:null, after:null};
+  [['before','Trước phiên',loadBeforeTab],['during','Trong phiên',loadDuringTab],['after','Sau phiên',loadAfterTab]]
+    .forEach(([k,ten,fn]) => {
+      try { fn(); tabLoadedFor[k] = currentSession.session_id; }
+      catch(e){ console.error('Lỗi nạp tab '+ten, e); showToast('⚠️ Lỗi nạp tab '+ten+' — dữ liệu tab này sẽ KHÔNG bị ghi đè','warning'); }
+    });
   switchTab(tab); window.scrollTo(0,0);
   if(swState().running) startTick();
 }
 function goHome(){
   if(dirty && !confirm('Còn thay đổi chưa lưu. Vẫn quay lại?')) return;
   stopTick(); currentSession = null; dirty = false;
+  tabLoadedFor = {before:null, during:null, after:null};
+  clearDetailFields();
   document.getElementById('autosaveDot').textContent = '';
   document.getElementById('homeScreen').classList.remove('hidden');
   document.getElementById('detailScreen').classList.add('hidden');
   renderHome();
+}
+function clearDetailFields(){
+  ['b_date','b_coach','b_client','b_time_start','b_time_end','b_location',
+   'd_pp','d_coach2','a_reflect1','a_reflect2','a_reflect3','a_reflect4',
+   'a_hours','a_problem','a_personal','a_testimonial']
+    .forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
 }
 function switchTab(tab){
   activeTab = tab;
@@ -2006,6 +2026,7 @@ function loadBeforeTab(){
 function toggleCB(i,v){ currentSession.checklist_before[i].checked = v; document.getElementById('cbItem'+i).classList.toggle('checked',v); markDirty(); }
 function updateCBNote(i,v){ currentSession.checklist_before[i].note = v; markDirty(); }
 function collectBefore(){
+  if(!sameSession('before')) return;
   const s = currentSession;
   s.session_date = document.getElementById('b_date').value;
   s.coach_name = document.getElementById('b_coach').value;
@@ -2031,17 +2052,21 @@ function initSessionRunning(){
            stages: initStages(), timer:{elapsed:0,running:false,lastTick:null},
            activeStage:0, lapAt:{}, recogManual:[], recogSelf:{}, recogPeer:{}, interventions:[] };
 }
+function setVal(id,v){ const el=document.getElementById(id); if(el) el.value = v; }
+function setTxt(id,v){ const el=document.getElementById(id); if(el) el.textContent = v; }
 function loadDuringTab(){
   const r = currentSession.session_running;
-  document.getElementById('d_pp').value = r.pp_name || '';
-  document.getElementById('d_coach2').value = r.coach_name || '';
+  setVal('d_pp', r.pp_name || '');
+  setVal('d_coach2', r.coach_name || '');
   const c = r.pp_competency || '';
-  document.getElementById('ppCompText').textContent = c || '— Chọn 1 năng lực —';
-  document.getElementById('ppCompText').className = c ? 'comp-selected' : '';
-  document.getElementById('flowStrip').classList.toggle('hidden', flowHidden);
-  document.getElementById('btnQCol').textContent = hideQCol ? 'Hiện cột câu hỏi' : 'Ẩn cột câu hỏi';
+  const pc = document.getElementById('ppCompText');
+  if(pc){ pc.textContent = c || '— Chọn 1 năng lực —'; pc.className = c ? 'comp-selected' : ''; }
+  const fs = document.getElementById('flowStrip');
+  if(fs) fs.classList.toggle('hidden', flowHidden);
+  setTxt('btnQCol', hideQCol ? 'Hiện cột câu hỏi' : 'Ẩn cột câu hỏi');
   toggleParticipants(localStorage.getItem('al_foldPart') === '1');
-  document.getElementById('helpBar').classList.toggle('hidden', localStorage.getItem('al_help') !== '1');
+  const hb = document.getElementById('helpBar');
+  if(hb) hb.classList.toggle('hidden', localStorage.getItem('al_help') !== '1');
   renderMembers(); renderObservers(); renderSessionTable(); renderSw(); renderRecog(); renderFlow(); renderIntStrip();
 }
 function toggleParticipants(force){
@@ -2064,6 +2089,7 @@ function renderPartSummary(){
 }
 function onPPNameChange(v){ currentSession.session_running.pp_name = v; renderSessionTable(); renderRecog(); renderPartSummary(); markDirty(); }
 function collectDuring(){
+  if(!sameSession('during')) return;
   const r = currentSession.session_running;
   r.pp_name = document.getElementById('d_pp').value;
   r.coach_name = document.getElementById('d_coach2').value;
@@ -2245,7 +2271,7 @@ function toggleHelp(){
 function toggleQCol(){
   hideQCol = !hideQCol;
   localStorage.setItem('al_hideQ', hideQCol ? '1' : '0');
-  document.getElementById('btnQCol').textContent = hideQCol ? 'Hiện cột câu hỏi' : 'Ẩn cột câu hỏi';
+  setTxt('btnQCol', hideQCol ? 'Hiện cột câu hỏi' : 'Ẩn cột câu hỏi');
   renderSessionTable();
 }
 function toggleQOpen(si){
@@ -3301,6 +3327,7 @@ function loadAfterTab(){
 }
 function toggleCA(i,v){ currentSession.checklist_after[i].checked = v; document.getElementById('caItem'+i).classList.toggle('checked',v); markDirty(); }
 function collectAfter(){
+  if(!sameSession('after')) return;
   const s = currentSession;
   s.reflect_1 = document.getElementById('a_reflect1').value;
   s.reflect_2 = document.getElementById('a_reflect2').value;
