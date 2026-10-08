@@ -869,7 +869,9 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
         </div>
         <div class="form-col">
           <label class="form-label">Số giờ coaching (Hours)</label>
-          <input type="number" id="a_hours" class="form-input" placeholder="VD: 1.5" step="0.5" min="0">
+          <input type="text" inputmode="decimal" id="a_hours" class="form-input" placeholder="VD: 1.5 — gõ dấu chấm hoặc phẩy đều được"
+            oninput="markDirty()" onblur="this.value=fmtHours(this.value)">
+          <div id="a_hours_warn" class="hidden" style="margin-top:4px;font-size:11px;color:#b45309;"></div>
         </div>
       </div>
       <div class="form-full">
@@ -1771,6 +1773,20 @@ function toTimeStr(v){
     if(!isNaN(d)) return p2(d.getHours())+':'+p2(d.getMinutes()); }
   return String(v);
 }
+// Số giờ coaching: chỉ nhận một con số 0–24. Chuỗi ISO, ngày tháng hay chữ đều bị loại,
+// vì trước đây Google Sheets đổi "1.5" thành ngày 1/5 rồi báo cáo cộng thành 2026 giờ.
+function parseHours(v){
+  if(v === 0) return 0;
+  if(v == null || v === '') return null;
+  if(v instanceof Date) return null;
+  let t = String(v).trim().replace(',', '.');
+  if(/^\d{4}-\d{2}-\d{2}/.test(t)) return null;      // 2026-05-01 hoặc ISO -> dữ liệu hỏng
+  t = t.replace(/[^0-9.]/g, '');
+  if(!t || (t.match(/\./g)||[]).length > 1) return null;
+  const n = parseFloat(t);
+  return (isFinite(n) && n >= 0 && n <= 24) ? n : null;
+}
+function fmtHours(v){ const n = parseHours(v); return n == null ? '' : String(n); }
 function dateVN(v){ const x = toDateStr(v); if(!x) return '';
   const m = x.match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? m[3]+'/'+m[2]+'/'+m[1] : x; }
 function normSession(s){
@@ -1778,7 +1794,10 @@ function normSession(s){
   s.session_date = toDateStr(s.session_date);
   s.time_start   = toTimeStr(s.time_start);
   s.time_end     = toTimeStr(s.time_end);
-  if(s.coaching_hours !== '' && s.coaching_hours != null) s.coaching_hours = String(s.coaching_hours);
+  const _h = parseHours(s.coaching_hours);
+  s.coaching_hours_bad = (s.coaching_hours !== '' && s.coaching_hours != null && _h == null)
+    ? String(s.coaching_hours) : (s.coaching_hours_bad || '');
+  s.coaching_hours = _h == null ? '' : String(_h);
   ['created_at','updated_at'].forEach(k => { if(s[k] instanceof Date) s[k] = s[k].toISOString(); });
   return s;
 }
@@ -3351,6 +3370,12 @@ function loadAfterTab(){
   document.getElementById('a_reflect3').value = s.reflect_3 || '';
   document.getElementById('a_reflect4').value = s.reflect_4 || '';
   document.getElementById('a_hours').value = s.coaching_hours || '';
+  const hw = document.getElementById('a_hours_warn');
+  if(hw){
+    const bad = s.coaching_hours_bad;
+    hw.classList.toggle('hidden', !bad);
+    hw.textContent = bad ? ('⚠️ Giá trị cũ trong Sheet là "' + bad + '" — không phải số giờ. Nhập lại rồi bấm Lưu.') : '';
+  }
   document.getElementById('a_problem').value = s.problem_presented || '';
   document.getElementById('a_personal').value = s.personal_learning || '';
   document.getElementById('a_testimonial').value = s.testimonial || '';
@@ -3366,7 +3391,8 @@ function collectAfter(){
   s.reflect_2 = document.getElementById('a_reflect2').value;
   s.reflect_3 = document.getElementById('a_reflect3').value;
   s.reflect_4 = document.getElementById('a_reflect4').value;
-  s.coaching_hours = document.getElementById('a_hours').value;
+  s.coaching_hours = fmtHours(document.getElementById('a_hours').value);
+  if(s.coaching_hours) s.coaching_hours_bad = '';
   s.problem_presented = document.getElementById('a_problem').value;
   s.personal_learning = document.getElementById('a_personal').value;
   s.testimonial = document.getElementById('a_testimonial').value;
@@ -3546,7 +3572,7 @@ function doExport(){
   let body = '';
   let total = 0, rows = '';
   data.forEach(s => {
-    const h = parseFloat(s.coaching_hours) || 0; total += h;
+    const h = parseHours(s.coaching_hours) || 0; total += h;
     const gio = s.time_start ? ` <span style="color:#888">${e(toTimeStr(s.time_start))}</span>` : '';
     rows += `<tr><td>${dVN(s.session_date)}${gio}</td><td>${e(s.client_name)||'—'}</td><td>${e(s.session_id)}</td>
       <td>${e(s.problem_presented)||'—'}</td><td>${h? h : '<span style="color:#c00">thiếu</span>'}</td><td>${e(s.session_type)||'—'}</td></tr>`;
@@ -3566,7 +3592,7 @@ function doExport(){
     <div class="row"><span class="lbl">PP (Người trình bày):</span><span class="val">${e(r.pp_name)}</span></div>
     <div class="row"><span class="lbl">Hình thức:</span><span class="val">${e(s.format)||'—'}${s.time_start?' · '+e(toTimeStr(s.time_start))+' → '+e(toTimeStr(s.time_end)):''}</span></div>
     <div class="row"><span class="lbl">Loại phiên:</span><span class="val">${e(s.session_type)}</span></div>
-    <div class="row"><span class="lbl">Số giờ:</span><span class="val">${s.coaching_hours ? e(s.coaching_hours)+' giờ' : '<span style="color:#c00">chưa nhập ở tab Sau phiên</span>'}</span></div>`;
+    <div class="row"><span class="lbl">Số giờ:</span><span class="val">${parseHours(s.coaching_hours) != null ? e(fmtHours(s.coaching_hours))+' giờ' : '<span style="color:#c00">chưa nhập ở tab Sau phiên</span>'}</span></div>`;
 
     if(r.members && r.members.length){
       body += `<h3>Thành viên tham dự</h3><table><thead><tr><th>Vai trò</th><th>Tên</th><th>Năng lực rèn luyện</th></tr></thead><tbody>`;
