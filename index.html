@@ -1771,6 +1771,8 @@ function toTimeStr(v){
     if(!isNaN(d)) return p2(d.getHours())+':'+p2(d.getMinutes()); }
   return String(v);
 }
+function dateVN(v){ const x = toDateStr(v); if(!x) return '';
+  const m = x.match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? m[3]+'/'+m[2]+'/'+m[1] : x; }
 function normSession(s){
   if(!s || typeof s !== 'object') return s;
   s.session_date = toDateStr(s.session_date);
@@ -3433,17 +3435,34 @@ async function confirmDelete(){
 // ============================================================
 // EXPORT PDF
 // ============================================================
+let exportTargetId = null;
 function openExport(){ openExportFor(currentSession && currentSession.session_id); }
 function openExportFor(id){
-  document.querySelector('input[value="current"]').checked = true;
+  // nút 📄 trên thẻ phiên ở trang chủ đưa mã phiên vào đây — trước đây bị bỏ quên
+  // nên "1 phiên hiện tại" không biết xuất phiên nào
+  exportTargetId = id || (currentSession && currentSession.session_id) || null;
+  const cur = document.querySelector('input[value="current"]');
+  cur.disabled = !exportTargetId;
+  document.querySelector('input[value="' + (exportTargetId ? 'current' : 'all') + '"]').checked = true;
   updateExportUI(); document.getElementById('exportModal').classList.remove('hidden');
+}
+function exportOne(){
+  const id = exportTargetId || (currentSession && currentSession.session_id);
+  if(!id) return null;
+  if(currentSession && currentSession.session_id === id) return currentSession;
+  const src = sessions.length ? sessions : JSON.parse(localStorage.getItem('al_sessions_v3')||'[]');
+  return src.find(x => x.session_id === id) || null;
 }
 function closeExport(){ document.getElementById('exportModal').classList.add('hidden'); }
 function updateExportUI(){
   const type = (document.querySelector('input[name="exportType"]:checked')||{}).value;
   document.getElementById('exportDateRange').classList.toggle('hidden', type !== 'daterange');
   let preview = '';
-  if(type === 'current') preview = `Sẽ xuất: 1 phiên — ${(currentSession&&currentSession.session_id)||'—'}`;
+  if(type === 'current'){
+    const o = exportOne();
+    preview = o ? `Sẽ xuất 1 phiên: ${o.session_id}${o.client_name ? ' — '+o.client_name : ''}${o.session_date ? ' · '+dateVN(o.session_date) : ''}`
+                : 'Chưa chọn phiên nào — hãy mở một phiên, hoặc bấm 📄 ngay trên thẻ phiên ở trang chủ';
+  }
   else if(type === 'all') preview = `Sẽ xuất: Tất cả ${sessions.length} phiên`;
   else preview = 'Chọn khoảng thời gian phía trên';
   document.getElementById('exportPreview').textContent = preview;
@@ -3483,13 +3502,18 @@ function doExport(){
   }
   const src = normAll(sessions.length ? sessions : JSON.parse(localStorage.getItem('al_sessions_v3')||'[]'));
   let data = [];
-  if(type === 'current') data = currentSession ? [currentSession] : [];
+  if(type === 'current'){ const o = exportOne(); data = o ? [o] : []; }
   else if(type === 'all') data = src;
   else {
     const from = document.getElementById('expDateFrom').value, to = document.getElementById('expDateTo').value;
     data = src.filter(s => (!from || s.session_date >= from) && (!to || s.session_date <= to));
   }
-  if(!data.length){ showToast('Không có phiên nào để xuất!','warning'); return; }
+  if(!data.length){
+    showToast(type === 'current'
+      ? 'Chưa chọn phiên — mở một phiên rồi bấm 📄, hoặc bấm 📄 ngay trên thẻ phiên ở trang chủ'
+      : 'Không có phiên nào trong phạm vi đã chọn', 'warning');
+    return;
+  }
 
   const dateStr = new Date().toLocaleDateString('vi-VN');
   const e = esc;
@@ -3518,8 +3542,7 @@ function doExport(){
     @media print{body{padding:8px;}h1,h2,h3{page-break-after:avoid;}.ref,.rg{page-break-inside:avoid;}tr{page-break-inside:avoid;}}
   `;
 
-  const dVN = v => { const x = toDateStr(v); if(!x) return '—';
-    const m = x.match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? m[3]+'/'+m[2]+'/'+m[1] : x; };
+  const dVN = v => dateVN(v) || '—';
   let body = '';
   let total = 0, rows = '';
   data.forEach(s => {
