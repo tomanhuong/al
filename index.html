@@ -19,7 +19,7 @@
   --radius: 10px;
   --shadow: 0 2px 12px rgba(43,41,109,0.08);
   --shadow-lg: 0 8px 32px rgba(43,41,109,0.14);
-  --note-fs: 12px; --note-lh: 1.45;
+  --note-fs: 11px; --note-lh: 1.40;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{font-size:16px;scroll-behavior:smooth;}
@@ -60,6 +60,26 @@ input,textarea,select{font-family:var(--font);}
 .btn-clear:hover{color:var(--danger);border-color:var(--danger);}
 .btn-create{width:100%;padding:14px;background:var(--accent);color:var(--primary);font-weight:800;font-size:15px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;box-shadow:0 2px 8px rgba(253,185,19,0.3);}
 .btn-create:hover{background:#f0a800;transform:translateY(-1px);}
+.btn-lib{padding:14px 20px;background:var(--primary);color:var(--white);font-weight:800;font-size:15px;border-radius:var(--radius);white-space:nowrap;box-shadow:var(--shadow);}
+.btn-lib:hover{background:var(--primary-light);}
+.lib-item{border:1.5px solid var(--gray-border);border-radius:9px;padding:10px 13px;margin-bottom:8px;}
+.lib-item.off{opacity:.55;background:var(--gray-bg);}
+.lib-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.lib-name{font-size:13.5px;font-weight:700;color:var(--primary);flex:1;min-width:140px;}
+.lib-badge{font-size:9.5px;font-weight:800;padding:1px 7px;border-radius:9px;background:var(--gray-bg);color:var(--gray-mid);}
+.lib-badge.custom{background:rgba(0,167,157,.14);color:var(--teal);}
+.lib-badge.edited{background:var(--star-bg);color:#9a6b00;}
+.lib-use{font-size:11px;color:var(--gray-mid);white-space:nowrap;}
+.lib-use b{color:var(--primary);}
+.lib-use .hi{color:var(--teal);} .lib-use .lo{color:#e65100;}
+.lib-q{font-size:11.5px;color:var(--gray-text);line-height:1.45;margin-top:5px;padding-left:9px;border-left:2px solid var(--gray-border);}
+.lib-q b{font-size:9.5px;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.03em;}
+.lib-meta{font-size:10.5px;color:var(--gray-mid);margin-top:5px;}
+.lib-acts{display:flex;gap:5px;}
+.lib-edit{margin-top:8px;padding-top:8px;border-top:1px dashed var(--gray-border);}
+.lib-edit label{display:block;font-size:10px;font-weight:800;color:var(--gray-mid);text-transform:uppercase;margin:6px 0 2px;}
+.lib-edit input,.lib-edit textarea,.lib-edit select{width:100%;padding:7px 9px;border:1.5px solid var(--gray-border);border-radius:7px;font-size:12.5px;font-family:var(--font);outline:none;}
+.lib-edit textarea{min-height:46px;resize:vertical;line-height:1.45;}
 
 /* SESSION CARDS */
 .session-list{display:flex;flex-direction:column;gap:10px;}
@@ -145,7 +165,14 @@ input,textarea,select{font-family:var(--font);}
 .comp-list{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
 .comp-option{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;border:1.5px solid var(--gray-border);cursor:pointer;transition:all 0.2s;font-size:13px;}
 .comp-option:hover{border-color:var(--primary);background:rgba(43,41,109,0.04);}
-.comp-option.selected{border-color:var(--primary);background:rgba(43,41,109,0.08);font-weight:600;}
+.comp-option.selected{border-color:var(--primary);background:rgba(43,41,109,0.08);font-weight:700;}
+.comp-option.hi{border-color:var(--accent);background:#fffaf0;}
+.comp-option.add{border-style:dashed;color:var(--teal);font-weight:600;}
+.co-tick{width:16px;flex-shrink:0;color:var(--primary);font-weight:800;}
+.co-name{flex:1;min-width:0;}
+.co-tag{font-size:9.5px;font-weight:700;color:var(--teal);background:rgba(0,167,157,.12);padding:1px 6px;border-radius:9px;}
+.co-use{font-size:10px;color:var(--gray-mid);}
+#compSearch{margin-bottom:10px;}
 .comp-option input[type="radio"]{accent-color:var(--primary);width:15px;height:15px;flex-shrink:0;}
 .comp-other-wrap{display:flex;gap:8px;margin-top:4px;}
 .comp-other-input{flex:1;padding:9px 12px;border:1.5px solid var(--gray-border);border-radius:8px;font-size:13px;outline:none;}
@@ -176,9 +203,13 @@ input,textarea,select{font-family:var(--font);}
 .sw-stage-meta b.over{color:var(--danger);}
 .btn-lap{padding:9px 14px;border-radius:8px;background:var(--accent);color:var(--primary);font-size:12px;font-weight:800;white-space:nowrap;}
 .btn-lap:hover{background:#f0a800;}
-.sw-total{font-size:11px;color:var(--gray-mid);margin-left:auto;text-align:right;line-height:1.35;white-space:nowrap;}
+.sw-total{font-size:11px;color:var(--gray-mid);margin-left:auto;text-align:right;line-height:1.5;white-space:nowrap;}
+.sw-total-input{width:54px;padding:2px 4px;border:1.5px solid var(--gray-border);border-radius:6px;font-size:14px;font-weight:800;color:var(--primary);text-align:center;outline:none;}
+.sw-total-input:focus{border-color:var(--accent);}
 .sw-total b{color:var(--primary);font-size:13px;}
-.sw-chips{display:flex;gap:4px;flex-wrap:wrap;width:100%;padding-top:2px;}
+.sw-chips{display:flex;gap:4px;flex-wrap:wrap;width:100%;padding-top:2px;align-items:center;}
+.fs-group{display:inline-flex;gap:2px;}
+.fs-btn{padding:2px 7px!important;font-size:10px!important;min-width:26px;}
 .sw-chip{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;background:var(--gray-bg);color:var(--gray-mid);border:1.5px solid transparent;}
 .sw-chip.done{background:rgba(0,167,157,.12);color:var(--teal);}
 .sw-chip.cur{background:var(--primary);color:#fff;}
@@ -197,9 +228,9 @@ input,textarea,select{font-family:var(--font);}
 
 /* ===== SESSION TABLE ===== */
 .session-table-wrap{overflow:auto;background:var(--white);width:100%;max-height:calc(100vh - 360px);min-height:240px;}
-.session-table{width:100%;border-collapse:separate;border-spacing:0;min-width:1280px;table-layout:fixed;}
+.session-table{width:100%;border-collapse:separate;border-spacing:0;min-width:var(--tbl-min,1280px);table-layout:fixed;}
 .session-table th{background:var(--primary);color:var(--white);font-size:11px;font-weight:600;padding:6px 9px;text-align:left;vertical-align:middle;position:sticky;top:0;z-index:20;height:50px;}
-.session-table th.member-header{background:var(--primary-light);text-align:center;width:144px;}
+.session-table th.member-header{background:var(--primary-light);text-align:center;width:var(--col-w,144px);}
 .session-table th.col-stage{width:134px;left:0;z-index:30;}
 .session-table th.col-time{width:90px;left:134px;z-index:30;}
 .session-table th.col-questions{width:190px;left:224px;z-index:30;}
@@ -256,7 +287,7 @@ input,textarea,select{font-family:var(--font);}
 .mh-stat.warn{background:#e65100;color:#fff;}
 
 /* ===== NOTE CELL ===== */
-td.note-cell{padding:0;width:144px;}
+td.note-cell{padding:0;width:var(--col-w,144px);}
 .note-box{position:relative;height:32px;overflow:hidden;}
 tr.cur .note-box{height:var(--active-note-h,180px);}
 .note-view{position:absolute;inset:0;overflow-y:auto;padding:5px 6px;cursor:text;font-size:var(--note-fs);line-height:var(--note-lh);}
@@ -286,6 +317,67 @@ tr.cur .note-box{height:var(--active-note-h,180px);}
 .note-ta{background:transparent;color:var(--gray-text);outline:none;resize:none;overflow-y:auto;caret-color:var(--primary);z-index:2;}
 .note-hint{position:absolute;right:4px;bottom:2px;font-size:9px;color:var(--gray-mid);background:rgba(255,255,255,.9);padding:0 4px;border-radius:4px;z-index:3;pointer-events:none;}
 
+/* ===== DẢI + THẺ CAN THIỆP ===== */
+.int-strip{display:flex;align-items:center;gap:8px;padding:5px 14px;background:#fffaf2;border-bottom:1px solid var(--gray-border);font-size:11px;overflow-x:auto;white-space:nowrap;}
+.int-strip b{color:#9a6b00;}
+.int-lab{font-weight:800;color:#9a6b00;flex-shrink:0;}
+.btn-int-new{padding:3px 10px;border-radius:12px;background:var(--accent);color:var(--primary);font-size:11px;font-weight:800;flex-shrink:0;}
+.btn-int-new:hover{background:#f0a800;}
+.int-chip{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:12px;border:1.5px solid var(--gray-border);background:#fff;cursor:pointer;flex-shrink:0;}
+.int-chip:hover{border-color:var(--primary);}
+.int-chip.wait{border-color:#e65100;background:#fff1e6;color:#8a3b00;font-weight:600;}
+.int-chip.watch{border-color:var(--teal);background:rgba(0,167,157,.08);color:#00756e;font-weight:600;}
+.int-chip.sig{border-color:#e0a500;background:var(--star-bg);color:#7a5d00;}
+.int-empty{color:var(--gray-mid);font-style:italic;}
+
+.int-box{background:var(--white);border-radius:16px;width:100%;max-width:720px;max-height:88vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);}
+.int-head{display:flex;align-items:center;gap:12px;padding:14px 18px 10px;border-bottom:2px solid var(--gray-bg);flex-wrap:wrap;}
+.int-title{font-size:15px;font-weight:800;color:var(--primary);}
+.int-steps{display:flex;align-items:center;gap:4px;margin-left:auto;}
+.int-step{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--gray-mid);background:var(--gray-bg);padding:3px 10px;border-radius:12px;cursor:pointer;}
+.int-step.on{background:var(--primary);color:#fff;}
+.int-step.ok{background:rgba(0,167,157,.14);color:var(--teal);}
+.int-arrow{color:var(--gray-border);font-size:10px;}
+.int-body{padding:14px 18px 18px;overflow-y:auto;}
+.int-sec-lab{font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;}
+.int-hint{font-size:11px;color:var(--gray-mid);margin-bottom:8px;}
+.int-group{font-size:10px;font-weight:800;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.04em;margin:12px 0 5px;}
+.int-opt{display:flex;align-items:flex-start;gap:8px;padding:7px 11px;border:1.5px solid var(--gray-border);border-radius:8px;margin-bottom:5px;cursor:pointer;font-size:12.5px;line-height:1.4;}
+.int-opt:hover{border-color:var(--primary);background:rgba(43,41,109,.03);}
+.int-opt.sig{border-color:#e0a500;background:var(--star-bg);}
+.int-opt.on{border-color:var(--primary);background:rgba(43,41,109,.08);font-weight:700;}
+.int-opt .st{font-size:9.5px;font-weight:800;color:#fff;background:var(--primary-light);padding:1px 6px;border-radius:9px;flex-shrink:0;margin-top:1px;}
+.int-opt .st.Problem{background:#4F6BD6}.int-opt .st.Team{background:#00A79D}.int-opt .st.Question{background:#8a5cd6}
+.int-opt .st.Action{background:#e07b00}.int-opt .st.Learning{background:#2e7d32}.int-opt .st.Coach{background:#6b6b7a}
+.int-opt .ef{margin-left:auto;font-size:10px;color:var(--gray-mid);flex-shrink:0;}
+.int-sig-why{font-size:11px;color:#8a3b00;font-weight:600;display:block;}
+.int-ta{width:100%;padding:9px 11px;border:1.5px solid var(--gray-border);border-radius:8px;font-size:13px;line-height:1.5;outline:none;resize:vertical;min-height:54px;font-family:var(--font);}
+.int-ta:focus{border-color:var(--primary);}
+.int-quick{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;}
+.int-quick button{font-size:11px;padding:3px 9px;border-radius:12px;background:var(--gray-bg);color:var(--primary);font-weight:600;}
+.int-quick button:hover{background:var(--primary);color:#fff;}
+.int-say{display:flex;gap:9px;align-items:flex-start;padding:8px 10px;border:1.5px solid var(--gray-border);border-radius:8px;margin-bottom:6px;}
+.int-say.done{border-color:var(--teal);background:rgba(0,167,157,.05);}
+.int-say input[type=checkbox]{width:17px;height:17px;accent-color:var(--teal);flex-shrink:0;margin-top:2px;}
+.int-say-c{flex:1;min-width:0;}
+.int-say-k{font-size:9.5px;font-weight:800;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.04em;}
+.int-say-t{width:100%;border:none;outline:none;font-size:12.5px;line-height:1.45;font-family:var(--font);resize:none;overflow:hidden;background:transparent;color:var(--gray-text);padding:1px 0;}
+.int-go{width:100%;padding:12px;border-radius:10px;background:var(--danger);color:#fff;font-size:14px;font-weight:800;margin-top:10px;}
+.int-go.watch{background:var(--teal);}
+.int-next{padding:9px 20px;border-radius:8px;background:var(--primary);color:#fff;font-size:13px;font-weight:700;}
+.int-foot{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:12px;}
+.int-meas{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0;}
+.int-meas>div{background:var(--gray-bg);border-radius:8px;padding:9px 11px;}
+.int-meas h5{font-size:10px;font-weight:800;color:var(--gray-mid);text-transform:uppercase;margin-bottom:5px;}
+.int-meas .mrow{display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:2px;}
+.int-meas .mrow i{display:block;height:6px;border-radius:3px;background:var(--q-line);}
+.int-meas .msum{font-size:11px;color:var(--gray-mid);margin-top:5px;border-top:1px solid var(--gray-border);padding-top:4px;}
+.int-verdict{display:flex;gap:6px;margin:8px 0;}
+.int-verdict button{flex:1;padding:9px;border-radius:8px;font-size:12px;font-weight:700;background:var(--gray-bg);color:var(--gray-mid);border:2px solid transparent;}
+.int-verdict button.on.changed{background:rgba(0,167,157,.14);color:var(--teal);border-color:var(--teal);}
+.int-verdict button.on.partial{background:var(--star-bg);color:#9a6b00;border-color:var(--star-line);}
+.int-verdict button.on.none{background:#fff1e6;color:#8a3b00;border-color:#e65100;}
+
 /* ===== RECOGNITION PANEL ===== */
 .recog-panel{position:sticky;bottom:0;z-index:50;background:var(--white);border-radius:var(--radius) var(--radius) 0 0;box-shadow:0 -6px 24px rgba(43,41,109,.13);border-top:3px solid var(--accent);margin-top:14px;}
 .recog-head{display:flex;align-items:center;gap:10px;padding:10px 16px;flex-wrap:wrap;cursor:pointer;}
@@ -313,6 +405,25 @@ tr.cur .note-box{height:var(--active-note-h,180px);}
 .rg-im.missing{color:#c0aa6b;}
 .rg-kind{font-size:9.5px;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.04em;font-weight:700;flex-shrink:0;}
 .recog-empty{font-size:12px;color:var(--gray-mid);font-style:italic;padding:6px 0 10px;}
+.is-top{font-size:12.5px;color:var(--gray-text);padding:4px 0 8px;border-bottom:1.5px solid var(--gray-bg);margin-bottom:8px;}
+.is-top b{color:var(--primary);font-size:14px;}
+.is-bars{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+.is-bars>div{background:var(--gray-bg);border-radius:8px;padding:8px 10px;}
+.is-bars h5{font-size:10px;font-weight:800;color:var(--gray-mid);text-transform:uppercase;margin-bottom:4px;}
+.is-bars .mrow{display:flex;align-items:center;gap:6px;font-size:11.5px;margin-bottom:2px;}
+.is-bars .mrow i{display:block;height:6px;border-radius:3px;background:var(--accent);}
+.is-card{border-left:3px solid var(--teal);background:#f8fdfd;border-radius:0 7px 7px 0;padding:8px 11px;margin-bottom:8px;}
+.is-card.wait{border-left-color:#e65100;background:#fff8f2;}
+.is-h{font-size:12px;color:var(--gray-text);margin-bottom:4px;}
+.is-pt{font-weight:700;color:var(--primary);}
+.is-rel{color:var(--teal);font-weight:600;}
+.is-wait{color:#e65100;font-weight:800;}
+.is-v{float:right;font-weight:700;font-size:11.5px;}
+.is-want{font-size:12px;margin-bottom:4px;}
+.is-say{font-size:12px;line-height:1.45;padding:1px 0 1px 8px;border-left:2px solid var(--gray-border);margin:2px 0;}
+.is-k{font-size:9.5px;font-weight:800;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.03em;}
+.is-tick{font-size:9.5px;color:var(--teal);font-weight:700;}
+.is-fo{font-size:12px;color:#7a5d00;font-style:italic;margin-top:4px;}
 .rg-row{display:grid;grid-template-columns:58px 1fr;gap:2px 10px;font-size:12px;line-height:1.45;}
 .rg-lab{font-size:10px;font-weight:800;color:var(--gray-mid);text-transform:uppercase;letter-spacing:.04em;padding-top:2px;}
 .rg-val{min-width:0;word-break:break-word;}
@@ -374,6 +485,18 @@ tr.cur .note-box{height:var(--active-note-h,180px);}
 .export-actions,.delete-actions{display:flex;gap:9px;margin-top:18px;justify-content:flex-end;}
 .btn-cancel{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:500;background:var(--gray-bg);color:var(--gray-mid);}
 .btn-export{padding:9px 22px;border-radius:8px;font-size:13px;font-weight:700;background:var(--primary);color:var(--white);}
+.end-big{font-size:38px;font-weight:800;color:var(--primary);text-align:center;line-height:1.1;margin:6px 0 4px;}
+.end-big small{font-size:13px;font-weight:600;color:var(--gray-mid);}
+.end-vs{display:block;font-size:12px;font-weight:500;color:var(--gray-mid);margin-top:2px;}
+.end-kpis{display:flex;gap:8px;margin:12px 0;}
+.end-kpis>div{flex:1;background:var(--gray-bg);border-radius:8px;padding:8px;text-align:center;}
+.end-kpis b{display:block;font-size:19px;color:var(--primary);}
+.end-kpis span{font-size:10px;color:var(--gray-mid);}
+.end-table{width:100%;border-collapse:collapse;font-size:12px;}
+.end-table th{background:var(--gray-bg);color:var(--primary);font-size:10px;text-transform:uppercase;padding:4px 7px;text-align:left;}
+.end-table td{padding:3px 7px;border-bottom:1px solid var(--gray-border);}
+.end-table .num{text-align:center;width:66px;}
+.end-warn{margin-top:10px;background:#fff1e6;border-left:3px solid #e65100;padding:8px 10px;border-radius:0 6px 6px 0;font-size:12px;color:#8a3b00;}
 .delete-icon{font-size:38px;text-align:center;margin-bottom:10px;}
 .delete-info{background:var(--gray-bg);border-radius:8px;padding:11px 13px;margin:10px 0;font-size:13px;font-weight:600;color:var(--primary);text-align:center;}
 .delete-warning{font-size:12px;color:var(--gray-mid);text-align:center;margin-bottom:14px;}
@@ -473,9 +596,45 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
         <button class="status-tab" data-status="done">✅ Xong</button>
       </div>
     </div>
-    <button class="btn-create" onclick="createSession()">＋ Tạo phiên mới</button>
+    <div style="display:flex;gap:8px;">
+      <button class="btn-create" onclick="createSession()" style="flex:1">＋ Tạo phiên mới</button>
+      <button class="btn-lib" onclick="openLibrary()">📚 Thư viện</button>
+    </div>
   </div>
   <div id="sessionList" class="session-list"></div>
+</div>
+
+<!-- LIBRARY -->
+<div id="libraryScreen" class="hidden">
+  <div class="detail-header">
+    <button class="btn-back" onclick="closeLibrary()">← Quay lại</button>
+    <div class="detail-title">
+      <h2>📚 Thư viện của tôi</h2>
+      <p id="libStatus" style="opacity:1"></p>
+    </div>
+    <button class="btn-icon" onclick="libPush()" title="Đồng bộ lên Google Sheets ngay">☁️</button>
+  </div>
+  <div class="form-section">
+    <div class="tab-nav" style="box-shadow:none;background:var(--gray-bg);margin-bottom:12px;">
+      <button class="tab-btn active" id="libTabC" onclick="setLibTab('competency')">⚡ Năng lực</button>
+      <button class="tab-btn" id="libTabI" onclick="setLibTab('intervention')">🎯 Điểm can thiệp</button>
+    </div>
+    <div class="toolbar-row" style="margin-bottom:10px;">
+      <input id="libSearch" class="filter-input filter-search" type="text"
+        placeholder="Tìm… (không cần dấu)" oninput="renderLibraryScreen()">
+      <select id="libSort" class="filter-input" style="width:auto" onchange="renderLibraryScreen()">
+        <option value="name">A → Z</option>
+        <option value="used">Dùng nhiều nhất</option>
+        <option value="okdesc">Hiệu quả cao nhất</option>
+        <option value="okasc">Hiệu quả thấp nhất — chỗ cần mài</option>
+        <option value="new">Mới thêm</option>
+      </select>
+      <label class="radio-option" style="font-size:12px;white-space:nowrap">
+        <input type="checkbox" id="libShowHidden" onchange="renderLibraryScreen()"> hiện cả mục đã ẩn</label>
+      <button class="btn-mini" onclick="libNewFromScreen()">＋ Thêm mới</button>
+    </div>
+    <div id="libList"></div>
+  </div>
 </div>
 
 <!-- DETAIL -->
@@ -575,7 +734,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
           <input type="text" id="d_coach2" class="form-input" placeholder="Họ và tên Coach">
         </div>
       </div>
-      <div class="form-label" style="margin-bottom:7px;">Thành viên (Member) — tối đa 5 người</div>
+      <div class="form-label" style="margin-bottom:7px;">Thành viên (Member) — tối đa 7 người</div>
       <div id="membersList" class="members-grid"></div>
       <button class="btn-add-member" onclick="addMember()" id="btnAddMember">＋ Thêm thành viên</button>
       <div class="form-label" style="margin:12px 0 7px;">Người quan sát (Observer) — tối đa 5 người</div>
@@ -598,9 +757,19 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
           <span class="sw-stage-meta" id="swStageMeta"></span>
         </div>
         <button class="btn-lap" onclick="lapStage()">⏱ Chốt bước <span style="opacity:.6" id="lapKeyHint">(Alt+↵)</span></button>
-        <div class="sw-total" id="swTotal"></div>
+        <div class="sw-total">
+          Tổng <input class="sw-total-input" id="swTotalInput" type="number" min="20" max="300" step="5"
+            title="Nhập tổng số phút — các bước tự chia theo tỉ lệ"
+            onchange="scaleTotal(this.value)" onkeydown="if(event.key==='Enter')this.blur()"> phút
+          <div id="swLeft"></div>
+        </div>
         <div class="sw-chips" id="swChips">
           <span style="flex:1"></span>
+          <span class="fs-group">
+            <button class="btn-mini fs-btn" onclick="stepNoteFs(-1)" title="Chữ nhỏ hơn">A⁻</button>
+            <button class="btn-mini fs-btn" onclick="resetNoteFs()" id="fsLabel" title="Cỡ chữ ô ghi chú">11</button>
+            <button class="btn-mini fs-btn" onclick="stepNoteFs(1)" title="Chữ to hơn">A⁺</button>
+          </span>
           <button class="btn-mini" onclick="toggleHelp()" id="btnHelp" style="padding:2px 9px;font-size:10px;">⌨ ? @ =</button>
           <button class="btn-mini" onclick="toggleQCol()" id="btnQCol" style="padding:2px 9px;font-size:10px;">Ẩn cột câu hỏi</button>
         </div>
@@ -614,6 +783,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
       </div>
 
       <div class="flow-strip" id="flowStrip"></div>
+      <div class="int-strip" id="intStrip"></div>
       </div><!-- /sw-stack -->
 
       <div class="session-table-wrap" id="tableWrap">
@@ -633,6 +803,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
             <button id="rgByPerson" class="on" onclick="setRecogView('person')">Theo người</button>
             <button id="rgByTime" onclick="setRecogView('time')">Theo thời gian</button>
             <button id="rgByStats" onclick="setRecogView('stats')">📊 Thống kê</button>
+            <button id="rgByInt" onclick="setRecogView('int')">🎯 Can thiệp</button>
           </div>
           <button class="btn-mini" onclick="copyRecog()">📋 Chép bản đọc</button>
           <button class="btn-mini" onclick="addRecogManual()">⊕ Thêm</button>
@@ -659,6 +830,10 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
     <div class="form-section">
       <div class="section-title">✅ Checklist sau phiên <span class="section-title-note">After Session Checklist</span></div>
       <div id="checklistAfterList"></div>
+    </div>
+    <div class="form-section">
+      <div class="section-title">🎯 Can thiệp của Coach <span class="section-title-note">Coach Interventions</span></div>
+      <div id="intAfter"></div>
     </div>
     <div class="form-section">
       <div class="section-title">🌿 Lắng đọng học hỏi <span class="section-title-note">Learning Reflection</span></div>
@@ -717,19 +892,16 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
 </main>
 
 <!-- COMPETENCY MODAL -->
-<div id="compModal" class="modal-overlay hidden">
+<div id="compModal" class="modal-overlay hidden" onclick="if(event.target===this)closeCompModal()">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
     <div class="modal-title">Chọn năng lực rèn luyện</div>
-    <div class="modal-note">Chọn 1 năng lực lãnh đạo (Leadership Competency) — mỗi người chỉ chọn 1</div>
+    <div class="modal-note">Bấm là chọn luôn · gõ để tìm, <b>không cần dấu</b> — "lang nghe" ra "Lắng nghe"</div>
+    <input type="text" class="filter-input" id="compSearch" autocomplete="off"
+      placeholder="Tìm năng lực…" oninput="renderCompList()" onkeydown="compKey(event)">
     <div class="comp-list" id="compList"></div>
-    <div class="comp-other-wrap">
-      <input type="text" class="comp-other-input" id="compOtherInput" placeholder="Năng lực khác (tự thêm vào danh sách)...">
-      <button class="btn-comp-add" onclick="addCustomComp()">＋ Thêm</button>
-    </div>
     <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeCompModal()">Huỷ</button>
-      <button class="btn-save" onclick="confirmComp()">✓ Xác nhận</button>
+      <button class="btn-cancel" onclick="closeCompModal()">Đóng</button>
     </div>
   </div>
 </div>
@@ -747,6 +919,31 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
     <div class="delete-actions">
       <button class="btn-cancel" onclick="closeDeleteModal()" style="flex:1;">← Giữ lại</button>
       <button class="btn-delete-confirm" id="btnDeleteConfirm" onclick="confirmDelete()">🗑 Xác nhận xóa</button>
+    </div>
+  </div>
+</div>
+
+<!-- INTERVENTION CARD MODAL -->
+<div id="intModal" class="export-modal hidden" onclick="if(event.target===this)closeIntCard()">
+  <div class="int-box">
+    <div class="int-head">
+      <span class="int-title" id="intTitle">🎯 Thẻ can thiệp</span>
+      <span class="int-steps" id="intSteps"></span>
+      <button class="btn-mini" onclick="closeIntCard()">Đóng ✕</button>
+    </div>
+    <div class="int-body" id="intBody"></div>
+  </div>
+</div>
+
+<!-- END SESSION MODAL -->
+<div id="endModal" class="export-modal hidden">
+  <div class="export-box" style="max-width:520px;">
+    <div class="export-title">🏁 Phiên đã khép lại</div>
+    <div class="export-note">Đồng hồ đã dừng. Dữ liệu đã lưu.</div>
+    <div id="endBody"></div>
+    <div class="export-actions">
+      <button class="btn-cancel" onclick="closeEndModal()">Ở lại xem bảng</button>
+      <button class="btn-export" onclick="endGoAfter()">Sang tab Sau phiên →</button>
     </div>
   </div>
 </div>
@@ -796,26 +993,60 @@ const DEFAULT_COMPETENCIES = [
   'Tập trung chiến lược','Huấn luyện (Coaching)'
 ];
 
+// 29 điểm can thiệp — lấy từ bảng cuối file Sheet của anh
+const DEFAULT_INTERVENTIONS = [
+  {"id": "i_problem_pp_trinh_bay_qua_rong", "name": "Problem – PP trình bày quá rộng", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc làm rõ phạm vi vấn đề? 1 điểm: phạm vi rất rộng, ai cũng hiểu mỗi kiểu 5 điểm: phạm vi rất rõ, nhóm hiểu giống nhau", "so_what": "Tại sao làm rõ phạm vi vấn đề lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để làm rõ phạm vi vấn đề hiệu quả hơn?", "stages": "B"},
+  {"id": "i_problem_mong_muon_qua_nhieu_trong_1_phie", "name": "Problem – Mong muốn quá nhiều trong 1 phiên", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc làm rõ mong muốn trong phiên? 1 điểm: mong muốn dàn trải, chưa chốt ưu tiên 5 điểm: chốt 1 mong muốn ưu tiên rõ ràng", "so_what": "Nếu thiếu làm rõ mong muốn trong phiên thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để làm rõ mong muốn trong phiên rõ ràng hơn?", "stages": "B"},
+  {"id": "i_problem_van_de_qua_phuc_tap_voi_nhom", "name": "Problem – Vấn đề quá phức tạp với nhóm", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc chọn một điểm quan trọng? 1 điểm: chưa chọn được điểm nào, đi vòng quanh 5 điểm: chọn rõ 1 điểm quan trọng để xử lý", "so_what": "Tại sao chọn một điểm quan trọng lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn chọn một điểm quan trọng như thế nào để làm việc hiệu quả hơn?", "stages": "B,C"},
+  {"id": "i_problem_cang_lam_cang_khong_ro_van_de", "name": "Problem – Càng làm càng không rõ vấn đề", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc đặt một câu mô tả vấn đề? 1 điểm: chưa có 1 câu chung, mỗi người nói 1 kiểu 5 điểm: có 1 câu mô tả vấn đề rõ ràng, nhóm thống nhất", "so_what": "Nếu thiếu đặt một câu mô tả vấn đề thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để đặt một câu mô tả vấn đề rõ ràng hơn?", "stages": "C"},
+  {"id": "i_problem_van_de_dua_vao_phien_qua_de_de_r", "name": "Problem – Vấn đề đưa vào phiên (quá dễ, dễ ra nguyên nhân)", "stream": "Problem", "what": "Vấn đề bạn vừa mới nghĩ tới được mấy ngày nay? 1 điểm: vấn đề mới toanh/mới xuất hiện, dễ đưa nguyên nhân ngay → dễ tranh nhau đưa lời khuyên 5 điểm: vấn đề đã tồn tại đủ lâu, có dữ kiện/bối cảnh, không thể giải quyết bằng 1 lời khuyên nhanh", "so_what": "Nếu vấn đề quá dễ (dễ ra nguyên nhân) thì điều gì sẽ ảnh hưởng đến cách học của nhóm?", "now_what": "Bây giờ nhóm muốn làm thế nào để chọn/đặt lại vấn đề đủ phức tạp hơn cho phiên này?", "stages": "B"},
+  {"id": "i_problem_van_de_dua_vao_phien_thieu_boi_c", "name": "Problem – Vấn đề đưa vào phiên (thiếu bối cảnh cụ thể)", "stream": "Problem", "what": "Nhóm mình đang như thế nào về bối cảnh cụ thể của vấn đề? 1 điểm: bối cảnh chung chung, thiếu con số/mốc 5 điểm: bối cảnh rất cụ thể (doanh số cần đạt, số lượng vị trí cần tuyển, mốc thời gian…)", "so_what": "Tại sao bối cảnh cụ thể của vấn đề lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn bổ sung bối cảnh cụ thể của vấn đề như thế nào?", "stages": "B"},
+  {"id": "i_problem_than_trong_chon_van_de_pp_viet_x", "name": "Problem – Thận trọng chọn vấn đề (PP viết xuống trước khi vào phiên)", "stream": "Problem", "what": "Nhóm mình đang như thế nào về việc PP viết xuống vấn đề trước khi vào phiên? 1 điểm: PP chưa có câu viết rõ, đang nói miệng và đổi ý liên tục 5 điểm: PP có 1–2 câu viết rõ ràng để nhóm bám xuyên suốt", "so_what": "Nếu thiếu việc PP viết xuống vấn đề trước khi vào phiên thì điều gì sẽ ảnh hưởng?", "now_what": "Bây giờ nhóm muốn dành bao lâu để PP viết xuống vấn đề trước khi vào phiên và đọc lại cho nhóm?", "stages": "B"},
+  {"id": "i_problem_tai_cau_truc_van_de", "name": "Problem – TÁI CẤU TRÚC VẤN ĐỀ", "stream": "Problem", "what": "Nhóm mình đang như thế nào về tái cấu trúc vấn đề? 1 điểm: chỉ có 1 câu phát biểu của PP, nhóm chưa nghe nhiều góc nhìn 5 điểm: từng thành viên đã phát biểu, nhóm nghe được điều họ quan sát, và PP chốt được vấn đề thực sự là gì", "so_what": "Tại sao tái cấu trúc vấn đề lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn tái cấu trúc vấn đề như thế nào?", "stages": "C"},
+  {"id": "i_team_tham_gia_khong_can_bang", "name": "Team – Tham gia không cân bằng", "stream": "Team", "what": "Nhóm mình đang như thế nào về mức độ tham gia đặt câu hỏi của các thành viên? 1 điểm: rất ít người hỏi/phát biểu 5 điểm: tất cả đều có tham gia hỏi/phát biểu", "so_what": "Tại sao mức độ tham gia đặt câu hỏi của các thành viên lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn điều chỉnh thế nào để mức độ tham gia đặt câu hỏi của các thành viên cân bằng hơn?", "stages": "A,B,C,D,E,F,G"},
+  {"id": "i_team_khong_hien_dien_ra_ngoai_nghe_dien_", "name": "Team – Không hiện diện/ra ngoài nghe điện thoại", "stream": "Team", "what": "Nhóm mình đang như thế nào về hiện diện trong phiên? 1 điểm: nhiều người không hiện diện/gián đoạn liên tục 5 điểm: tất cả hiện diện đầy đủ, tập trung", "so_what": "Việc hiện diện trong phiên ảnh hưởng đến hiệu quả làm việc của nhóm như thế nào?", "now_what": "Bây giờ nhóm muốn làm thế nào để hiện diện trong phiên tốt hơn?", "stages": "A,B,C,D,E,F,G"},
+  {"id": "i_team_khong_coi_mo_ap_dat_nhau", "name": "Team – Không cởi mở/áp đặt nhau", "stream": "Team", "what": "Nhóm mình đang như thế nào về cởi mở trao đổi? 1 điểm: ngại nói thật, dễ phòng thủ/áp đặt 5 điểm: nói thẳng, nghe thật, tôn trọng nhau", "so_what": "Nếu thiếu cởi mở trao đổi thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để cởi mở trao đổi hiệu quả hơn?", "stages": "A,B,C,D,E,F,G"},
+  {"id": "i_team_khong_thich_nhau_kho_hop_tac", "name": "Team – Không thích nhau/khó hợp tác", "stream": "Team", "what": "Nhóm mình đang như thế nào về tôn trọng khác biệt? 1 điểm: dễ phản ứng, khó hợp tác 5 điểm: tôn trọng khác biệt, vẫn phối hợp tốt", "so_what": "Tại sao tôn trọng khác biệt lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn tôn trọng khác biệt như thế nào để làm việc tốt hơn?", "stages": "A,B,C,D,E,F,G"},
+  {"id": "i_question_cau_hoi_dong_ap_dat", "name": "Question – Câu hỏi đóng/áp đặt", "stream": "Question", "what": "Nhóm mình đang như thế nào về câu hỏi mở? 1 điểm: chủ yếu là câu hỏi đóng/áp đặt 5 điểm: đa số là câu hỏi mở, giúp PP suy nghĩ", "so_what": "Tại sao câu hỏi mở lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn đặt câu hỏi mở như thế nào để làm việc hiệu quả hơn?", "stages": "B,C,D"},
+  {"id": "i_question_cau_hoi_dan_dat", "name": "Question – Câu hỏi dẫn dắt", "stream": "Question", "what": "Nhóm mình đang như thế nào về tránh dẫn dắt? 1 điểm: nhiều câu hỏi dẫn dắt/cho lời khuyên ẩn 5 điểm: câu hỏi trung tính, không dẫn hướng", "so_what": "Nếu thiếu tránh dẫn dắt thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn tránh dẫn dắt như thế nào khi đặt câu hỏi?", "stages": "B,C,D"},
+  {"id": "i_question_cau_hoi_qua_rong_moi_nguoi_day_", "name": "Question – Câu hỏi quá rộng, mỗi người đẩy 1 hướng", "stream": "Question", "what": "Nhóm mình đang như thế nào về hội tụ câu hỏi? 1 điểm: mạnh ai nấy hỏi, tản mạn nhiều hướng 5 điểm: câu hỏi hội tụ vào 1 hướng ưu tiên", "so_what": "Tại sao hội tụ câu hỏi lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn hội tụ câu hỏi như thế nào để tránh bị tản mạn?", "stages": "B,C,D"},
+  {"id": "i_question_tranh_tranh_nhau_dua_loi_khuyen", "name": "Question – Tránh “tranh nhau đưa lời khuyên”", "stream": "Question", "what": "Nhóm mình đang như thế nào về việc giữ câu hỏi thay vì đưa lời khuyên? 1 điểm: nhiều lời khuyên/giải pháp xuất hiện sớm 5 điểm: nhóm giữ nhịp câu hỏi để PP tự khám phá", "so_what": "Nếu nhóm tranh nhau đưa lời khuyên thì điều gì sẽ ảnh hưởng đến sự học?", "now_what": "Từ bây giờ nhóm muốn giữ câu hỏi thay vì đưa lời khuyên như thế nào?", "stages": "B,C,D"},
+  {"id": "i_question_bam_sat_tu_khoa_pp", "name": "Question – Bám sát từ khoá PP", "stream": "Question", "what": "Nhóm mình đang như thế nào về việc bám sát những từ khoá PP đã trình bày? 1 điểm: hỏi lan sang chuyện khác, bỏ qua từ khoá PP 5 điểm: câu hỏi bám sát từ khoá PP, đào sâu đúng ý PP nói", "so_what": "Nếu thiếu việc bám sát những từ khoá PP đã trình bày thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn bám sát những từ khoá PP đã trình bày như thế nào khi đặt câu hỏi?", "stages": "B,C,D"},
+  {"id": "i_action_pp_khong_ra_action", "name": "Action – PP không ra action", "stream": "Action", "what": "Nhóm mình đang như thế nào về ra hành động cụ thể? 1 điểm: chưa có hành động sau phiên 5 điểm: có hành động cụ thể, rõ ai-làm gì-khi nào", "so_what": "Tại sao ra hành động cụ thể lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn ra hành động cụ thể như thế nào trong phần còn lại của phiên?", "stages": "E"},
+  {"id": "i_action_action_chung_chung", "name": "Action – Action chung chung", "stream": "Action", "what": "Nhóm mình đang như thế nào về làm rõ hành động cụ thể? 1 điểm: hành động mơ hồ, khó làm ngay 5 điểm: hành động rõ ràng, làm được ngay", "so_what": "Nếu thiếu làm rõ hành động cụ thể thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm rõ hành động cụ thể như thế nào để dễ làm ngay?", "stages": "E"},
+  {"id": "i_action_action_khong_lien_quan_nguyen_nha", "name": "Action – Action không liên quan nguyên nhân gốc", "stream": "Action", "what": "Nhóm mình đang như thế nào về liên kết hành động với nguyên nhân gốc? 1 điểm: action tách rời nguyên nhân gốc 5 điểm: mỗi action gắn rõ với nguyên nhân gốc", "so_what": "Tại sao liên kết hành động với nguyên nhân gốc lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn liên kết hành động với nguyên nhân gốc như thế nào khi chốt action?", "stages": "E"},
+  {"id": "i_action_van_de_nen_chon_a_hay_b", "name": "Action – Vấn đề nên chọn A hay B", "stream": "Action", "what": "Hãy hỏi PP, họ đã nghiêng về phương án nào chưa? 1 điểm: PP chưa rõ nghiêng hướng nào, nói chung chung 5 điểm: PP đã nghiêng rõ một hướng và nói được điều đang lăn khoăn", "so_what": "Nếu PP đã nghiêng mà nhóm vẫn hỏi lan man, điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn làm thế nào để làm rõ điều PP đang lăn khoăn trong hướng đã nghiêng? TH1: PP đã lật hẳn sang 1 hướng → trong hướng đó có gì đang lăn khoăn? TH2: Tỉ lệ 4:6 → vậy phần “6” đang băn khoăn điều gì?", "stages": "E"},
+  {"id": "i_learning_chon_nang_luc_nhung_khong_thuc_", "name": "Learning – Chọn năng lực nhưng không thực hành", "stream": "Learning", "what": "Nhóm mình đang như thế nào về thực hành năng lực đã chọn? 1 điểm: không có thực hành trong phiên 5 điểm: có thực hành ngay, nhìn thấy hành vi", "so_what": "Nếu thiếu thực hành năng lực đã chọn thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn thực hành năng lực đã chọn như thế nào ngay trong phiên?", "stages": "D,F"},
+  {"id": "i_learning_thuc_hanh_nang_luc_lanh_dao", "name": "Learning – Thực hành năng lực lãnh đạo", "stream": "Learning", "what": "Nhóm mình đang như thế nào về thực hành năng lực lãnh đạo? 1 điểm: bị cuốn vào vấn đề, không nhìn thấy mình đang thực hành gì 5 điểm: mỗi người ý thức rõ mình đang thực hành và điều chỉnh ngay", "so_what": "Tại sao thực hành năng lực lãnh đạo lại quan trọng trong phiên này?", "now_what": "Từ bây giờ, mỗi thành viên tạo 1 câu hỏi dựa vào năng lực lãnh đạo để nhóm cùng suy ngẫm thêm.", "stages": "D,F"},
+  {"id": "i_learning_chi_noi_van_de_khong_quan_sat_n", "name": "Learning – Chỉ nói vấn đề, không quan sát người khác", "stream": "Learning", "what": "Nhóm mình đang như thế nào về quan sát cách người khác thực hành? 1 điểm: hầu như không có quan sát về cách làm 5 điểm: có quan sát rõ và học từ nhau", "so_what": "Tại sao quan sát cách người khác thực hành lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn quan sát cách người khác thực hành như thế nào để học sâu hơn?", "stages": "D,F"},
+  {"id": "i_learning_khong_ghi_chu_ai_noi_nguoi_ay_n", "name": "Learning – Không ghi chú, “ai nói người ấy nói”", "stream": "Learning", "what": "Nhóm mình đang như thế nào về ghi chú để học? 1 điểm: không ghi chú, cuối phiên khó đọng lại 5 điểm: có ghi chú, cuối phiên rút được bài học rõ", "so_what": "Nếu thiếu ghi chú để học thì điều gì sẽ ảnh hưởng?", "now_what": "Từ bây giờ nhóm muốn ghi chú để học như thế nào trong phần còn lại của phiên?", "stages": "D,F"},
+  {"id": "i_coach_logistics_thanh_vien_hoi_coach_gio", "name": "Coach & Logistics – Thành viên hỏi coach “giờ nên làm gì?”", "stream": "Coach & Logistics", "what": "Nhóm mình đang như thế nào về nhóm tự ra quyết định? 1 điểm: phụ thuộc coach để quyết định 5 điểm: nhóm tự đề xuất lựa chọn và tự chốt", "so_what": "Tại sao nhóm tự ra quyết định lại quan trọng?", "now_what": "Bây giờ nhóm muốn nhóm tự ra quyết định như thế nào để đi tiếp?", "stages": "A,B,C,D,E,F,G"},
+  {"id": "i_coach_logistics_gian_doan_coach_rot_mang", "name": "Coach & Logistics – Gián đoạn (coach rớt mạng/phát sinh việc)", "stream": "Coach & Logistics", "what": "Nhóm mình đang như thế nào về thống nhất cách tiếp tục phiên? 1 điểm: gián đoạn làm nhóm mất nhịp, không biết làm gì tiếp 5 điểm: nhóm thống nhất cách tiếp tục rõ ràng, giữ được nhịp", "so_what": "Nếu thiếu thống nhất cách tiếp tục phiên thì điều gì sẽ ảnh hưởng?", "now_what": "Bây giờ nhóm muốn thống nhất cách tiếp tục phiên như thế nào để không mất nhịp?", "stages": "A,B,C,D,E,F,G"},
+  {"id": "i_coach_logistics_nhom_lan_man_mat_cau_tru", "name": "Coach & Logistics – Nhóm lan man/mất cấu trúc", "stream": "Coach & Logistics", "what": "Nhóm mình đang như thế nào về bám theo trình tự can thiệp? 1 điểm: nhảy bước liên tục, không rõ đang ở đâu 5 điểm: rõ đang ở WHAT/SO WHAT/NOW WHAT và đi theo mạch", "so_what": "Tại sao bám theo trình tự can thiệp lại quan trọng?", "now_what": "Từ bây giờ nhóm muốn bám theo trình tự can thiệp như thế nào để làm việc rõ ràng hơn?", "stages": "A,B,C,D,E,F,G"},
+  {"id": "i_coach_logistics_giu_su_tap_trung_dao_sau", "name": "Coach & Logistics – Giữ sự tập trung, đào sâu", "stream": "Coach & Logistics", "what": "Nhóm đang tập trung đào sâu điều gì? 1 điểm: chưa rõ đang đào sâu điểm nào, câu hỏi kéo ra nhiều hướng 5 điểm: cả nhóm đang đào sâu đúng 1 điểm rõ ràng, bám sát từ khoá PP", "so_what": "Tại sao việc nhóm tập trung đào sâu điều gì lại quan trọng?", "now_what": "Từ bây giờ nhóm thống nhất giữ sự tập trung và đào sâu như thế nào trong 5–10 phút tới?", "stages": "A,B,C,D,E,F,G"}
+];
+const STREAMS = ['Problem','Team','Question','Action','Learning','Coach & Logistics'];
+
 const DEFAULT_STAGES = [
-  {id:'A',name:'Giới thiệu Học Hành Động',en:'Introduce Action Learning',duration:2,
+  {id:'A',name:'Giới thiệu Học Hành Động',en:'Introduce Action Learning',duration:3,
    result:'Cả nhóm hiểu AL, mỗi người chọn 1 năng lực lãnh đạo',
    questions:['Giới thiệu & giải thích Học Hành Động đến nhóm — các thành tố, quy trình, vai trò và quy tắc.','Yêu cầu mỗi thành viên chọn một năng lực lãnh đạo để rèn luyện trong phiên.']},
-  {id:'B',name:'Chia sẻ vấn đề',en:'Share the Problem',duration:13,
+  {id:'B',name:'Chia sẻ vấn đề',en:'Share the Problem',duration:10,
    result:'Nhóm nghe & hiểu vấn đề PP. Bắt đầu vòng hỏi–đáp.',
    questions:['PP dành 2-3 phút chia sẻ điều mình muốn nhóm giúp đỡ.','Ai có câu hỏi đầu tiên?']},
-  {id:'C',name:'Đồng thuận vấn đề',en:'Consensus Intervention',duration:15,
+  {id:'C',name:'Đồng thuận vấn đề',en:'Consensus Intervention',duration:20,
    result:'Nhóm soi lại cách làm việc. Thống nhất một câu vấn đề.',
    questions:['Chúng ta đang làm việc theo nhóm như thế nào? (1-10: 1=Kém; 10=Xuất sắc)','Chúng ta đang làm gì tốt?','Chúng ta có thể làm gì tốt hơn?','Chúng ta đã thống nhất về vấn đề chưa?','Hãy mỗi người viết xuống câu phát biểu về vấn đề.','Ai có câu hỏi tiếp theo?']},
-  {id:'D',name:'Can thiệp nhắc nhở',en:'Reminder Intervention',duration:5,
+  {id:'D',name:'Can thiệp nhắc nhở',en:'Reminder Intervention',duration:10,
    result:'Nhóm được nhắc về thời gian, mục tiêu cuối phiên.',
    questions:['Chúng ta còn bao nhiêu phút nữa — hãy nhớ năng lực lãnh đạo mình đã chọn.','PP ơi, sau ít phút nữa tôi sẽ hỏi bạn về những hành động sẽ thực hiện sau phiên.','Ai có câu hỏi tiếp theo?']},
-  {id:'E',name:'Cam kết hành động',en:'Action Commitment',duration:10,
+  {id:'E',name:'Cam kết hành động',en:'Action Commitment',duration:5,
    result:'PP nêu được hành động cụ thể sẽ làm sau phiên.',
    questions:['Những hành động gì bạn sẽ thực hiện như là kết quả của phiên này?','Bạn được giúp đỡ ở điểm nào?','Như thế nào?']},
   {id:'F',name:'Lắng đọng học hỏi',en:'Learning Reflection',duration:20,
    result:'Cả nhóm rút bài học về vấn đề, nhóm, câu hỏi, năng lực.',
    questions:['Nhóm chúng ta đã làm gì tốt nhất?','Có câu hỏi tốt nào đã được hỏi?','Chúng ta có thể học được gì về sức mạnh của câu hỏi?','Những điều gì chúng ta có thể học được từ phiên này?','Bạn đã thực hành năng lực lãnh đạo mà bạn đã chọn như thế nào?']},
-  {id:'G',name:'Cảm ơn nhóm',en:'Close Session',duration:5,
+  {id:'G',name:'Cảm ơn nhóm',en:'Close Session',duration:2,
    result:'Phiên được khép lại rõ ràng, ấm áp.',
    questions:['Cảm ơn các bạn đã tham gia phiên huấn luyện này! (Vỗ tay — Kết thúc phiên)','PP chia sẻ cảm nhận — Điều gì hữu ích?']}
 ];
@@ -1017,6 +1248,50 @@ function setActiveStage(i){
   renderSessionTable(); renderSw(); markDirty();
 }
 
+/* Nhập tổng phút -> chia lại 7 bước theo đúng tỉ lệ cũ.
+   Dùng phương pháp SỐ DƯ LỚN NHẤT nên tổng luôn bằng đúng số đã nhập. */
+function scaleTotal(val){
+  const st = currentSession.session_running.stages;
+  let target = parseInt(val, 10);
+  if(isNaN(target)) { renderSw(); return; }
+  target = Math.max(st.length, Math.min(600, target));
+  const cur = st.reduce((a,x) => a + (parseInt(x.duration)||0), 0);
+  if(!cur){ renderSw(); return; }
+  if(target === cur){ renderSw(); return; }
+
+  const raw = st.map(x => (parseInt(x.duration)||0) * target / cur);
+  const out = raw.map(v => Math.floor(v));
+  let rest = target - out.reduce((a,b) => a+b, 0);
+
+  // ưu tiên phần dư lớn hơn; dư bằng nhau thì bước dài hơn được trước
+  const order = st.map((_,i) => i).sort((a,b) => {
+    const ra = raw[a]-out[a], rb = raw[b]-out[b];
+    if(Math.abs(rb-ra) > 1e-9) return rb - ra;
+    const da = parseInt(st[a].duration)||0, db = parseInt(st[b].duration)||0;
+    if(db !== da) return db - da;
+    return a - b;
+  });
+  for(let k = 0; k < rest; k++) out[order[k % order.length]]++;
+
+  // không để bước nào ngắn hơn 2 phút: mượn từ bước dài nhất
+  const MIN_STAGE = 2;
+  for(let pass = 0; pass < 20; pass++){
+    let fixed = false;
+    for(let i = 0; i < out.length; i++){
+      if(out[i] < MIN_STAGE){
+        let mx = 0;
+        for(let j = 1; j < out.length; j++) if(out[j] > out[mx]) mx = j;
+        if(out[mx] > MIN_STAGE + 1){ out[mx]--; out[i]++; fixed = true; }
+      }
+    }
+    if(!fixed) break;
+  }
+
+  st.forEach((x,i) => x.duration = out[i]);
+  renderSessionTable(); renderSw(); markDirty();
+  showToast(`⏱ Đã chia lại ${target} phút: ` + st.map(x => x.id+' '+x.duration+'′').join(' · '), 'success');
+}
+
 function lapStage(){
   const r = currentSession.session_running;
   const i = activeIdx();
@@ -1024,10 +1299,51 @@ function lapStage(){
   const prev = i>0 ? (r.lapAt[i-1] || 0) : 0;
   r.lapAt[i] = swElapsed();
   r.stages[i].time_actual = Math.max(0, Math.round((r.lapAt[i]-prev)/60));
-  if(i < r.stages.length-1) r.activeStage = i+1;
-  renderSessionTable(); renderSw(); markDirty(); pinTable();
+  const isLast = (i === r.stages.length - 1);
+  if(!isLast) r.activeStage = i+1;
+  renderSessionTable(); renderSw(); markDirty();
+  if(isLast){ endSession(); return; }
+  pinTable();
   showToast('⏱ Đã chốt bước ' + r.stages[i].id + ' — ' + r.stages[i].time_actual + ' phút', 'success');
 }
+
+/* Chốt bước G = đóng phiên: dừng đồng hồ, lưu, tổng kết */
+function endSession(){
+  const t = swState();
+  t.running = false; stopTick();
+  saveSession(true);
+  renderSw();
+  showEndSummary();
+}
+
+function showEndSummary(){
+  const r = currentSession.session_running;
+  const plan = r.stages.reduce((a,x) => a + (parseInt(x.duration)||0), 0);
+  const real = Math.round(swElapsed()/60);
+  const stats = personStats();
+  const q = stats.reduce((a,x) => a + x.q, 0);
+  const star = collectRecognitions().length;
+  const cards = (r.interventions || []);
+  const done = cards.filter(c => c.doneAt != null).length;
+  const rows = r.stages.map(st =>
+    `<tr><td>${st.id} — ${esc(st.name)}</td><td class="num">${st.duration||0}′</td>
+     <td class="num"><b>${st.time_actual===''||st.time_actual==null ? '—' : st.time_actual+'′'}</b></td></tr>`).join('');
+  document.getElementById('endBody').innerHTML = `
+    <div class="end-big">${real}<small> phút thực tế</small>
+      <span class="end-vs">dự kiến ${plan}′ ${real>plan?`· vượt ${real-plan}′`:(real<plan?`· sớm ${plan-real}′`:'')}</span></div>
+    <div class="end-kpis">
+      <div><b>${q}</b><span>câu hỏi cả nhóm</span></div>
+      <div><b>${star}</b><span>⭐ ghi nhận</span></div>
+      <div><b>${done}/${cards.length}</b><span>🎯 can thiệp đã làm</span></div>
+    </div>
+    <table class="end-table"><thead><tr><th>Bước</th><th class="num">Dự kiến</th><th class="num">Thực tế</th></tr></thead>
+      <tbody>${rows}</tbody></table>
+    ${cards.length && done < cards.length
+      ? `<div class="end-warn">⏳ Còn ${cards.length-done} ý định can thiệp chưa làm — giữ lại ở tab Sau phiên để lắng đọng.</div>` : ''}`;
+  document.getElementById('endModal').classList.remove('hidden');
+}
+function closeEndModal(){ document.getElementById('endModal').classList.add('hidden'); }
+function endGoAfter(){ closeEndModal(); switchTab('after'); window.scrollTo(0,0); }
 
 function renderSw(){
   if(!currentSession) return;
@@ -1050,14 +1366,275 @@ function renderSw(){
   document.getElementById('swStageName').textContent = st.id + ' — ' + st.name;
   document.getElementById('swStageMeta').innerHTML =
     `dự kiến ${plan}′ · đã <b class="${over?'over':''}">${inStage}′</b>` + (over ? ` · vượt ${inStage-plan}′` : '');
-  document.getElementById('swTotal').innerHTML =
-    `Tổng <b>${totalPlan}′</b><br>còn ${Math.max(0, totalPlan-elapsedMin)}′`;
+  const ti = document.getElementById('swTotalInput');
+  if(ti && document.activeElement !== ti) ti.value = totalPlan;
+  document.getElementById('swLeft').innerHTML =
+    `còn <b style="color:var(--primary)">${Math.max(0, totalPlan-elapsedMin)}′</b>`;
 
   document.getElementById('swChips').innerHTML = r.stages.map((s,k) => {
     const done = r.lapAt && r.lapAt[k] != null;
     const cls = k===i ? 'cur' : (done ? 'done' : '');
     const lbl = done ? `${s.id}✓${s.time_actual||0}′` : `${s.id} ${s.duration||0}′`;
     return `<button class="sw-chip ${cls}" onclick="setActiveStage(${k})" title="${esc(s.name)}">${lbl}</button>`;
+  }).join('');
+}
+
+// ============================================================
+// THƯ VIỆN SỐNG — năng lực + điểm can thiệp
+// ============================================================
+let LIB = { competencies: [], interventions: [] };
+let libTimer = null;
+
+function noAccent(x){
+  return String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase().trim();
+}
+function slugId(x){ return noAccent(x).replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'').slice(0,40); }
+function nowISO(){ return new Date().toISOString(); }
+
+function seedLibrary(){
+  const t = nowISO();
+  const comps = DEFAULT_COMPETENCIES.map(n => ({
+    type:'competency', id:'c_'+slugId(n), name:n, stream:'', what:'', so_what:'', now_what:'',
+    stages:'', origin:'default', hidden:false, created_at:t, updated_at:t,
+    from_session:'', used:0, ok:0, note:''
+  }));
+  // giữ lại các năng lực anh từng tự thêm ở bản cũ
+  try {
+    JSON.parse(localStorage.getItem('customComps') || '[]').forEach(n => {
+      if(!n || comps.some(c => c.name === n)) return;
+      comps.push({type:'competency', id:'c_'+slugId(n), name:n, stream:'', what:'', so_what:'', now_what:'',
+        stages:'', origin:'custom', hidden:false, created_at:t, updated_at:t,
+        from_session:'(bản cũ)', used:0, ok:0, note:''});
+    });
+  } catch(e){}
+  const inters = DEFAULT_INTERVENTIONS.map(x => Object.assign({
+    type:'intervention', origin:'default', hidden:false, created_at:t, updated_at:t,
+    from_session:'', used:0, ok:0, note:''
+  }, x));
+  return { competencies: comps, interventions: inters };
+}
+
+function mergeLibrary(server){
+  const seed = seedLibrary();
+  const map = {};
+  seed.competencies.concat(seed.interventions).forEach(x => map[x.id] = x);
+  const sv = (server && server.competencies || []).concat(server && server.interventions || []);
+  sv.forEach(x => { if(x && x.id) map[x.id] = Object.assign({}, map[x.id] || {}, x); });
+  const all = Object.keys(map).map(k => map[k]);
+  return {
+    competencies : all.filter(x => x.type === 'competency'),
+    interventions: all.filter(x => x.type === 'intervention')
+  };
+}
+
+function libLoadOffline(){
+  try {
+    const raw = localStorage.getItem('al_library_v1');
+    LIB = raw ? mergeLibrary(JSON.parse(raw)) : seedLibrary();
+  } catch(e){ LIB = seedLibrary(); }
+}
+function libSaveOffline(){
+  try { localStorage.setItem('al_library_v1', JSON.stringify(LIB)); } catch(e){}
+}
+
+async function libLoad(){
+  libLoadOffline();
+  try {
+    const res = await apiGet('get_library');
+    if(res && res.status === 'success' && res.library){
+      const hasServer = (res.library.interventions||[]).length > 0;
+      LIB = mergeLibrary(res.library);
+      libSaveOffline();
+      if(!hasServer) libPush();          // lần đầu: đẩy bộ mặc định lên Sheet
+      setLibStatus('ok');
+    } else setLibStatus('local');
+  } catch(e){ setLibStatus('local'); }
+  renderLibraryScreen();
+}
+
+async function libPush(){
+  libSaveOffline();
+  try {
+    const res = await apiPost({ action:'save_library', library: LIB });
+    setLibStatus(res && res.status === 'success' ? 'ok' : 'local');
+  } catch(e){ setLibStatus('local'); }
+}
+function libSaveSoon(){
+  libSaveOffline();
+  clearTimeout(libTimer);
+  libTimer = setTimeout(libPush, 1200);
+}
+function setLibStatus(st){
+  const el = document.getElementById('libStatus');
+  if(!el) return;
+  el.textContent = st === 'ok' ? '☁️ thư viện đã đồng bộ' : '📴 thư viện lưu máy';
+  el.style.color = st === 'ok' ? 'var(--teal)' : '#e65100';
+}
+
+/* danh sách đang dùng được (bỏ mục đã ẩn) */
+function libComps(){ return LIB.competencies.filter(x => !x.hidden); }
+function libInters(){ return LIB.interventions.filter(x => !x.hidden); }
+function libFind(id){ return LIB.competencies.concat(LIB.interventions).find(x => x.id === id); }
+
+function libAddComp(name, fromSession){
+  name = String(name||'').trim();
+  if(!name) return null;
+  const exist = LIB.competencies.find(c => noAccent(c.name) === noAccent(name));
+  if(exist){ exist.hidden = false; libSaveSoon(); return exist; }
+  const t = nowISO();
+  const it = { type:'competency', id:'c_'+slugId(name)+'_'+Date.now().toString(36).slice(-4),
+    name, stream:'', what:'', so_what:'', now_what:'', stages:'', origin:'custom',
+    hidden:false, created_at:t, updated_at:t, from_session: fromSession||'', used:0, ok:0, note:'' };
+  LIB.competencies.push(it); libSaveSoon(); return it;
+}
+function libAddInter(o, fromSession){
+  const t = nowISO();
+  const it = Object.assign({
+    type:'intervention', id:'i_'+slugId(o.name||'moi')+'_'+Date.now().toString(36).slice(-4),
+    stream:'Team', what:'', so_what:'', now_what:'', stages:'', origin:'custom',
+    hidden:false, created_at:t, updated_at:t, from_session: fromSession||'', used:0, ok:0, note:''
+  }, o);
+  LIB.interventions.push(it); libSaveSoon(); return it;
+}
+function libCountUse(pointId, ok){
+  const it = libFind(pointId);
+  if(!it) return;
+  it.used = (Number(it.used)||0) + 1;
+  if(ok) it.ok = (Number(it.ok)||0) + 1;
+  it.updated_at = nowISO();
+  libSaveSoon();
+}
+
+// ============================================================
+// MÀN HÌNH THƯ VIỆN
+// ============================================================
+let libTab = 'competency', libEditing = null;
+
+function openLibrary(){
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('libraryScreen').classList.remove('hidden');
+  renderLibraryScreen(); window.scrollTo(0,0);
+}
+function closeLibrary(){
+  document.getElementById('libraryScreen').classList.add('hidden');
+  document.getElementById('homeScreen').classList.remove('hidden');
+  libPush();
+}
+function setLibTab(t){
+  libTab = t; libEditing = null;
+  document.getElementById('libTabC').classList.toggle('active', t === 'competency');
+  document.getElementById('libTabI').classList.toggle('active', t === 'intervention');
+  renderLibraryScreen();
+}
+function libToggleEdit(id){ libEditing = (libEditing === id ? null : id); renderLibraryScreen(); }
+function libField(id, key, v){
+  const it = libFind(id); if(!it) return;
+  it[key] = v; it.updated_at = nowISO();
+  if(it.origin === 'default') it.edited = true;
+  libSaveSoon();
+}
+function libToggleHide(id){
+  const it = libFind(id); if(!it) return;
+  it.hidden = !it.hidden; it.updated_at = nowISO(); libSaveSoon(); renderLibraryScreen();
+  showToast(it.hidden ? '⊘ Đã ẩn — phiên cũ vẫn giữ nguyên' : '↩ Đã hiện lại', 'success');
+}
+function libDelete(id){
+  const it = libFind(id); if(!it) return;
+  if(it.origin === 'default'){ showToast('Mục mặc định chỉ ẩn được, không xoá','warning'); return; }
+  if(!confirm('Xoá hẳn "' + it.name + '" khỏi thư viện?')) return;
+  ['competencies','interventions'].forEach(k => {
+    const i = LIB[k].findIndex(x => x.id === id); if(i >= 0) LIB[k].splice(i,1);
+  });
+  libEditing = null; libSaveSoon(); renderLibraryScreen();
+}
+function libRestore(id){
+  const it = libFind(id); if(!it || it.origin !== 'default') return;
+  const src = (it.type === 'competency')
+    ? {name: it.name}
+    : DEFAULT_INTERVENTIONS.find(x => x.id === it.id);
+  if(!src){ showToast('Không tìm thấy bản gốc','warning'); return; }
+  Object.assign(it, src); it.edited = false; it.updated_at = nowISO();
+  libSaveSoon(); renderLibraryScreen();
+  showToast('↩ Đã về bản mặc định','success');
+}
+function libNewFromScreen(){
+  if(libTab === 'competency'){
+    const n = prompt('Tên năng lực mới:');
+    if(n && n.trim()){ const it = libAddComp(n.trim(), 'thêm tay'); libEditing = it.id; renderLibraryScreen(); }
+  } else {
+    const n = prompt('Tên điểm can thiệp mới:');
+    if(!n || !n.trim()) return;
+    let st = prompt('Luồng?\n' + STREAMS.map((x,i) => (i+1)+'. '+x).join('\n') + '\n\nNhập số:', '2');
+    st = STREAMS[parseInt(st,10)-1] || 'Team';
+    const full = n.indexOf('–') >= 0 ? n.trim() : (st + ' – ' + n.trim());
+    const it = libAddInter({name: full, stream: st}, 'thêm tay');
+    libEditing = it.id; renderLibraryScreen();
+  }
+}
+
+function renderLibraryScreen(){
+  const box = document.getElementById('libList');
+  if(!box) return;
+  const q = noAccent((document.getElementById('libSearch')||{}).value || '');
+  const sort = (document.getElementById('libSort')||{}).value || 'name';
+  const showHidden = (document.getElementById('libShowHidden')||{}).checked;
+  let list = (libTab === 'competency' ? LIB.competencies : LIB.interventions).slice();
+  if(!showHidden) list = list.filter(x => !x.hidden);
+  if(q) list = list.filter(x => noAccent(x.name + ' ' + (x.what||'') + ' ' + (x.so_what||'') + ' ' + (x.now_what||'')).indexOf(q) >= 0);
+  const rate = x => (Number(x.used)||0) ? (Number(x.ok)||0)/(Number(x.used)||1) : -1;
+  list.sort((a,b) => {
+    if(sort === 'used')   return (b.used||0) - (a.used||0);
+    if(sort === 'okdesc') return rate(b) - rate(a);
+    if(sort === 'okasc')  return rate(a) - rate(b);
+    if(sort === 'new')    return String(b.created_at||'').localeCompare(String(a.created_at||''));
+    return a.name.localeCompare(b.name, 'vi');
+  });
+
+  document.getElementById('libTabC').innerHTML = `⚡ Năng lực (${LIB.competencies.filter(x=>!x.hidden).length})`;
+  document.getElementById('libTabI').innerHTML = `🎯 Điểm can thiệp (${LIB.interventions.filter(x=>!x.hidden).length})`;
+
+  if(!list.length){ box.innerHTML = '<div class="recog-empty">Không thấy mục nào.</div>'; return; }
+
+  box.innerHTML = list.map(x => {
+    const pct = (Number(x.used)||0) ? Math.round((Number(x.ok)||0)/(Number(x.used)||1)*100) : null;
+    const use = (Number(x.used)||0)
+      ? `dùng <b>${x.used}</b> lần${pct!=null && x.type==='intervention' ? ` · <span class="${pct>=60?'hi':(pct<40?'lo':'')}">${pct}% ✓</span>` : ''}`
+      : '<span style="opacity:.6">chưa dùng</span>';
+    const editing = libEditing === x.id;
+    let h = `<div class="lib-item ${x.hidden?'off':''}">
+      <div class="lib-h">
+        <span class="lib-name">${x.hidden?'⊘ ':''}${esc(x.name)}</span>
+        <span class="lib-badge ${x.origin==='custom'?'custom':''}">${x.origin==='custom'?'của tôi':'mặc định'}</span>
+        ${x.edited?'<span class="lib-badge edited">đã sửa</span>':''}
+        <span class="lib-use">${use}</span>
+        <span class="lib-acts">
+          <button class="btn-mini" onclick="libToggleEdit('${x.id}')">${editing?'▴ đóng':'✎ sửa'}</button>
+          ${x.edited?`<button class="btn-mini" onclick="libRestore('${x.id}')" title="Về bản gốc">↩</button>`:''}
+          <button class="btn-mini" onclick="libToggleHide('${x.id}')">${x.hidden?'↩ hiện lại':'⊘ ẩn'}</button>
+          ${x.origin==='custom'?`<button class="btn-mini" style="color:var(--danger)" onclick="libDelete('${x.id}')">🗑</button>`:''}
+        </span>
+      </div>`;
+    if(x.type === 'intervention' && !editing){
+      if(x.what)     h += `<div class="lib-q"><b>What</b> ${esc(x.what)}</div>`;
+      if(x.so_what)  h += `<div class="lib-q"><b>So what</b> ${esc(x.so_what)}</div>`;
+      if(x.now_what) h += `<div class="lib-q"><b>Now what</b> ${esc(x.now_what)}</div>`;
+    }
+    h += `<div class="lib-meta">${x.stages?`bước ${esc(x.stages)} · `:''}${x.from_session?`từ phiên ${esc(x.from_session)} · `:''}thêm ${String(x.created_at||'').slice(0,10)}</div>`;
+    if(editing){
+      h += `<div class="lib-edit">
+        <label>Tên</label><input value="${esc(x.name)}" oninput="libField('${x.id}','name',this.value)">`;
+      if(x.type === 'intervention'){
+        h += `<label>Luồng</label><select onchange="libField('${x.id}','stream',this.value)">
+            ${STREAMS.map(st => `<option ${x.stream===st?'selected':''}>${esc(st)}</option>`).join('')}</select>
+          <label>Hay gặp ở bước (A,B,C…)</label><input value="${esc(x.stages)}" oninput="libField('${x.id}','stages',this.value)">
+          <label>What — tạo nhận thức</label><textarea oninput="libField('${x.id}','what',this.value)">${esc(x.what)}</textarea>
+          <label>So what — tạo ý nghĩa</label><textarea oninput="libField('${x.id}','so_what',this.value)">${esc(x.so_what)}</textarea>
+          <label>Now what — định hướng hành động</label><textarea oninput="libField('${x.id}','now_what',this.value)">${esc(x.now_what)}</textarea>`;
+      }
+      h += `<label>Ghi chú riêng</label><textarea oninput="libField('${x.id}','note',this.value)">${esc(x.note)}</textarea></div>`;
+    }
+    return h + '</div>';
   }).join('');
 }
 
@@ -1082,6 +1659,8 @@ async function apiPost(body){
 document.addEventListener('DOMContentLoaded', () => {
   setupFilterListeners();
   setupHotkeys();
+  applyNoteFs();
+  libLoad();
   loadData();
 });
 
@@ -1285,6 +1864,7 @@ function ensureSessionStructure(){
   if(r.activeStage == null) r.activeStage = 0;
   if(!r.lapAt) r.lapAt = {};
   if(!r.recogManual) r.recogManual = [];
+  if(!r.interventions) r.interventions = [];
   if(!r.recogSelf) r.recogSelf = {};
   if(!r.recogPeer) r.recogPeer = {};
   // MIGRATE ghi chú chuỗi cũ -> {raw, stamps}
@@ -1318,8 +1898,8 @@ function switchTab(tab){
     document.getElementById('tabContent'+cap(t)).classList.toggle('hidden', t !== tab);
     document.getElementById('tab'+cap(t)).classList.toggle('active', t === tab);
   });
-  if(tab === 'during'){ renderSw(); renderRecog(); renderFlow(); setTimeout(pinTable, 60); }
-  if(tab === 'after') renderRecogCards();
+  if(tab === 'during'){ renderSw(); renderRecog(); renderFlow(); renderIntStrip(); setTimeout(pinTable, 60); }
+  if(tab === 'after'){ renderRecogCards(); renderIntAfter(); }
 }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 function saveAndSwitchTab(t){ saveSession(); switchTab(t); }
@@ -1377,7 +1957,7 @@ function initStages(){
 function initSessionRunning(){
   return { pp_name:'', pp_competency:'', coach_name:'', members:[], observers:[],
            stages: initStages(), timer:{elapsed:0,running:false,lastTick:null},
-           activeStage:0, lapAt:{}, recogManual:[], recogSelf:{}, recogPeer:{} };
+           activeStage:0, lapAt:{}, recogManual:[], recogSelf:{}, recogPeer:{}, interventions:[] };
 }
 function loadDuringTab(){
   const r = currentSession.session_running;
@@ -1390,7 +1970,7 @@ function loadDuringTab(){
   document.getElementById('btnQCol').textContent = hideQCol ? 'Hiện cột câu hỏi' : 'Ẩn cột câu hỏi';
   toggleParticipants(localStorage.getItem('al_foldPart') === '1');
   document.getElementById('helpBar').classList.toggle('hidden', localStorage.getItem('al_help') !== '1');
-  renderMembers(); renderObservers(); renderSessionTable(); renderSw(); renderRecog(); renderFlow();
+  renderMembers(); renderObservers(); renderSessionTable(); renderSw(); renderRecog(); renderFlow(); renderIntStrip();
 }
 function toggleParticipants(force){
   const el = document.getElementById('participantsSection');
@@ -1428,7 +2008,7 @@ function renderMembers(){
       </button>
       <button style="margin-top:6px;width:100%;padding:5px;border-radius:6px;font-size:11px;background:transparent;color:var(--danger);border:1px solid var(--danger);" onclick="removeMember(${i})">🗑 Xóa</button>
     </div>`).join('');
-  document.getElementById('btnAddMember').style.display = m.length >= 5 ? 'none' : 'flex';
+  document.getElementById('btnAddMember').style.display = m.length >= MAX_MEMBERS ? 'none' : 'flex';
 }
 function renderObservers(){
   const o = currentSession.session_running.observers;
@@ -1440,7 +2020,8 @@ function renderObservers(){
     </div>`).join('');
   document.getElementById('btnAddObserver').style.display = o.length >= 5 ? 'none' : 'flex';
 }
-function addMember(){ const m = currentSession.session_running.members; if(m.length>=5) return; m.push({name:'',competency:''}); renderMembers(); renderSessionTable(); markDirty(); }
+const MAX_MEMBERS = 7;
+function addMember(){ const m = currentSession.session_running.members; if(m.length>=MAX_MEMBERS) return; m.push({name:'',competency:''}); renderMembers(); renderSessionTable(); markDirty(); }
 function removeMember(i){ currentSession.session_running.members.splice(i,1); renderMembers(); renderSessionTable(); renderRecog(); markDirty(); }
 function updateMember(i,k,v){ currentSession.session_running.members[i][k]=v; if(k==='name'){ renderSessionTable(); renderRecog(); renderFlow(); renderPartSummary(); } markDirty(); }
 function addObserver(){ const o = currentSession.session_running.observers; if(o.length>=5) return; o.push({name:''}); renderObservers(); markDirty(); }
@@ -1450,53 +2031,94 @@ function updateObserver(i,k,v){ currentSession.session_running.observers[i][k]=v
 // ============================================================
 // COMPETENCY MODAL
 // ============================================================
-function openCompModal(type,index){
-  currentCompTarget = {type,index}; selectedComp = null;
-  let cur = '';
-  if(type === 'pp') cur = currentSession.session_running.pp_competency || '';
-  else if(type === 'member') cur = (currentSession.session_running.members[index]||{}).competency || '';
-  if(cur) selectedComp = cur;
-  renderCompList(cur);
-  document.getElementById('compOtherInput').value = '';
+let compIdx = 0;
+
+function openCompModal(type, index){
+  currentCompTarget = {type, index};
+  document.getElementById('compSearch').value = '';
+  compIdx = 0;
+  renderCompList();
   document.getElementById('compModal').classList.remove('hidden');
-}
-function renderCompList(cur){
-  document.getElementById('compList').innerHTML = allCompetencies.map(n => {
-    const sel = n === cur;
-    return `<label class="comp-option ${sel?'selected':''}">
-      <input type="radio" name="compPick" value="${esc(n)}" ${sel?'checked':''}
-        onchange="pickComp(this)"> ${esc(n)}</label>`;
-  }).join('');
-}
-function pickComp(el){
-  selectedComp = el.value;
-  document.querySelectorAll('.comp-option').forEach(x => x.classList.remove('selected'));
-  el.closest('.comp-option').classList.add('selected');
+  setTimeout(() => document.getElementById('compSearch').focus(), 40);
 }
 function closeCompModal(){ document.getElementById('compModal').classList.add('hidden'); }
-function addCustomComp(){
-  const n = document.getElementById('compOtherInput').value.trim();
-  if(!n) return;
-  if(!allCompetencies.includes(n)){
-    allCompetencies.push(n); customCompetencies.push(n);
-    localStorage.setItem('customComps', JSON.stringify(customCompetencies));
-  }
-  selectedComp = n; renderCompList(n);
-  document.getElementById('compOtherInput').value = '';
-  document.getElementById('compList').lastElementChild?.scrollIntoView({behavior:'smooth'});
+
+function currentCompValue(){
+  const t = currentCompTarget; if(!t) return '';
+  if(t.type === 'pp') return currentSession.session_running.pp_competency || '';
+  return (currentSession.session_running.members[t.index] || {}).competency || '';
 }
-function confirmComp(){
-  if(!selectedComp || !currentCompTarget){ closeCompModal(); return; }
-  const {type,index} = currentCompTarget;
+
+function compMatches(){
+  const q = noAccent(document.getElementById('compSearch').value);
+  const list = libComps();
+  if(!q) return list;
+  return list.filter(c => noAccent(c.name).indexOf(q) >= 0);
+}
+
+function renderCompList(){
+  const q = (document.getElementById('compSearch').value || '').trim();
+  const cur = currentCompValue();
+  const list = compMatches();
+  if(compIdx >= list.length) compIdx = Math.max(0, list.length - 1);
+  let html = list.map((c, i) => `
+    <div class="comp-option ${c.name===cur?'selected':''} ${i===compIdx?'hi':''}"
+         onclick="chooseComp('${esc(c.name).replace(/'/g,"&#39;")}')" onmouseenter="compIdx=${i};markCompHi()">
+      <span class="co-tick">${c.name===cur?'✓':''}</span>
+      <span class="co-name">${esc(c.name)}</span>
+      ${c.origin==='custom'?'<span class="co-tag">của tôi</span>':''}
+      ${c.used?`<span class="co-use">${c.used} lần</span>`:''}
+    </div>`).join('');
+  if(q && !list.some(c => noAccent(c.name) === noAccent(q))){
+    html += `<div class="comp-option add" onclick="addCompFromSearch()">
+      <span class="co-tick">＋</span><span class="co-name">Thêm <b>"${esc(q)}"</b> vào thư viện</span></div>`;
+  }
+  if(!html) html = '<div class="recog-empty">Không thấy năng lực nào.</div>';
+  document.getElementById('compList').innerHTML = html;
+}
+function markCompHi(){
+  document.querySelectorAll('#compList .comp-option').forEach((el,i) => el.classList.toggle('hi', i === compIdx));
+}
+function compKey(e){
+  const list = compMatches();
+  const q = (document.getElementById('compSearch').value || '').trim();
+  const n = list.length + (q && !list.some(c => noAccent(c.name) === noAccent(q)) ? 1 : 0);
+  if(e.key === 'ArrowDown'){ e.preventDefault(); compIdx = Math.min(n-1, compIdx+1); markCompHi(); scrollCompHi(); }
+  else if(e.key === 'ArrowUp'){ e.preventDefault(); compIdx = Math.max(0, compIdx-1); markCompHi(); scrollCompHi(); }
+  else if(e.key === 'Enter'){
+    e.preventDefault();
+    if(compIdx < list.length) chooseComp(list[compIdx].name);
+    else addCompFromSearch();
+  }
+  else if(e.key === 'Escape'){ e.preventDefault(); closeCompModal(); }
+}
+function scrollCompHi(){
+  const el = document.querySelector('#compList .comp-option.hi');
+  if(el) el.scrollIntoView({block:'nearest'});
+}
+function addCompFromSearch(){
+  const q = (document.getElementById('compSearch').value || '').trim();
+  if(!q) return;
+  libAddComp(q, currentSession ? currentSession.session_id : '');
+  showToast('📚 Đã thêm "' + q + '" vào thư viện', 'success');
+  chooseComp(q);
+}
+
+function chooseComp(name){
+  if(!currentCompTarget) return closeCompModal();
+  const {type, index} = currentCompTarget;
   if(type === 'pp'){
-    currentSession.session_running.pp_competency = selectedComp;
-    document.getElementById('ppCompText').textContent = selectedComp;
+    currentSession.session_running.pp_competency = name;
+    document.getElementById('ppCompText').textContent = name;
     document.getElementById('ppCompText').className = 'comp-selected';
-  } else if(type === 'member'){
-    currentSession.session_running.members[index].competency = selectedComp;
+  } else {
+    currentSession.session_running.members[index].competency = name;
     renderMembers();
   }
-  renderSessionTable(); renderRecog(); markDirty(); closeCompModal();
+  const it = LIB.competencies.find(c => c.name === name);
+  if(it){ it.used = (Number(it.used)||0) + 1; libSaveSoon(); }
+  renderSessionTable(); renderRecog(); markDirty();
+  closeCompModal();
 }
 
 // ============================================================
@@ -1512,6 +2134,34 @@ function personInfo(key){
   const i = parseInt(key.slice(1),10);
   const m = (r.members||[])[i] || {};
   return {tag:'M'+(i+1), name:m.name || 'Thành viên', comp:m.competency || ''};
+}
+
+/* ===== CỠ CHỮ Ô GHI CHÚ ===== */
+const NOTE_FS_STEPS = [10, 11, 12, 13];
+let noteFs = parseInt(localStorage.getItem('al_noteFs')||'11', 10);
+function applyNoteFs(){
+  if(NOTE_FS_STEPS.indexOf(noteFs) < 0) noteFs = 11;
+  document.documentElement.style.setProperty('--note-fs', noteFs + 'px');
+  document.documentElement.style.setProperty('--note-lh', noteFs <= 10 ? '1.35' : '1.40');
+  const l = document.getElementById('fsLabel'); if(l) l.textContent = noteFs;
+  localStorage.setItem('al_noteFs', String(noteFs));
+  fitTable();
+}
+function stepNoteFs(d){
+  const i = NOTE_FS_STEPS.indexOf(noteFs);
+  noteFs = NOTE_FS_STEPS[Math.max(0, Math.min(NOTE_FS_STEPS.length-1, i + d))];
+  applyNoteFs();
+}
+function resetNoteFs(){ noteFs = 11; applyNoteFs(); }
+
+/* ===== BỀ RỘNG CỘT NGƯỜI — tự co khi đông người ===== */
+function applyColWidths(){
+  const n = colKeys().length;                       // PP + tối đa 7 thành viên
+  const fixed = 134 + 90 + (hideQCol ? 0 : 190);
+  const avail = Math.max(600, window.innerWidth - 64) - fixed;
+  const w = Math.max(112, Math.min(168, Math.floor(avail / Math.max(1,n))));
+  document.documentElement.style.setProperty('--col-w', w + 'px');
+  document.documentElement.style.setProperty('--tbl-min', (fixed + n*w) + 'px');
 }
 
 function toggleHelp(){
@@ -1558,6 +2208,7 @@ function renderSessionTable(){
   });
   head += '</tr>';
   document.getElementById('tableHead').innerHTML = head;
+  applyColWidths();
 
   // BODY
   let body = '';
@@ -1630,6 +2281,7 @@ function renderSessionTable(){
     body += row;
   });
   document.getElementById('tableBody').innerHTML = body;
+  renderIntStrip();
   // Ô ghi chú cuộn xuống đáy -> luôn thấy những dòng mới nhất
   document.querySelectorAll('#tableBody tr.cur .note-view').forEach(v => { v.scrollTop = v.scrollHeight; });
   renderFlow();
@@ -1860,6 +2512,346 @@ function toggleFlow(){
 }
 
 // ============================================================
+// THẺ CAN THIỆP — 4 bước
+// ============================================================
+let curCard = null;
+
+function cards(){
+  const r = currentSession.session_running;
+  if(!r.interventions) r.interventions = [];
+  return r.interventions;
+}
+const SAY_KEYS = [
+  ['leanIn',  '🫱 Lean In',  'Nghiêng người, giọng chắc — cắt mạch nhóm'],
+  ['what',    'WHAT',        'Tạo nhận thức về thực tại'],
+  ['soWhat',  'SO WHAT',     'Tạo ý nghĩa — vì sao quan trọng'],
+  ['nowWhat', 'NOW WHAT',    'Định hướng hành động ngay'],
+  ['leanOut', '🫲 Lean Out', 'Trao lại không gian, rút lui dứt khoát']
+];
+
+function newCard(point){
+  const c = {
+    id: 'ic_' + Date.now().toString(36),
+    createdAt: curMinute(), stage: currentSession.session_running.stages[activeIdx()].id,
+    point: null, want: '', related: 'all',
+    says: {leanIn:'Hello team!', what:'', soWhat:'', nowWhat:'', leanOut:'Rất tuyệt vời. Mời nhóm tiếp tục!'},
+    ticks: {}, doneAt: null, verdict: null, followNote: '', step: 1
+  };
+  if(point) applyPoint(c, point);
+  cards().push(c);
+  curCard = c; markDirty();
+  return c;
+}
+function applyPoint(c, pt){
+  c.point = {id: pt.id, name: pt.name, stream: pt.stream};
+  c.says.what    = pt.what    || '';
+  c.says.soWhat  = pt.so_what || '';
+  c.says.nowWhat = pt.now_what|| '';
+}
+
+/* ---------- Gợi ý: đọc thẳng từ dữ liệu đang có ---------- */
+function interventionSignals(){
+  if(!currentSession) return [];
+  const r = currentSession.session_running, out = [], m = curMinute();
+  const stats = personStats();
+  const totQ = stats.reduce((a,x) => a + x.q, 0);
+  const pick = n => libInters().find(x => x.name === n) || libInters().find(x => noAccent(x.name).indexOf(noAccent(n)) >= 0);
+
+  stats.forEach(p => {
+    if(p.pending >= 3) out.push({why: `${p.name} hỏi ${p.pending} câu liên tiếp, chưa có câu đáp nào`,
+                                 point: pick('Question – Câu hỏi đóng/áp đặt')});
+  });
+  if(totQ >= 6) stats.forEach(p => {
+    if(p.q / totQ > 0.5) out.push({why: `${p.name} chiếm ${Math.round(p.q/totQ*100)}% số câu hỏi cả nhóm`,
+                                   point: pick('Team – Tham gia không cân bằng')});
+  });
+  // PP trả lời trong cột người hỏi nên cột PP trống là bình thường -> chỉ xét thành viên
+  if(m >= 15){
+    const silent = stats.filter(p => p.k !== 'pp' && p.q === 0 && p.bhv === 0 && p.a === 0 && p.name.trim());
+    if(silent.length)
+      out.push({why: silent.length === 1
+                  ? `${silent[0].name} chưa phát ngôn lần nào sau ${m} phút`
+                  : `${silent.length} người chưa phát ngôn sau ${m} phút: ${silent.map(x=>x.name).join(', ')}`,
+                point: pick('Team – Tham gia không cân bằng')});
+  }
+  const i = activeIdx(), st = r.stages[i];
+  const prevLap = i > 0 ? ((r.lapAt && r.lapAt[i-1]) || 0) : 0;
+  const inStage = Math.floor((swElapsed() - prevLap) / 60);
+  const plan = parseInt(st.duration) || 0;
+  if(plan && inStage > plan * 1.5)
+    out.push({why: `Bước ${st.id} đã ${inStage}′ / dự kiến ${plan}′`,
+              point: pick('Coach & Logistics – Nhóm lan man/mất cấu trúc')});
+  if(st.id === 'E'){
+    const pp = parseNote(getNote(i, 'pp'));
+    if(pp.lines.filter(l => !l.empty).length === 0)
+      out.push({why: 'Đang ở bước Cam kết hành động mà chưa ghi được hành động nào của PP',
+                point: pick('Action – PP không ra action')});
+  }
+  if(m >= 30){
+    const named = libComps().map(c => noAccent(c.name));
+    let mentioned = false;
+    r.stages.forEach((x, si) => colKeys().forEach(k => {
+      const t = noAccent(getNote(si, k).raw);
+      if(named.some(n => n && t.indexOf(n) >= 0)) mentioned = true;
+    }));
+    if(!mentioned) out.push({why: `Đã ${m} phút, chưa dòng nào nhắc tới năng lực đang rèn`,
+                             point: pick('Learning – Chọn năng lực nhưng không thực hành')});
+  }
+  // bỏ gợi ý đã có thẻ đang chờ cùng điểm
+  const open = cards().filter(c => c.doneAt == null && c.point).map(c => c.point.id);
+  return out.filter(x => x.point && open.indexOf(x.point.id) < 0)
+            .filter((x,i,a) => a.findIndex(y => y.why === x.why) === i)
+            .slice(0, 4);
+}
+
+/* ---------- Đo hành vi trước / sau can thiệp ---------- */
+function measureAround(card){
+  const list = cards().filter(c => c.doneAt != null).sort((a,b) => a.doneAt - b.doneAt);
+  const t = card.doneAt;
+  const nxt = list.find(c => c.doneAt > t);
+  let win = 10;
+  if(nxt) win = Math.min(win, nxt.doneAt - t);
+  win = Math.min(win, t);                       // không lùi quá đầu phiên
+  win = Math.max(1, win);
+  const before = {}, after = {};
+  colKeys().forEach(k => { before[k] = 0; after[k] = 0; });
+  let bPend = 0, aPend = 0;
+  currentSession.session_running.stages.forEach((st, si) => {
+    colKeys().forEach(k => {
+      parseNote(getNote(si, k)).lines.forEach(l => {
+        if(l.empty || l.t == null) return;
+        if(l.t >= t - win && l.t < t){ if(l.kind === 'question'){ before[k]++; bPend++; } else if(l.kind === 'answer') bPend = 0; }
+        if(l.t >= t && l.t <= t + win){ if(l.kind === 'question'){ after[k]++; aPend++; } else if(l.kind === 'answer') aPend = 0; }
+      });
+    });
+  });
+  const voiceB = Object.keys(before).filter(k => before[k] > 0).length;
+  const voiceA = Object.keys(after).filter(k => after[k] > 0).length;
+  return {win, t, before, after, voiceB, voiceA, bPend, aPend};
+}
+
+/* ---------- Dải ghim ---------- */
+function renderIntStrip(){
+  const el = document.getElementById('intStrip');
+  if(!el || !currentSession) return;
+  const cs = cards();
+  const wait  = cs.filter(c => c.doneAt == null);
+  const watch = cs.filter(c => c.doneAt != null && !c.verdict);
+  const sig = interventionSignals();
+  let h = `<span class="int-lab">🎯 CAN THIỆP</span>
+           <button class="btn-int-new" onclick="openIntCard(null)">＋ Thẻ mới</button>`;
+  if(wait.length || watch.length){
+    h += `<span>${wait.length?`<b>⏳ ${wait.length} định</b>`:''}${wait.length&&watch.length?' · ':''}${watch.length?`<b>👁 ${watch.length} đang theo dõi</b>`:''}</span>`;
+  }
+  cs.slice(-4).forEach(c => {
+    const nm = c.point ? c.point.name.split('–').pop().trim() : (c.want || 'thẻ trống');
+    const cls = c.doneAt == null ? 'wait' : (c.verdict ? '' : 'watch');
+    const tag = c.doneAt == null ? `⏳ ${c.createdAt}′` : (c.verdict ? '✅' : `👁 ${c.doneAt}′`);
+    h += `<span class="int-chip ${cls}" onclick="openIntCard('${c.id}')">${tag} ${esc(nm).slice(0,34)}</span>`;
+  });
+  sig.forEach(x => {
+    h += `<span class="int-chip sig" onclick="newFromSignal('${esc(x.point.id)}')">💡 ${esc(x.why).slice(0,46)} → tạo thẻ</span>`;
+  });
+  if(!cs.length && !sig.length) h += `<span class="int-empty">chưa có thẻ nào — bấm “＋ Thẻ mới” khi thấy điểm cần can thiệp</span>`;
+  el.innerHTML = h;
+}
+function newFromSignal(pid){
+  const pt = libFind(pid);
+  const c = newCard(pt);
+  c.step = 2;
+  openIntCard(c.id);
+}
+
+/* ---------- Thẻ ---------- */
+function openIntCard(id){
+  if(id) curCard = cards().find(c => c.id === id);
+  if(!curCard) curCard = newCard(null);
+  document.getElementById('intModal').classList.remove('hidden');
+  renderIntCard();
+}
+function closeIntCard(){
+  document.getElementById('intModal').classList.add('hidden');
+  // thẻ trắng trơn thì bỏ luôn
+  if(curCard && !curCard.point && !curCard.want && curCard.doneAt == null){
+    const i = cards().indexOf(curCard); if(i >= 0) cards().splice(i, 1);
+  }
+  curCard = null;
+  renderIntStrip(); renderRecog(); markDirty();
+}
+function intStep(n){ if(curCard){ curCard.step = n; renderIntCard(); } }
+function intSet(k, v){ if(!curCard) return; curCard[k] = v; markDirty(); }
+function intSay(k, v){ if(!curCard) return; curCard.says[k] = v; markDirty(); }
+function intTick(k, v){ if(!curCard) return; curCard.ticks[k] = v; renderIntCard(); markDirty(); }
+
+function intChoosePoint(pid){
+  const pt = libFind(pid);
+  if(!pt || !curCard) return;
+  applyPoint(curCard, pt);
+  curCard.step = 2;
+  renderIntCard(); renderIntStrip(); markDirty();
+}
+function intCustomPoint(){
+  const name = prompt('Tên điểm can thiệp (ví dụ: Team – Nhóm né phản hồi thẳng):');
+  if(!name || !name.trim()) return;
+  let stream = prompt('Thuộc luồng nào?\n' + STREAMS.map((x,i) => (i+1)+'. '+x).join('\n') + '\n\nNhập số:', '2');
+  stream = STREAMS[parseInt(stream,10)-1] || 'Team';
+  const full = name.indexOf('–') >= 0 ? name.trim() : (stream + ' – ' + name.trim());
+  const it = libAddInter({name: full, stream,
+    what: prompt('WHAT — câu hỏi tạo nhận thức:') || '',
+    so_what: prompt('SO WHAT — câu hỏi tạo ý nghĩa:') || '',
+    now_what: prompt('NOW WHAT — câu hỏi định hướng hành động:') || '',
+    stages: currentSession.session_running.stages[activeIdx()].id
+  }, currentSession.session_id);
+  showToast('📚 Đã thêm vào thư viện điểm can thiệp', 'success');
+  intChoosePoint(it.id);
+}
+function intGo(){
+  if(!curCard) return;
+  curCard.doneAt = curMinute();
+  curCard.step = 4;
+  if(curCard.point) libCountUse(curCard.point.id, false);
+  renderIntCard(); renderIntStrip(); markDirty();
+  showToast('🎯 Đã ghi can thiệp lúc ' + curCard.doneAt + '′ — theo dõi xem nhóm đổi thế nào', 'success');
+}
+function intVerdict(v){
+  if(!curCard) return;
+  const was = curCard.verdict;
+  curCard.verdict = v;
+  if(curCard.point && v === 'changed' && was !== 'changed'){
+    const it = libFind(curCard.point.id);
+    if(it){ it.ok = (Number(it.ok)||0) + 1; libSaveSoon(); }
+  }
+  renderIntCard(); renderIntStrip(); markDirty();
+}
+function intAgain(){
+  if(!curCard) return;
+  const pt = curCard.point ? libFind(curCard.point.id) : null;
+  const c = newCard(pt);
+  c.want = curCard.want; c.step = 3;
+  openIntCard(c.id);
+  showToast('Thẻ nối tiếp — lần này can thiệp mạnh hơn', 'warning');
+}
+function intDelete(){
+  if(!curCard || !confirm('Xoá thẻ can thiệp này?')) return;
+  const i = cards().indexOf(curCard); if(i >= 0) cards().splice(i, 1);
+  curCard = null;
+  document.getElementById('intModal').classList.add('hidden');
+  renderIntStrip(); renderRecog(); markDirty();
+}
+
+const WANT_QUICK = ['nhóm hỏi câu mở','mọi người cùng tham gia','nhóm chốt được 1 câu vấn đề',
+                    'hỏi chéo nhau thay vì chỉ hỏi PP','quay lại đúng nhịp thời gian','PP ra được hành động cụ thể'];
+
+function renderIntCard(){
+  const c = curCard; if(!c) return;
+  const n = cards().indexOf(c) + 1;
+  document.getElementById('intTitle').textContent = `🎯 Thẻ can thiệp #${n}` +
+    (c.doneAt != null ? ` · đã can thiệp ${c.doneAt}′` : ` · định lúc ${c.createdAt}′`);
+  const okStep = [false, !!c.point || !!c.want, !!c.want, c.doneAt != null, !!c.verdict];
+  document.getElementById('intSteps').innerHTML = [1,2,3,4].map(i =>
+    `<span class="int-step ${c.step===i?'on':(okStep[i]?'ok':'')}" onclick="intStep(${i})">${
+      ['','① Điểm','② Kết quả','③ Can thiệp','④ Theo dõi'][i]}</span>`).join('<span class="int-arrow">→</span>');
+
+  let h = '';
+  if(c.step === 1){
+    const stageId = currentSession.session_running.stages[activeIdx()].id;
+    const sig = interventionSignals();
+    const all = libInters();
+    const near = all.filter(x => String(x.stages||'').split(',').map(z=>z.trim()).indexOf(stageId) >= 0);
+    const q = (document.getElementById('intSearch') || {}).value || '';
+    const show = q ? all.filter(x => noAccent(x.name + ' ' + x.what).indexOf(noAccent(q)) >= 0)
+                   : (near.length ? near : all);
+    const opt = x => {
+      const ef = x.used ? `${x.used} lần · ${Math.round((x.ok/x.used)*100)}% ✓` : '';
+      return `<div class="int-opt ${c.point&&c.point.id===x.id?'on':''}" onclick="intChoosePoint('${x.id}')">
+        <span class="st ${esc(x.stream.split(' ')[0])}">${esc(x.stream.split(' ')[0])}</span>
+        <span>${esc(x.name.split('–').slice(1).join('–').trim() || x.name)}</span>
+        <span class="ef">${ef}</span></div>`;
+    };
+    h += `<div class="int-sec-lab">① Chọn điểm can thiệp</div>
+      <div class="int-hint">Liên quan:
+        <select onchange="intSet('related',this.value)" style="font-family:var(--font);font-size:12px;padding:2px 6px;border-radius:6px;border:1.5px solid var(--gray-border)">
+          <option value="all"${c.related==='all'?' selected':''}>cả nhóm</option>
+          ${colKeys().map(k => { const p = personInfo(k);
+            return `<option value="${k}"${c.related===k?' selected':''}>${esc(p.tag)} · ${esc(p.name)}</option>`; }).join('')}
+        </select></div>
+      <input type="text" class="filter-input" id="intSearch" placeholder="Tìm điểm can thiệp… (không cần dấu)"
+        value="${esc(q)}" oninput="renderIntCard();document.getElementById('intSearch').focus()">`;
+    if(!q && sig.length){
+      h += `<div class="int-group">💡 Đang xảy ra ngay lúc này</div>` + sig.map(x =>
+        `<div class="int-opt sig" onclick="intChoosePoint('${x.point.id}')">
+           <span class="st ${esc(x.point.stream.split(' ')[0])}">${esc(x.point.stream.split(' ')[0])}</span>
+           <span><span class="int-sig-why">⚠ ${esc(x.why)}</span>${esc(x.point.name)}</span></div>`).join('');
+    }
+    h += `<div class="int-group">${q ? 'Kết quả tìm' : (near.length ? 'Hay gặp ở bước '+stageId+' đang chạy' : 'Tất cả')} · ${show.length} mục</div>`;
+    h += show.map(opt).join('') || '<div class="recog-empty">Không thấy mục nào.</div>';
+    if(!q && near.length) h += `<div class="int-opt" onclick="document.getElementById('intSearch').value=' ';renderIntCard()">
+      <span class="co-tick">≡</span><span>Xem tất cả ${all.length} điểm can thiệp</span></div>`;
+    h += `<div class="int-opt" onclick="intCustomPoint()"><span class="co-tick">＋</span>
+      <span>Điểm can thiệp mới — thêm vào thư viện của tôi</span></div>`;
+  }
+
+  if(c.step === 2){
+    h += `<div class="int-sec-lab">② Kết quả muốn thấy sau can thiệp</div>
+      <div class="int-hint">${c.point ? '<b>'+esc(c.point.name)+'</b> · ' : ''}Thái độ, hành vi gì của nhóm cần đổi?</div>
+      <textarea class="int-ta" oninput="intSet('want',this.value)" placeholder="ví dụ: nhóm hỏi chéo nhau thay vì chỉ dồn về PP">${esc(c.want)}</textarea>
+      <div class="int-quick">${WANT_QUICK.map(w =>
+        `<button onclick="intSet('want',(curCard.want?curCard.want+'; ':'')+'${w}');renderIntCard()">⊕ ${w}</button>`).join('')}</div>
+      <div class="int-foot"><span></span><button class="int-next" onclick="intStep(3)">Tiếp →</button></div>`;
+  }
+
+  if(c.step === 3){
+    h += `<div class="int-sec-lab">③ Can thiệp bằng gì — tích dần lúc đang nói</div>
+      <div class="int-hint">Ba câu lấy từ thư viện, sửa thẳng tại đây được.</div>`;
+    h += SAY_KEYS.map(([k, lab, hint]) => `
+      <label class="int-say ${c.ticks[k]?'done':''}">
+        <input type="checkbox" ${c.ticks[k]?'checked':''} onchange="intTick('${k}',this.checked)">
+        <span class="int-say-c"><span class="int-say-k">${lab} — ${hint}</span>
+          <textarea class="int-say-t" rows="2" oninput="intSay('${k}',this.value);this.style.height='auto';this.style.height=this.scrollHeight+'px'"
+            placeholder="…">${esc(c.says[k])}</textarea></span></label>`).join('');
+    h += c.doneAt == null
+      ? `<button class="int-go" onclick="intGo()">▶ ĐÃ CAN THIỆP XONG — ghi mốc ${curMinute()}′</button>`
+      : `<div class="int-hint" style="margin-top:10px">Đã can thiệp lúc <b>${c.doneAt}′</b>.</div>
+         <button class="int-go watch" onclick="intStep(4)">👁 Sang bước theo dõi</button>`;
+  }
+
+  if(c.step === 4){
+    if(c.doneAt == null){
+      h += `<div class="recog-empty">Chưa can thiệp. Quay lại bước ③ và bấm “ĐÃ CAN THIỆP XONG”.</div>`;
+    } else {
+      const m = measureAround(c);
+      const mx = Math.max(1, ...colKeys().map(k => Math.max(m.before[k], m.after[k])));
+      const col = (obj, voice, pend) => colKeys().map(k => {
+        const v = obj[k]; if(!v) return '';
+        return `<div class="mrow"><span style="min-width:62px">${esc(personInfo(k).name)}</span>
+          <b>${v}</b><i style="width:${Math.round(v/mx*70)}px"></i></div>`;
+      }).join('') + `<div class="msum">${voice} người lên tiếng · ${pend} câu chưa được đáp</div>`;
+      h += `<div class="int-sec-lab">④ Theo dõi — can thiệp lúc ${c.doneAt}′</div>
+        <div class="int-hint">So <b>${m.win} phút trước</b> với <b>${m.win} phút sau</b> (cắt đúng bằng nhau để so cho công bằng).</div>
+        <div class="int-meas">
+          <div><h5>Trước ${c.doneAt-m.win}→${c.doneAt}′</h5>${col(m.before, m.voiceB, m.bPend) || '<span class="recog-empty">—</span>'}</div>
+          <div><h5>Sau ${c.doneAt}→${c.doneAt+m.win}′</h5>${col(m.after, m.voiceA, m.aPend) || '<span class="recog-empty">—</span>'}</div>
+        </div>
+        <div class="int-sec-lab" style="margin-top:12px">Anh kết luận</div>
+        <div class="int-verdict">
+          <button class="changed ${c.verdict==='changed'?'on':''}" onclick="intVerdict('changed')">⬤ Đã đổi</button>
+          <button class="partial ${c.verdict==='partial'?'on':''}" onclick="intVerdict('partial')">⬤ Đổi một phần</button>
+          <button class="none ${c.verdict==='none'?'on':''}" onclick="intVerdict('none')">⬤ Chưa đổi</button>
+        </div>
+        <textarea class="int-ta" oninput="intSet('followNote',this.value)"
+          placeholder="Ghi thêm bằng chứng — ví dụ: Hoài bắt đầu hỏi Hiên thay vì hỏi PP">${esc(c.followNote)}</textarea>`;
+      if(c.verdict === 'none' || c.verdict === 'partial')
+        h += `<button class="int-go" style="background:#e65100" onclick="intAgain()">↻ Tạo thẻ nối tiếp — can thiệp mạnh hơn</button>`;
+    }
+  }
+
+  h += `<div class="int-foot"><button class="btn-mini" style="color:var(--danger)" onclick="intDelete()">🗑 Xoá thẻ</button>
+        <span style="font-size:11px;color:var(--gray-mid)">Đóng thẻ là tự lưu</span></div>`;
+  document.getElementById('intBody').innerHTML = h;
+  document.querySelectorAll('.int-say-t').forEach(t => { t.style.height='auto'; t.style.height=t.scrollHeight+'px'; });
+}
+
+// ============================================================
 // GHI NHẬN
 // ============================================================
 function collectRecognitions(){
@@ -1891,6 +2883,7 @@ function setRecogView(v){
   document.getElementById('rgByPerson').classList.toggle('on', v === 'person');
   document.getElementById('rgByTime').classList.toggle('on', v === 'time');
   document.getElementById('rgByStats').classList.toggle('on', v === 'stats');
+  document.getElementById('rgByInt').classList.toggle('on', v === 'int');
   renderRecog();
 }
 function toggleRecog(e){
@@ -1992,6 +2985,98 @@ function renderStats(){
   </div>`;
 }
 
+/* Thống kê can thiệp — để review lại nguyên văn mình đã nói */
+const VERDICT_LABEL = {changed:'✅ Đã đổi', partial:'🟡 Đổi một phần', none:'🔴 Chưa đổi'};
+function renderIntAfter(){
+  const el = document.getElementById('intAfter');
+  if(!el || !currentSession) return;
+  const cs = cards();
+  if(!cs.length){ el.innerHTML = '<div class="recog-empty">Phiên này không có thẻ can thiệp nào.</div>'; return; }
+  const undone = cs.filter(c => c.doneAt == null);
+  el.innerHTML =
+    (undone.length ? `<div class="end-warn" style="margin-bottom:10px">⏳ <b>${undone.length} ý định can thiệp chưa làm</b> — chính chỗ này là chất liệu để lắng đọng: điều gì khiến mình định mà không làm?</div>` : '')
+    + renderIntStats()
+    + `<label class="radio-option" style="margin-top:10px;font-size:12px">
+        <input type="checkbox" ${currentSession.session_running.int_in_pdf === false ? '' : 'checked'}
+          onchange="currentSession.session_running.int_in_pdf=this.checked;markDirty()"> Đưa phần can thiệp vào PDF
+       </label>`;
+}
+
+function renderIntStats(){
+  const cs = cards();
+  if(!cs.length) return `<div class="recog-empty">Chưa có thẻ can thiệp nào. Bấm <b>＋ Thẻ mới</b> trên dải 🎯, hoặc ${MOD_KEY}+9.</div>`;
+  const done = cs.filter(c => c.doneAt != null);
+  const lag  = done.filter(c => c.doneAt != null && c.createdAt != null).map(c => c.doneAt - c.createdAt);
+  const avg  = lag.length ? (lag.reduce((a,b)=>a+b,0)/lag.length) : null;
+  const byStream = {}, byStage = {}, byV = {changed:0, partial:0, none:0};
+  cs.forEach(c => {
+    const st = c.point ? c.point.stream : 'Tự ghi';
+    byStream[st] = (byStream[st]||0) + 1;
+    byStage[c.stage||'?'] = (byStage[c.stage||'?']||0) + 1;
+    if(c.verdict) byV[c.verdict]++;
+  });
+  const mx = Math.max(1, ...Object.values(byStream));
+
+  let h = `<div class="is-top">
+    <b>${cs.length}</b> thẻ · <b>${done.length}</b> đã làm · <b style="color:#e65100">${cs.length-done.length}</b> chưa làm
+    ${avg!=null?` · độ nhạy: định → làm trung bình <b>${avg.toFixed(1)}′</b>`:''}
+  </div>
+  <div class="is-bars">
+    <div><h5>Theo luồng</h5>${Object.keys(byStream).map(k =>
+      `<div class="mrow"><span style="min-width:112px">${esc(k)}</span><b>${byStream[k]}</b>
+       <i style="width:${Math.round(byStream[k]/mx*70)}px"></i></div>`).join('')}</div>
+    <div><h5>Theo bước</h5>${Object.keys(byStage).sort().map(k =>
+      `<div class="mrow"><span style="min-width:36px">${esc(k)}</span><b>${byStage[k]}</b></div>`).join('')}</div>
+    <div><h5>Hiệu quả</h5>
+      <div class="mrow">✅ Đã đổi <b>${byV.changed}</b></div>
+      <div class="mrow">🟡 Một phần <b>${byV.partial}</b></div>
+      <div class="mrow">🔴 Chưa đổi <b>${byV.none}</b></div></div>
+  </div>`;
+
+  h += cs.map((c,i) => {
+    const says = SAY_KEYS.filter(([k]) => (c.says[k]||'').trim())
+      .map(([k,lab]) => `<div class="is-say"><span class="is-k">${lab}</span> ${esc(c.says[k])}${c.ticks[k]?' <span class="is-tick">✓ đã nói</span>':''}</div>`).join('');
+    return `<div class="is-card ${c.doneAt==null?'wait':''}">
+      <div class="is-h">
+        <b>${i+1}.</b> ${c.createdAt}′ ${c.doneAt!=null?`→ can thiệp <b>${c.doneAt}′</b>`:'<span class="is-wait">⏳ CHƯA LÀM</span>'}
+        · bước ${esc(c.stage||'?')}
+        ${c.point?`· <span class="is-pt">${esc(c.point.name)}</span>`:''}
+        ${c.related && c.related!=='all'?`· <span class="is-rel">${esc(personInfo(c.related).name)}</span>`:''}
+        <span class="is-v">${c.verdict?VERDICT_LABEL[c.verdict]:''}</span>
+      </div>
+      ${c.want?`<div class="is-want"><b>Muốn thấy:</b> ${esc(c.want)}</div>`:''}
+      ${says}
+      ${c.followNote?`<div class="is-fo">→ ${esc(c.followNote)}</div>`:''}
+      <button class="btn-mini" onclick="openIntCard('${c.id}')" style="margin-top:5px">Mở thẻ</button>
+    </div>`;
+  }).join('');
+  h += `<button class="btn-mini" onclick="copyIntText()" style="margin-top:8px">📋 Chép toàn bộ</button>`;
+  return h;
+}
+
+function intReadText(){
+  const cs = cards(); if(!cs.length) return '';
+  const L = [];
+  cs.forEach((c,i) => {
+    L.push(`── Thẻ ${i+1} · bước ${c.stage||'?'} · định ${c.createdAt}′${c.doneAt!=null?` → can thiệp ${c.doneAt}′`:' · CHƯA LÀM'} ──`);
+    if(c.point) L.push(`Điểm can thiệp : ${c.point.name}`);
+    if(c.want)  L.push(`Muốn thấy      : ${c.want}`);
+    SAY_KEYS.forEach(([k,lab]) => { if((c.says[k]||'').trim()) L.push(`${lab.padEnd(12)} : ${c.says[k]}`); });
+    if(c.verdict) L.push(`Kết quả        : ${VERDICT_LABEL[c.verdict]}`);
+    if(c.followNote) L.push(`Ghi thêm       : ${c.followNote}`);
+    L.push('');
+  });
+  return L.join('\n');
+}
+function copyIntText(){
+  const t = intReadText(); if(!t) return;
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); showToast('📋 Đã chép phần can thiệp','success'); } catch(e){}
+  document.body.removeChild(ta);
+}
+
 function renderRecog(){
   if(!currentSession) return;
   const body = document.getElementById('recogBody');
@@ -2000,6 +3085,7 @@ function renderRecog(){
   document.getElementById('recogCount').textContent = items.length;
 
   if(recogView === 'stats'){ body.innerHTML = renderStats(); return; }
+  if(recogView === 'int'){ body.innerHTML = renderIntStats(); return; }
 
   if(!items.length){
     body.innerHTML = `<div class="recog-empty">Chưa có ghi nhận nào. Trong ô ghi chú, thêm <b>@</b> vào dòng, và dùng <b>=</b> để ghi tác động.<br>Ví dụ: <code>@ ko tin bản thân hay ko tin cậu? = Nam khựng lại, quay về chính mình</code></div>`;
@@ -2127,7 +3213,7 @@ function loadAfterTab(){
   document.getElementById('a_personal').value = s.personal_learning || '';
   document.getElementById('a_testimonial').value = s.testimonial || '';
   document.querySelectorAll('input[name="sessionType"]').forEach(r => { r.checked = r.value === s.session_type; });
-  renderRecogCards();
+  renderRecogCards(); renderIntAfter();
   setTimeout(() => document.querySelectorAll('#tabContentAfter .form-textarea').forEach(autoResize), 30);
 }
 function toggleCA(i,v){ currentSession.checklist_after[i].checked = v; document.getElementById('caItem'+i).classList.toggle('checked',v); markDirty(); }
@@ -2356,6 +3442,28 @@ function doExport(){
         + `<tbody>${rws}</tbody><tfoot><tr><td colspan="2">Cả nhóm</td><td>${T.q}</td><td>${T.a}</td><td>${T.b}</td></tr></tfoot></table>`;
     })();
 
+    // CAN THIỆP CỦA COACH
+    if(r.int_in_pdf !== false && r.interventions && r.interventions.length){
+      const VL = {changed:'Đã đổi', partial:'Đổi một phần', none:'Chưa đổi'};
+      const KN = {leanIn:'Lean In', what:'WHAT', soWhat:'SO WHAT', nowWhat:'NOW WHAT', leanOut:'Lean Out'};
+      const done = r.interventions.filter(c => c.doneAt != null).length;
+      body += `<h3>Can thiệp của Coach — ${r.interventions.length} thẻ · ${done} đã làm</h3>`;
+      r.interventions.forEach((c, k) => {
+        body += `<div class="rg" style="background:#F2F7FF;border-left-color:#4F6BD6">`
+          + `<b>Thẻ ${k+1} · bước ${e(c.stage||'?')} · định ${c.createdAt}′`
+          + (c.doneAt != null ? ` → can thiệp ${c.doneAt}′` : ' · CHƯA LÀM') + `</b>`;
+        if(c.point) body += `<br><b>Điểm can thiệp:</b> ${e(c.point.name)}`;
+        if(c.want)  body += `<br><b>Kết quả muốn thấy:</b> ${e(c.want)}`;
+        Object.keys(KN).forEach(kk => {
+          if((c.says && c.says[kk] || '').trim())
+            body += `<br><b>${KN[kk]}:</b> ${e(c.says[kk])}${c.ticks && c.ticks[kk] ? ' ✓' : ''}`;
+        });
+        if(c.verdict) body += `<br><b>Kết quả theo dõi:</b> ${VL[c.verdict] || c.verdict}`;
+        if(c.followNote) body += `<br><i>${e(c.followNote)}</i>`;
+        body += `</div>`;
+      });
+    }
+
     // GHI NHẬN
     const R = recogForSession(s);
     if(R.out.length){
@@ -2420,8 +3528,9 @@ function setupHotkeys(){
   document.addEventListener('keydown', e => {
     if(!currentSession || activeTab !== 'during') return;
     if(!hasMod(e)) return;
-    if(e.key >= '1' && e.key <= '6'){ e.preventDefault(); focusCol(parseInt(e.key,10)-1); return; }
+    if(e.key >= '1' && e.key <= '8'){ e.preventDefault(); focusCol(parseInt(e.key,10)-1); return; }
     if(e.key === 'Enter'){ e.preventDefault(); closeEditor(true); lapStage(); return; }
+    if(e.key === '9'){ e.preventDefault(); openIntCard(null); return; }
     if(e.key === '0'){ e.preventDefault(); swToggle(); return; }
     if(e.key === '/'){ e.preventDefault(); toggleFlow(); return; }
   });
@@ -2431,7 +3540,7 @@ function applyKeyLabels(){
   const k = MOD_KEY;
   const lap = document.getElementById('lapKeyHint');  if(lap) lap.textContent = `(${k}+↵)`;
   const hb = document.getElementById('helpKeys');
-  if(hb) hb.innerHTML = `<kbd>${k}</kbd>+<kbd>1…6</kbd> nhảy cột · <kbd>${k}</kbd>+<kbd>↵</kbd> chốt bước · `
+  if(hb) hb.innerHTML = `<kbd>${k}</kbd>+<kbd>1…8</kbd> nhảy cột · <kbd>${k}</kbd>+<kbd>↵</kbd> chốt bước · `
     + `<kbd>${k}</kbd>+<kbd>0</kbd> đồng hồ · <kbd>${k}</kbd>+<kbd>/</kbd> dòng chảy`
     + (IS_MAC ? ' <span style="opacity:.7">(⌃ = phím Control trên MacBook)</span>' : '');
   const t = document.getElementById('swToggle'); if(t) t.title = `Chạy / Dừng (${k}+0)`;
