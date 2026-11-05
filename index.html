@@ -190,6 +190,9 @@ input,textarea,select{font-family:var(--font);}
 /* ===== STOPWATCH BAR ===== */
 .sw-stack{position:sticky;top:0;z-index:60;background:var(--white);box-shadow:0 4px 14px rgba(43,41,109,.10);border-radius:var(--radius) var(--radius) 0 0;}
 .sw-bar{display:flex;align-items:center;gap:12px;padding:8px 16px 6px;background:var(--white);border-bottom:2px solid var(--gray-bg);flex-wrap:wrap;border-radius:var(--radius) var(--radius) 0 0;}
+.sw-time-wrap{display:flex;flex-direction:column;gap:1px;}
+.sw-clock{font-size:10px;color:var(--gray-mid);line-height:1.35;white-space:nowrap;}
+.sw-clock b{color:var(--primary);font-weight:700;}
 .sw-time{font-size:27px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums;letter-spacing:-0.5px;min-width:104px;line-height:1;}
 .sw-time.over{color:var(--danger);}
 .sw-controls{display:flex;gap:5px;}
@@ -203,6 +206,22 @@ input,textarea,select{font-family:var(--font);}
 .sw-stage-meta b.over{color:var(--danger);}
 .btn-lap{padding:9px 14px;border-radius:8px;background:var(--accent);color:var(--primary);font-size:12px;font-weight:800;white-space:nowrap;}
 .btn-lap:hover{background:#f0a800;}
+.mini-box{display:flex;flex-direction:column;gap:3px;padding:5px 9px;border:1.5px solid var(--gray-bg);border-radius:9px;background:#fcfcfd;}
+.mini-box.done{border-color:var(--danger);background:#fff1f1;animation:miniFlash .7s ease-in-out 6;}
+@keyframes miniFlash{0%,100%{background:#fff1f1;}50%{background:#ffd9d9;}}
+.mini-top{display:flex;align-items:center;gap:5px;}
+.mini-lab{font-size:10px;color:var(--gray-mid);font-weight:700;}
+.mini-time{font-size:19px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums;min-width:62px;text-align:center;line-height:1;}
+.mini-box.done .mini-time{color:var(--danger);}
+.mini-box.run .mini-time{color:var(--teal);}
+.mini-btn{width:24px;height:24px;border-radius:6px;background:var(--gray-bg);color:var(--primary);font-size:11px;display:flex;align-items:center;justify-content:center;}
+.mini-btn:hover{background:var(--primary);color:#fff;}
+.mini-presets{display:flex;gap:3px;align-items:center;}
+.mini-chip{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;background:var(--gray-bg);color:var(--gray-mid);}
+.mini-chip.on{background:var(--primary);color:#fff;}
+.mini-chip:hover{background:var(--accent);color:var(--primary);}
+.mini-custom{width:48px;font-size:10px;padding:2px 3px;border:1px solid var(--gray-bg);border-radius:6px;text-align:center;}
+.sw-run-badge{font-size:11px;font-weight:800;color:var(--teal);margin-left:8px;font-variant-numeric:tabular-nums;}
 .sw-total{font-size:11px;color:var(--gray-mid);margin-left:auto;text-align:right;line-height:1.5;white-space:nowrap;}
 .sw-total-input{width:54px;padding:2px 4px;border:1.5px solid var(--gray-border);border-radius:6px;font-size:14px;font-weight:800;color:var(--primary);text-align:center;outline:none;}
 .sw-total-input:focus{border-color:var(--accent);}
@@ -211,6 +230,35 @@ input,textarea,select{font-family:var(--font);}
 .fs-group{display:inline-flex;gap:2px;}
 .sw-chip-list{display:contents;}
 .fs-btn{padding:2px 7px!important;font-size:10px!important;min-width:26px;}
+.tp-progress{margin-left:auto;font-size:11px;font-weight:700;color:var(--teal);}
+.tp-note{font-size:11px;color:var(--gray-mid);margin:-4px 0 10px;}
+.tp-group{border:1.5px solid var(--gray-bg);border-radius:10px;margin-bottom:9px;overflow:hidden;}
+.tp-head{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f7f7fa;cursor:pointer;}
+.tp-head:hover{background:#f0f0f5;}
+.tp-caret{font-size:11px;color:var(--gray-mid);width:12px;}
+.tp-title{font-size:12.5px;font-weight:800;color:var(--primary);}
+.tp-n{margin-left:auto;font-size:10.5px;color:var(--gray-mid);font-weight:700;}
+.tp-body{padding:4px 12px 10px;}
+.tp-group.folded .tp-body{display:none;}
+.tp-item{padding:8px 0;border-top:1px solid #f0f0f3;}
+.tp-item:first-child{border-top:0;}
+.tp-row{display:flex;align-items:flex-start;gap:7px;}
+.tp-cb{width:15px;height:15px;margin-top:2px;accent-color:var(--teal);flex:none;}
+.tp-lab{font-size:12px;color:var(--dark);line-height:1.45;flex:1;}
+.tp-item.done .tp-lab{color:var(--teal);}
+.tp-tip-btn{flex:none;font-size:11px;padding:1px 6px;border-radius:6px;background:var(--gray-bg);}
+.tp-tip-btn:hover{background:var(--accent);}
+.tp-tip{display:none;margin:6px 0 0 22px;padding:7px 10px;background:#FFF8E5;border-left:3px solid var(--accent);border-radius:0 7px 7px 0;font-size:11px;line-height:1.5;color:#6b5400;white-space:pre-line;}
+.tp-item.tip-on .tp-tip{display:block;}
+.tp-item textarea{margin:6px 0 0 22px;width:calc(100% - 22px);}
+.int-streams{display:flex;flex-wrap:wrap;gap:4px;margin:7px 0 3px;}
+.int-sc{font-size:11px;font-weight:700;padding:3px 9px;border-radius:12px;background:var(--gray-bg);color:var(--gray-mid);border:1.5px solid transparent;}
+.int-sc i{font-style:normal;opacity:.55;font-size:10px;}
+.int-sc:hover{border-color:var(--primary);}
+.int-sc.on{background:var(--primary);color:#fff;}
+.int-sc.on i{opacity:.75;}
+.rg-tools{margin-left:auto;display:flex;gap:3px;}
+.time-clock{font-size:10px;color:var(--teal);font-weight:700;margin-top:2px;}
 .sw-chip{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;background:var(--gray-bg);color:var(--gray-mid);border:1.5px solid transparent;}
 .sw-chip.done{background:rgba(0,167,157,.12);color:var(--teal);}
 .sw-chip.cur{background:var(--primary);color:#fff;}
@@ -705,6 +753,14 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
       <div class="section-title">✅ Checklist chuẩn bị <span class="section-title-note">Before Session Checklist</span></div>
       <div id="checklistBeforeList"></div>
     </div>
+
+    <div class="form-section">
+      <div class="section-title">🎤 Chuẩn bị dẫn giảng <span class="section-title-note">Quy trình dẫn giảng trong AL — 5T</span>
+        <span class="tp-progress" id="tpProgress"></span></div>
+      <div class="tp-note">Soạn sẵn lời sẽ nói cho từng mục. Bấm <b>💡</b> để xem lại ghi chú gốc của thầy.</div>
+      <div id="teachPrepList"></div>
+    </div>
+
     <div class="action-bar">
       <button class="btn-save" onclick="saveSession()">💾 Lưu</button>
       <button class="btn-next-tab" onclick="saveAndSwitchTab('during')">Trong phiên →</button>
@@ -752,12 +808,26 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
           <button class="sw-btn" id="swToggle" onclick="swToggle()" title="Chạy / Dừng">▶</button>
           <button class="sw-btn" onclick="swReset()" title="Đặt lại">⟲</button>
         </div>
-        <div class="sw-time" id="swTime">00:00</div>
+        <div class="sw-time-wrap">
+          <div class="sw-time" id="swTime">00:00</div>
+          <div class="sw-clock" id="swClock"></div>
+        </div>
         <div class="sw-info">
           <span class="sw-stage-name" id="swStageName">—</span>
           <span class="sw-stage-meta" id="swStageMeta"></span>
         </div>
         <button class="btn-lap" onclick="lapStage()">⏱ Chốt bước <span style="opacity:.6" id="lapKeyHint">(Alt+↵)</span></button>
+
+        <div class="mini-box" id="miniBox">
+          <div class="mini-top">
+            <span class="mini-lab">⏳ Hẹn giờ</span>
+            <span class="mini-time" id="miniTime">02:00</span>
+            <button class="mini-btn" id="miniToggle" onclick="miniToggle()" title="Chạy / Dừng">▶</button>
+            <button class="mini-btn" onclick="miniReset()" title="Về mốc đã đặt">⟲</button>
+            <button class="mini-btn" id="miniSound" onclick="miniToggleSound()" title="Bật / tắt chuông">🔔</button>
+          </div>
+          <div class="mini-presets" id="miniPresets"></div>
+        </div>
         <div class="sw-total">
           Tổng <input class="sw-total-input" id="swTotalInput" type="number" min="20" max="300" step="5"
             title="Nhập tổng số phút — các bước tự chia theo tỉ lệ"
@@ -1205,46 +1275,179 @@ function renderHighlight(raw){
 // ============================================================
 let swInterval = null;
 
+/* Đồng hồ neo vào GIỜ THỰC của máy, không đếm từng giây.
+   accum     = số giây đã tích luỹ của những lần chạy trước
+   startedAt = mốc epoch lúc bấm chạy lần này (null = đang dừng)
+   clockStart= giờ thực ứng với phút 0, để quy đổi "phút 23" ra "09:28"
+   Nhờ vậy: thoát sang màn hình khác, đổi tab, máy ngủ — giờ vẫn chạy đúng. */
 function swState(){
   const r = currentSession.session_running;
-  if(!r.timer) r.timer = {elapsed:0, running:false, lastTick:null};
-  return r.timer;
+  if(!r.timer) r.timer = {};
+  return normTimer(r.timer);
 }
-function swElapsed(){ return swState().elapsed || 0; }
+function normTimer(t){
+  if(t.accum == null){                      // chuyển từ bản cũ {elapsed, running}
+    t.accum = Number(t.elapsed) || 0;
+    t.startedAt = t.running ? Date.now() : null;
+    delete t.elapsed; delete t.lastTick;
+  }
+  if(t.startedAt != null && !(Number(t.startedAt) > 0)) t.startedAt = null;
+  t.running = t.startedAt != null;
+  return t;
+}
+function swElapsedOf(t){
+  if(!t) return 0;
+  const base = Number(t.accum) || 0;
+  return Math.max(0, Math.floor(base + (t.startedAt ? (Date.now() - t.startedAt)/1000 : 0)));
+}
+function swElapsed(){ return swElapsedOf(swState()); }
 function curMinute(){ return Math.floor(swElapsed()/60); }
+/* Giờ thực ứng với phút thứ m của phiên */
+function clockAt(m){
+  const t = swState();
+  if(!t.clockStart) return '';
+  const d = new Date(new Date(t.clockStart).getTime() + m*60000);
+  if(isNaN(d)) return '';
+  return p2(d.getHours())+':'+p2(d.getMinutes());
+}
+function clockNow(){ const d = new Date(); return p2(d.getHours())+':'+p2(d.getMinutes()); }
 function fmtClock(s){
   const m = Math.floor(s/60), ss = s%60;
   return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');
 }
 
+function swPause(t){
+  if(t.startedAt){ t.accum = (Number(t.accum)||0) + (Date.now() - t.startedAt)/1000; t.startedAt = null; }
+  t.running = false;
+}
+function swStart(t){
+  if(!t.startedAt){
+    t.startedAt = Date.now();
+    if(!t.clockStart) t.clockStart = new Date(Date.now() - (Number(t.accum)||0)*1000).toISOString();
+  }
+  t.running = true;
+}
 function swToggle(){
   const t = swState();
-  t.running = !t.running;
-  t.lastTick = new Date().toISOString();
-  if(t.running){ startTick(); toggleParticipants(true); setTimeout(pinTable, 80); } else stopTick();
+  if(t.running){ swPause(t); stopTick(); }
+  else { swStart(t); startTick(); toggleParticipants(true); setTimeout(pinTable, 80); }
   renderSw(); markDirty();
 }
 function swReset(){
   if(!confirm('Đặt lại đồng hồ về 00:00?')) return;
-  const t = swState(); t.elapsed = 0; t.running = false; stopTick(); renderSw(); markDirty();
+  const t = swState();
+  t.accum = 0; t.startedAt = null; t.running = false; t.clockStart = null;
+  stopTick(); renderSw(); markDirty();
 }
 function startTick(){
   stopTick();
   swInterval = setInterval(() => {
-    const t = swState();
-    if(!t.running) return;
-    t.elapsed++;
-    renderSw();
-  }, 1000);
+    if(!currentSession) return;
+    renderSw(); renderMini();
+  }, 500);
 }
 function stopTick(){ if(swInterval){ clearInterval(swInterval); swInterval = null; } }
 
 function ensureRunning(){
   const t = swState();
-  if(!t.running && t.elapsed === 0){
-    t.running = true; t.lastTick = new Date().toISOString(); startTick(); renderSw();
+  if(!t.running && swElapsedOf(t) === 0){
+    swStart(t); startTick(); renderSw();
     showToast('⏱ Đồng hồ đã tự chạy từ ghi chú đầu tiên', 'success');
   }
+}
+
+/* ===== ĐỒNG HỒ PHỤ (đếm ngược) — cũng neo vào giờ thực ===== */
+const MINI_PRESETS = [1, 2, 3, 5, 10];
+let miniSoundOn = localStorage.getItem('al_miniSound') !== '0';
+let miniLastDone = null;
+
+function miniState(){
+  const r = currentSession.session_running;
+  if(!r.mini) r.mini = {dur:120, remain:120, endAt:null, done:false};
+  const m = r.mini;
+  if(m.dur == null) m.dur = 120;
+  if(m.remain == null) m.remain = m.dur;
+  return m;
+}
+function miniLeft(){
+  const m = miniState();
+  if(m.endAt) return Math.max(0, Math.round((m.endAt - Date.now())/1000));
+  return Math.max(0, Math.round(m.remain));
+}
+function miniToggle(){
+  const m = miniState();
+  if(m.endAt){ m.remain = miniLeft(); m.endAt = null; }
+  else {
+    if(miniLeft() <= 0) m.remain = m.dur;        // hết giờ rồi thì bấm chạy = chạy lại từ đầu
+    m.done = false; m.endAt = Date.now() + miniLeft()*1000;
+    startTick();
+  }
+  renderMini(); markDirty();
+}
+function miniReset(){
+  const m = miniState();
+  m.endAt = null; m.remain = m.dur; m.done = false;
+  const b = document.getElementById('miniBox'); if(b) b.classList.remove('done');
+  renderMini(); markDirty();
+}
+/* Đặt mốc mới = tạo một đồng hồ mới, luôn về trạng thái chờ bấm chạy */
+function miniSet(minutes){
+  const m = miniState();
+  const sec = Math.max(5, Math.round(parseFloat(String(minutes).replace(',','.'))*60) || 0);
+  m.dur = sec; m.remain = sec; m.endAt = null; m.done = false;
+  const b = document.getElementById('miniBox'); if(b) b.classList.remove('done');
+  renderMini(); markDirty();
+}
+function miniToggleSound(){
+  miniSoundOn = !miniSoundOn;
+  localStorage.setItem('al_miniSound', miniSoundOn ? '1' : '0');
+  renderMini();
+}
+function miniChime(){
+  if(!miniSoundOn) return;
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return;
+    const ac = new AC();
+    [0, 0.26, 0.52].forEach((d, k) => {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = 'sine'; o.frequency.value = k === 2 ? 1046 : 880;
+      g.gain.setValueAtTime(0.0001, ac.currentTime + d);
+      g.gain.exponentialRampToValueAtTime(0.26, ac.currentTime + d + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + d + 0.22);
+      o.connect(g); g.connect(ac.destination);
+      o.start(ac.currentTime + d); o.stop(ac.currentTime + d + 0.24);
+    });
+    setTimeout(() => { try { ac.close(); } catch(e){} }, 1400);
+  } catch(e){}
+}
+function renderMini(){
+  if(!currentSession) return;
+  const box = document.getElementById('miniBox');
+  if(!box) return;
+  const m = miniState(), left = miniLeft();
+  document.getElementById('miniTime').textContent = fmtClock(left);
+  document.getElementById('miniToggle').textContent = m.endAt ? '⏸' : '▶';
+  document.getElementById('miniSound').textContent = miniSoundOn ? '🔔' : '🔕';
+  box.classList.toggle('run', !!m.endAt && left > 0);
+
+  if(m.endAt && left <= 0){                    // vừa hết giờ
+    m.endAt = null; m.remain = 0; m.done = true;
+    box.classList.add('done');
+    if(miniLastDone !== currentSession.session_id + '|' + m.dur + '|' + curMinute()){
+      miniLastDone = currentSession.session_id + '|' + m.dur + '|' + curMinute();
+      miniChime();
+      showToast('⏳ Hết ' + Math.round(m.dur/60) + ' phút đã hẹn', 'warning');
+    }
+    markDirty();
+  }
+  const pr = document.getElementById('miniPresets');
+  if(pr) pr.innerHTML = MINI_PRESETS.map(v =>
+      `<button class="mini-chip ${m.dur === v*60 ? 'on' : ''}" onclick="miniSet(${v})">${v}′</button>`).join('')
+    + `<input class="mini-custom" type="number" min="0.5" max="60" step="0.5" placeholder="phút"
+         title="Đặt mốc mới (phút) — Enter là tạo đồng hồ mới"
+         onchange="if(this.value){miniSet(this.value);this.value='';}"
+         onkeydown="if(event.key==='Enter')this.blur()">`;
 }
 
 function stageRanges(){
@@ -1333,7 +1536,7 @@ function lapStage(){
 /* Chốt bước G = đóng phiên: dừng đồng hồ, lưu, tổng kết */
 function endSession(){
   const t = swState();
-  t.running = false; stopTick();
+  swPause(t); stopTick();
   saveSession(true);
   renderSw();
   showEndSummary();
@@ -1373,19 +1576,27 @@ function renderSw(){
   const t = swState(), r = currentSession.session_running;
   const i = activeIdx(), st = r.stages[i], ranges = stageRanges();
   const totalPlan = ranges.length ? ranges[ranges.length-1].to : 0;
-  const elapsedMin = Math.floor(t.elapsed/60);
+  const el = swElapsedOf(t);
+  const elapsedMin = Math.floor(el/60);
   const prevLap = i>0 ? ((r.lapAt && r.lapAt[i-1]) || 0) : 0;
-  const inStage = Math.max(0, Math.floor((t.elapsed - prevLap)/60));
+  const inStage = Math.max(0, Math.floor((el - prevLap)/60));
   const plan = parseInt(st.duration)||0;
   const over = inStage > plan;
 
   const tEl = document.getElementById('swTime');
-  tEl.textContent = fmtClock(t.elapsed);
+  tEl.textContent = fmtClock(el);
   tEl.classList.toggle('over', elapsedMin > totalPlan && totalPlan>0);
   const btn = document.getElementById('swToggle');
   btn.textContent = t.running ? '⏸' : '▶';
   btn.classList.toggle('run', t.running);
 
+  const ck = document.getElementById('swClock');
+  if(ck){
+    const stFrom = i>0 ? Math.floor(prevLap/60) : 0;
+    ck.innerHTML = t.clockStart
+      ? `bắt đầu <b>${clockAt(0)}</b> · bây giờ <b>${clockNow()}</b><br>bước này từ <b>${clockAt(stFrom)}</b>`
+      : 'chưa bấm chạy';
+  }
   document.getElementById('swStageName').textContent = st.id + ' — ' + st.name;
   document.getElementById('swStageMeta').innerHTML =
     `dự kiến ${plan}′ · đã <b class="${over?'over':''}">${inStage}′</b>` + (over ? ` · vượt ${inStage-plan}′` : '');
@@ -1901,7 +2112,8 @@ function renderHome(){
           <span class="session-client">${esc(s.client_name)||'Chưa có tên KH'}</span>
           <span class="status-badge ${badges[s.status]}">${labels[s.status]||''}</span>
         </div>
-        <div class="session-card-bottom">Coach: ${esc(s.coach_name)||'—'} &nbsp;·&nbsp; ${esc(s.session_date)||'—'} &nbsp;·&nbsp; PP: ${esc((s.session_running&&s.session_running.pp_name))||'—'}</div>
+        <div class="session-card-bottom">Coach: ${esc(s.coach_name)||'—'} &nbsp;·&nbsp; ${dateVN(s.session_date)||'—'} &nbsp;·&nbsp; PP: ${esc((s.session_running&&s.session_running.pp_name))||'—'}${
+          ((s.session_running||{}).timer||{}).startedAt ? `<span class="sw-run-badge" data-run="${esc(s.session_id)}">⏱ đang chạy ${fmtClock(swElapsedOf(s.session_running.timer))}</span>` : ''}</div>
       </div>
       <div class="session-card-actions" onclick="event.stopPropagation()">
         <button class="btn-icon" onclick="openSession('${s.session_id}')" title="Mở xem">👁</button>
@@ -1911,6 +2123,16 @@ function renderHome(){
       </div>
     </div>`).join('');
 }
+
+/* Đồng hồ vẫn chạy khi đã thoát ra trang chủ — cập nhật con số ngay trên thẻ phiên */
+setInterval(() => {
+  if(currentSession) return;
+  document.querySelectorAll('.sw-run-badge[data-run]').forEach(el => {
+    const s = sessions.find(x => x.session_id === el.dataset.run);
+    const t = s && s.session_running && s.session_running.timer;
+    if(t && t.startedAt) el.textContent = '⏱ đang chạy ' + fmtClock(swElapsedOf(t));
+  });
+}, 1000);
 
 function setupFilterListeners(){
   document.getElementById('filterKeyword').addEventListener('input', renderHome);
@@ -1936,6 +2158,15 @@ function clearFilters(){
 // ============================================================
 // CREATE / OPEN
 // ============================================================
+const COACH_FALLBACK = 'Toma Nhưỡng';
+function defaultCoach(){
+  const v = (localStorage.getItem('al_coach') || '').trim();
+  return v || COACH_FALLBACK;
+}
+function rememberCoach(v){
+  const t = String(v || '').trim();
+  if(t) localStorage.setItem('al_coach', t);
+}
 function getNextSessionId(){
   let max = 0;
   sessions.forEach(s => {
@@ -1949,7 +2180,7 @@ function getNextSessionId(){
 function createSession(){
   const today = new Date().toISOString().split('T')[0];
   currentSession = {
-    session_id: getNextSessionId(), coach_name:'', client_name:'',
+    session_id: getNextSessionId(), coach_name: defaultCoach(), client_name:'',
     session_date: today, format:'Trực tiếp', time_start:'', time_end:'', location:'',
     status:'draft',
     checklist_before: initChecklistBefore(),
@@ -1979,18 +2210,22 @@ function editSession(id){
 function ensureSessionStructure(){
   const s = currentSession;
   normSession(s);
+  if(!String(s.coach_name || '').trim()) s.coach_name = defaultCoach();
   if(!s.checklist_before || !s.checklist_before.length) s.checklist_before = initChecklistBefore();
   if(!s.session_running) s.session_running = initSessionRunning();
   const r = s.session_running;
   if(!r.stages || !r.stages.length) r.stages = initStages();
   if(!r.members) r.members = [];
   if(!r.observers) r.observers = [];
-  if(!r.timer) r.timer = {elapsed:0, running:false, lastTick:null};
-  r.timer.running = false;              // mở lại phiên thì đồng hồ dừng
+  if(!String(r.coach_name || '').trim()) r.coach_name = s.coach_name || defaultCoach();
+  if(!r.timer) r.timer = {};
+  normTimer(r.timer);
   if(r.activeStage == null) r.activeStage = 0;
   if(!r.lapAt) r.lapAt = {};
   if(!r.recogManual) r.recogManual = [];
   if(!r.interventions) r.interventions = [];
+  if(!r.teachPrep) r.teachPrep = {};
+  if(!r.mini) r.mini = {dur:120, remain:120, endAt:null, done:false};
   if(!r.recogSelf) r.recogSelf = {};
   if(!r.recogPeer) r.recogPeer = {};
   // MIGRATE ghi chú chuỗi cũ -> {raw, stamps}
@@ -2018,7 +2253,7 @@ function openDetailScreen(tab){
       catch(e){ console.error('Lỗi nạp tab '+ten, e); showToast('⚠️ Lỗi nạp tab '+ten+' — dữ liệu tab này sẽ KHÔNG bị ghi đè','warning'); }
     });
   switchTab(tab); window.scrollTo(0,0);
-  if(swState().running) startTick();
+  if(swState().running || miniState().endAt) startTick();
 }
 function goHome(){
   if(dirty && !confirm('Còn thay đổi chưa lưu. Vẫn quay lại?')) return;
@@ -2042,7 +2277,7 @@ function switchTab(tab){
     document.getElementById('tabContent'+cap(t)).classList.toggle('hidden', t !== tab);
     document.getElementById('tab'+cap(t)).classList.toggle('active', t === tab);
   });
-  if(tab === 'during'){ renderSw(); renderRecog(); renderFlow(); renderIntStrip(); setTimeout(pinTable, 60); }
+  if(tab === 'during'){ renderSw(); renderMini(); renderRecog(); renderFlow(); renderIntStrip(); setTimeout(pinTable, 60); }
   if(tab === 'after'){ renderRecogCards(); renderIntAfter(); }
 }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
@@ -2054,6 +2289,116 @@ function saveAndSwitchTab(t){ saveSession(); switchTab(t); }
 function initChecklistBefore(){
   return CHECKLIST_BEFORE.map((it,i) => ({id:i+1, label:it.label, en:it.en, checked:false, note:''}));
 }
+/* ===== CHUẨN BỊ DẪN GIẢNG — QUY TRÌNH DẪN GIẢNG TRONG AL 5T ===== */
+const TEACH_PREP = [
+ ['B1','B1. TẠO KẾT NỐI', [
+  ['b1_0','Đối tượng & bối cảnh — họ là ai, bao nhiêu người, làm lĩnh vực gì, ai là người có tiếng nói',
+   'Ví dụ: khoảng 10 người, gồm Tổng giám đốc và Lead của đội 200 người, làm lĩnh vực thực phẩm.\nĐối tượng ta gặp thường là quản lý, lãnh đạo — cần biết họ đang yếu hay đã rất xuất sắc.'],
+  ['b1_1','1.1 Điều gì khiến mọi người quan tâm, hứng thú, tin tưởng? Vì sao họ cần dành thời gian cho chủ đề này?',
+   'Không phải người giỏi nói, mà cần giỏi TRÌNH TỰ. Chân thật như những gì nó đang diễn ra.\nVí dụ: "Hôm nay rất vui, chúng ta có 2 tiếng để trải nghiệm phương pháp Học Hành Động. Ai đã biết phương pháp này? Mình rất may mắn, biết đến 12 năm. Thực sự hữu ích. Liệu các bạn có muốn…"\nĐưa mọi kiến thức vào BỐI CẢNH của người nghe: "Hàng ngày các bạn giải quyết rất nhiều vấn đề lớn liên quan tới sinh mạng của mỗi người."'],
+  ['b1_2','1.2 Giới thiệu bản thân — luôn trả lời được: HỌ NHẬN ĐƯỢC ĐIỀU GÌ?',
+   'Sai lầm lớn nhất là không chuẩn bị cho phần giới thiệu.\nWHAT 1 — điều chính về bản thân muốn giới thiệu.\nWHAT 2 — điều cụ thể cho điều chính ấy.\nHOW 1 — trình bày những điểm ấy theo trình tự nào.\nHOW 2 — trình bày theo trình tự bằng cách thức nào.\nWHY [QUAN TRỌNG] — tại sao mình có mặt ở đây cùng mọi người, cảm nhận của mình với mọi người, giá trị mang lại là gì.\nTRÌNH TỰ ĐÚNG: chia sẻ WHY trước, rồi mới sang WHAT.\nNói WHAT thì phải có ý nghĩa gì đó với họ. Ví dụ: "Tôi có 10 năm trải nghiệm với AL, người đầu tiên tại VN, và với sự đúc kết, đam mê, mình sẽ dồn hết công lực vào giá trị cho các bạn."\nMẫu: "Chào cả nhà, ngày hôm nay Nhưỡng rất vui vì được có mặt nơi đây. Xin được gửi lời biết ơn sự tin tưởng của anh Quỳnh nói riêng, và của từng anh chị em nói chung. Nhưỡng có mặt ở đây trong hành trình 2 tháng tới để kiến tạo cùng anh chị em, trả lời cho 2 câu hỏi mà Tổng giám đốc rất trăn trở: Làm thế nào để nhân sự được hạnh phúc? Làm thế nào để cùng nhau chinh phục mọi mục tiêu?"\nKhông để các bạn thấy mình là công cụ của Ban giám đốc — trả lại cho các bạn khảo sát, niềm tin, ghi nhận việc nhận được cơ hội.\nTHẤY CHỮ "MÌNH MUỐN" = ĐỔI THÀNH "CHÚNG TA CẦN".'],
+  ['b1_3','1.3 Giới thiệu WIAL và WIAL Việt Nam',
+   'Có gốc gác xuất xứ thì mới uy tín.'],
+  ['b1_4','1.4 Nói lịch trình', ''],
+  ['b1_5','1.5 Hoạt động kết nối', '']]],
+ ['B2','B2. TRÌNH BÀY', [
+  ['b2_1','2.1 Chọn thông tin nào để trình bày',
+   'Kiến thức thông tin chính: nguồn gốc & định nghĩa AL, 2 cân bằng Học và Làm, lợi ích từ AL, 2 quy tắc nền tảng, 6 thành tố, quy trình AL, quy trình phát triển năng lực lãnh đạo, 2 dạng vấn đề, thiết lập phiên minh hoạ, nhiệm vụ các vai trò.\nChọn thông tin nào là do THIẾT KẾ PHIÊN — có ý nghĩa gì cho người tham gia.\nBiến số THỜI GIAN là yếu tố quan trọng để thiết kế phần này.'],
+  ['b2_2','2.2 Độ sâu đến đâu',
+   'Tầng 1 — WHAT: nó là cái gì.\nTầng 2 — WHY: vì sao.\nTầng 3 — nó có ảnh hưởng gì tới cuộc đời của người tham gia.'],
+  ['b2_3','2.3 Cách dẫn định nghĩa AL qua 5 vế',
+   'AL là 1 QUÁ TRÌNH (liệu nhóm có một quy trình giải quyết vấn đề chuẩn không, hay đang giải quyết một cách bản năng? Phương pháp này cung cấp cho bạn),\nliên quan đến 1 NHÓM NHỎ 4 ĐẾN 8 NGƯỜI,\nVẤN ĐỀ THỰC TẾ (lấy vấn đề đang diễn ra làm bối cảnh đầu bài — không ngồi với nhau để lấy một case study. Bản chất vấn đề là mình không biết gì nhiều, không biết gì hết thì mới gặp vấn đề),\nTẠO HÀNH ĐỘNG, TẠO SỰ HỌC.\nThời điểm đẹp nhất để viết xuống vấn đề là KHI NÓI ĐẾN 6 THÀNH TỐ, cụ thể đến chỗ vấn đề.\nKHÔNG ĐẢM BẢO VẤN ĐỀ ĐƯỢC GIẢI QUYẾT — mà sẽ LÀM SÁNG TỎ, THẤY RÕ VẤN ĐỀ NHẤT.']]],
+ ['B3','B3. THIẾT LẬP PHIÊN', [
+  ['b3_1','3.1 Đảm bảo mọi người bước vào phiên với năng lượng mạnh nhất',
+   'Mời người có tầm ảnh hưởng nhất làm PP hoặc thành viên — không để làm người quan sát.'],
+  ['b3_2','3.2 Tránh 2 sai lầm thường gặp',
+   'Thứ nhất: trình bày phần giới thiệu dài quá.\nThứ hai [QUAN TRỌNG]: thiết lập luôn — "Những gì vừa trình bày chỉ là cơ bản thôi, nếu có những câu hỏi thì hãy giữ lại sau khi trải nghiệm phiên."'],
+  ['b3_3','3.3 Thiết lập vai trò',
+   'Ngay khi trình bày vai trò, chú ý thiết lập các yếu tố — như coach cần sự trung tính. Khi có câu hỏi thì nhắc lại: nhóm có tác động ảnh hưởng gì khi mất đi vai trò Coach?\nĐIỀU ĐẶC BIỆT CỦA AL LÀ: TRÌNH TỰ — CÁI GÌ TRƯỚC, CÁI GÌ SAU. THIẾT LẬP ĐÚNG TRÌNH TỰ.'],
+  ['b3_4','3.4 Nhiệm vụ giao cho người quan sát',
+   'Giao nhiệm vụ gì cho họ thì cần biết tính toán — KHÔNG QUÁ 2 NHIỆM VỤ.\nNắm cái gì mà cứ mơ mơ màng màng là chưa nắm được nó. Phải nắm cứng, nắm rất chắc.']]],
+ ['B4','B4. TRẢ LỜI', [
+  ['b4_1','4.1 Danh sách câu hỏi thường gặp và cách trả lời',
+   'Soạn sẵn các câu hay bị hỏi và câu trả lời ngắn gọn cho từng câu.']]],
+ ['B5','B5. TỔNG KẾT', [
+  ['b5_1','5.1 Lắng đọng về giá trị — kiến thức mới, hành động mới',
+   'Sống chết gì cũng cần tổng kết, để thấy lại giá trị nhận được so với thời gian bỏ ra.\nKhông lan man, không đặt câu hỏi. TRÌNH TỰ ĐÚNG — PHẦN NÀO RA PHẦN ĐÓ.'],
+  ['b5_2','5.2 Khẳng định kết quả từ buổi gặp, ghi nhận người tham dự', ''],
+  ['b5_3','5.3 Giới thiệu kênh kết nối, hoạt động sắp tới', ''],
+  ['b5_4','5.4 Chụp hình lưu niệm', '']]]
+];
+const TEACH_IDS = TEACH_PREP.reduce((a,g) => a.concat(g[2].map(x => x[0])), []);
+/* Lần đầu: mở sẵn B1, gập B2–B5 cho màn hình đỡ dài */
+let tpFolded = {B2:1, B3:1, B4:1, B5:1};
+try { const sv = localStorage.getItem('al_tpFold'); if(sv) tpFolded = JSON.parse(sv); } catch(e){}
+
+function tpData(){
+  const r = currentSession.session_running;
+  if(!r.teachPrep) r.teachPrep = {};
+  return r.teachPrep;
+}
+function tpGet(id){ const d = tpData()[id]; return d || {c:false, t:''}; }
+function tpSet(id, k, v){
+  const d = tpData();
+  if(!d[id]) d[id] = {c:false, t:''};
+  d[id][k] = v;
+  if(k === 'c'){
+    const el = document.getElementById('tp_'+id);
+    if(el) el.classList.toggle('done', !!v);
+    renderTeachPrepHeads();
+  }
+  markDirty();
+}
+function tpToggleTip(id){
+  const el = document.getElementById('tp_'+id);
+  if(el) el.classList.toggle('tip-on');
+}
+function tpToggleGroup(g){
+  tpFolded[g] = !tpFolded[g];
+  try { localStorage.setItem('al_tpFold', JSON.stringify(tpFolded)); } catch(e){}
+  const el = document.getElementById('tpg_'+g);
+  if(el) el.classList.toggle('folded', !!tpFolded[g]);
+}
+function renderTeachPrepHeads(){
+  let done = 0;
+  TEACH_PREP.forEach(([g, , items]) => {
+    const n = items.filter(x => tpGet(x[0]).c).length;
+    done += n;
+    const el = document.getElementById('tpn_'+g);
+    if(el) el.textContent = n + '/' + items.length;
+  });
+  const p = document.getElementById('tpProgress');
+  if(p) p.textContent = done + '/' + TEACH_IDS.length + ' mục đã chuẩn bị';
+}
+function renderTeachPrep(){
+  const box = document.getElementById('teachPrepList');
+  if(!box || !currentSession) return;
+  box.innerHTML = TEACH_PREP.map(([g, title, items]) => `
+    <div class="tp-group ${tpFolded[g] ? 'folded' : ''}" id="tpg_${g}">
+      <div class="tp-head" onclick="tpToggleGroup('${g}')">
+        <span class="tp-caret">${tpFolded[g] ? '▸' : '▾'}</span>
+        <span class="tp-title">${esc(title)}</span>
+        <span class="tp-n" id="tpn_${g}"></span>
+      </div>
+      <div class="tp-body">${items.map(([id, lab, tip]) => {
+        const d = tpGet(id);
+        return `<div class="tp-item ${d.c ? 'done' : ''}" id="tp_${id}">
+          <div class="tp-row">
+            <input type="checkbox" class="tp-cb" ${d.c ? 'checked' : ''} onchange="tpSet('${id}','c',this.checked)">
+            <span class="tp-lab">${esc(lab)}</span>
+            ${tip ? `<button class="tp-tip-btn" onclick="tpToggleTip('${id}')" title="Ghi chú gốc của thầy">💡</button>` : ''}
+          </div>
+          ${tip ? `<div class="tp-tip">${esc(tip)}</div>` : ''}
+          <textarea class="form-textarea" placeholder="Lời mình sẽ nói ở mục này…"
+            oninput="autoResize(this);tpSet('${id}','t',this.value)">${esc(d.t)}</textarea>
+        </div>`;
+      }).join('')}</div>
+    </div>`).join('');
+  renderTeachPrepHeads();
+  setTimeout(() => box.querySelectorAll('.form-textarea').forEach(autoResize), 30);
+}
+
 function loadBeforeTab(){
   const s = currentSession;
   document.getElementById('b_session_id').value = s.session_id;
@@ -2074,6 +2419,7 @@ function loadBeforeTab(){
       <textarea class="form-textarea" placeholder="Ghi chú (Notes)..." oninput="autoResize(this);updateCBNote(${i},this.value)">${esc(it.note)}</textarea>
     </div>`).join('');
   setTimeout(() => document.querySelectorAll('#checklistBeforeList .form-textarea').forEach(autoResize), 30);
+  renderTeachPrep();
 }
 function toggleCB(i,v){ currentSession.checklist_before[i].checked = v; document.getElementById('cbItem'+i).classList.toggle('checked',v); markDirty(); }
 function updateCBNote(i,v){ currentSession.checklist_before[i].note = v; markDirty(); }
@@ -2082,6 +2428,7 @@ function collectBefore(){
   const s = currentSession;
   s.session_date = document.getElementById('b_date').value;
   s.coach_name = document.getElementById('b_coach').value;
+  rememberCoach(s.coach_name);
   s.client_name = document.getElementById('b_client').value;
   s.time_start = document.getElementById('b_time_start').value;
   s.time_end = document.getElementById('b_time_end').value;
@@ -2100,8 +2447,8 @@ function initStages(){
   }));
 }
 function initSessionRunning(){
-  return { pp_name:'', pp_competency:'', coach_name:'', members:[], observers:[],
-           stages: initStages(), timer:{elapsed:0,running:false,lastTick:null},
+  return { pp_name:'', pp_competency:'', coach_name: defaultCoach(), members:[], observers:[],
+           stages: initStages(), timer:{accum:0, startedAt:null, clockStart:null, running:false},
            activeStage:0, lapAt:{}, recogManual:[], recogSelf:{}, recogPeer:{}, interventions:[] };
 }
 function setVal(id,v){ const el=document.getElementById(id); if(el) el.value = v; }
@@ -2119,7 +2466,7 @@ function loadDuringTab(){
   toggleParticipants(localStorage.getItem('al_foldPart') === '1');
   const hb = document.getElementById('helpBar');
   if(hb) hb.classList.toggle('hidden', localStorage.getItem('al_help') !== '1');
-  renderMembers(); renderObservers(); renderSessionTable(); renderSw(); renderRecog(); renderFlow(); renderIntStrip();
+  renderMembers(); renderObservers(); renderSessionTable(); renderSw(); renderMini(); renderRecog(); renderFlow(); renderIntStrip();
 }
 function toggleParticipants(force){
   const el = document.getElementById('participantsSection');
@@ -2145,6 +2492,7 @@ function collectDuring(){
   const r = currentSession.session_running;
   r.pp_name = document.getElementById('d_pp').value;
   r.coach_name = document.getElementById('d_coach2').value;
+  rememberCoach(r.coach_name);
 }
 function renderMembers(){
   const m = currentSession.session_running.members;
@@ -2274,16 +2622,50 @@ function chooseComp(name){
 // ============================================================
 // BẢNG ĐIỀU PHỐI
 // ============================================================
+/* Giờ thực bắt đầu – kết thúc của một bước, suy từ mốc chốt bước */
+function stageClockSpan(si){
+  const r = currentSession.session_running, t = swState();
+  if(!t.clockStart) return null;
+  const lap = r.lapAt || {};
+  const from = si > 0 ? ((lap[si-1] != null) ? lap[si-1] : null) : 0;
+  if(from == null) return null;                       // bước trước chưa chốt -> chưa biết
+  const to = lap[si] != null ? lap[si] : null;
+  return {from: clockAt(Math.floor(from/60)), to: to != null ? clockAt(Math.floor(to/60)) : null,
+          running: to == null && si === activeIdx()};
+}
+function stageClock(si){
+  const c = stageClockSpan(si);
+  if(!c) return '';
+  return `<div class="time-clock">🕐 ${c.from} → ${c.to || (c.running ? 'đang chạy' : '—')}</div>`;
+}
+function stageClockMini(si){
+  const c = stageClockSpan(si);
+  if(!c || !c.to) return '';
+  return `<div class="time-clock">🕐 ${c.from}→${c.to}</div>`;
+}
 function colKeys(){
   const r = currentSession.session_running;
   return ['pp'].concat((r.members||[]).map((m,i) => 'm'+i));
 }
 function personInfo(key){
   const r = currentSession.session_running;
-  if(key === 'pp') return {tag:'PP', name:r.pp_name || 'Người trình bày', comp:r.pp_competency || ''};
+  if(key === 'pp')    return {tag:'PP', name:r.pp_name || 'Người trình bày', comp:r.pp_competency || ''};
+  if(key === 'coach') return {tag:'Coach', name:r.coach_name || currentSession.coach_name || 'Coach', comp:'điều phối phiên'};
   const i = parseInt(key.slice(1),10);
+  if(key.charAt(0) === 'o'){
+    const o = (r.observers||[])[i] || {};
+    return {tag:'O'+(i+1), name:o.name || 'Người quan sát', comp:'quan sát'};
+  }
   const m = (r.members||[])[i] || {};
   return {tag:'M'+(i+1), name:m.name || 'Thành viên', comp:m.competency || ''};
+}
+/* Cột trong bảng chỉ có PP + thành viên, nhưng GHI NHẬN thì phải đủ cả
+   người quan sát và chính coach — trước đây hai nhóm này bị bỏ ra ngoài. */
+function recogKeys(){
+  const r = currentSession.session_running;
+  return colKeys()
+    .concat((r.observers||[]).map((o,i) => 'o'+i).filter((k,i) => ((r.observers||[])[i]||{}).name))
+    .concat(['coach']);
 }
 
 /* ===== CỠ CHỮ Ô GHI CHÚ ===== */
@@ -2400,13 +2782,15 @@ function renderSessionTable(){
             <span class="time-label">phút</span>
           </div>
           <div class="time-range-label" id="timeRange_${si}">Phút ${range.from} → ${range.to}</div>
+          ${stageClock(si)}
           ${(actual!=='' && actual!=null) ? `<div class="time-actual ${over?'over':''}">thực tế ${actual}′${over?' (vượt)':''}</div>` : `<div class="time-label">chưa chốt</div>`}
         </div></td>`;
     } else {
       stageCell = `<td class="col-stage" onclick="setActiveStage(${si})" title="${esc(stage.name)} — bấm để mở bước này">
         <div class="stage-compact">${stage.id} — ${esc(stage.name)}</div></td>`;
       timeCell = `<td class="col-time" onclick="setActiveStage(${si})"><div class="time-compact">
-        ${stage.duration||0}′ dự kiến${(actual!=='' && actual!=null) ? ` · <b class="${over?'over':''}">✓${actual}′</b>` : ''}</div></td>`;
+        ${stage.duration||0}′ dự kiến${(actual!=='' && actual!=null) ? ` · <b class="${over?'over':''}">✓${actual}′</b>` : ''}
+        ${stageClockMini(si)}</div></td>`;
     }
     row = `<tr class="${isCur?'cur':'dim'}">${stageCell}${timeCell}
       ${hideQCol ? '' : `<td class="col-questions"${isCur?'':` onclick="setActiveStage(${si})"`}>${qCell}</td>`}`;
@@ -2822,6 +3206,7 @@ function newFromSignal(pid){
 
 /* ---------- Thẻ ---------- */
 function openIntCard(id){
+  intQ = ''; intShowAll = false;
   if(id) curCard = cards().find(c => c.id === id);
   if(!curCard) curCard = newCard(null);
   document.getElementById('intModal').classList.remove('hidden');
@@ -2897,6 +3282,76 @@ function intDelete(){
   renderIntStrip(); renderRecog(); markDirty();
 }
 
+/* Ô tìm và bộ lọc nhóm giữ ở biến, KHÔNG đọc ngược từ DOM.
+   Trước đây mỗi phím gõ lại dựng lại cả ô input rồi focus() -> con trỏ nhảy về đầu,
+   chữ tiếng Việt bị gõ ngược ("Lắng nghe" thành "ehgn gnắL"). */
+let intQ = '';
+let intStream = '';
+let intShowAll = false;
+
+function intSetStream(v){
+  intStream = (intStream === v) ? '' : v;
+  intShowAll = false;
+  renderIntStreams(); renderIntList();
+  const inp = document.getElementById('intSearch'); if(inp) inp.focus();
+}
+function intSeeAll(){ intShowAll = true; renderIntList(); }
+
+function renderIntStreams(){
+  const el = document.getElementById('intStreams');
+  if(!el) return;
+  const all = libInters();
+  const cnt = {};
+  all.forEach(x => cnt[x.stream] = (cnt[x.stream]||0) + 1);
+  el.innerHTML = `<button class="int-sc ${intStream===''?'on':''}" onclick="intSetStream('')">Tất cả ${all.length}</button>`
+    + STREAMS.map(k => !cnt[k] ? '' :
+      `<button class="int-sc s-${esc(k)} ${intStream===k?'on':''}" onclick="intSetStream('${k}')"
+        title="${esc(STREAM_VI[k]||'')}">${esc(k)} <i>${cnt[k]}</i></button>`).join('');
+}
+
+function renderIntList(){
+  const el = document.getElementById('intList');
+  const c = curCard;
+  if(!el || !c) return;
+  const stageId = currentSession.session_running.stages[activeIdx()].id;
+  const all = libInters();
+  const q = String(intQ || '').trim();
+  const byStream = intStream ? all.filter(x => x.stream === intStream) : all;
+  const near = byStream.filter(x => String(x.stages||'').split(',').map(z=>z.trim()).indexOf(stageId) >= 0);
+  const matched = q ? byStream.filter(x => noAccent(x.name + ' ' + x.what + ' ' + (x.so_what||'') + ' ' + (x.now_what||''))
+                                            .indexOf(noAccent(q)) >= 0) : null;
+  const show = matched ? matched : (intShowAll || !near.length ? byStream : near);
+
+  const opt = x => {
+    const ef = x.used ? `${x.used} lần · ${Math.round((x.ok/x.used)*100)}% ✓` : '';
+    return `<div class="int-opt ${c.point&&c.point.id===x.id?'on':''}" onclick="intChoosePoint('${x.id}')">
+      <span class="st ${esc(x.stream)}" title="${esc(STREAM_VI[x.stream]||'')}">${esc(x.stream)}</span>
+      <span>${esc(x.name.split('–').slice(1).join('–').trim() || x.name)}</span>
+      <span class="ef">${ef}</span></div>`;
+  };
+
+  let h = '';
+  const sig = interventionSignals().filter(x => !intStream || x.point.stream === intStream);
+  if(!q && sig.length){
+    h += `<div class="int-group">💡 Đang xảy ra ngay lúc này</div>` + sig.map(x =>
+      `<div class="int-opt sig" onclick="intChoosePoint('${x.point.id}')">
+         <span class="st ${esc(x.point.stream)}">${esc(x.point.stream)}</span>
+         <span><span class="int-sig-why">⚠ ${esc(x.why)}</span>${esc(x.point.name)}</span></div>`).join('');
+  }
+  const lab = q ? 'Kết quả tìm'
+    : (intStream ? STREAM_VI[intStream] || intStream
+    : (!intShowAll && near.length ? 'Hay gặp ở bước ' + stageId + ' đang chạy' : 'Tất cả'));
+  h += `<div class="int-group">${lab} · ${show.length} mục</div>`;
+  h += show.map(opt).join('') ||
+    `<div class="recog-empty">Không thấy mục nào${q ? ' khớp với “'+esc(q)+'”' : ''}.</div>`;
+  if(!q && !intShowAll && near.length < byStream.length)
+    h += `<div class="int-opt" onclick="intSeeAll()"><span class="co-tick">≡</span>
+      <span>Xem tất cả ${byStream.length} điểm${intStream ? ' nhóm '+esc(intStream) : ' can thiệp'}</span></div>`;
+  h += `<div class="int-opt" onclick="intCustomPoint()"><span class="co-tick">＋</span>
+    <span>Điểm can thiệp mới — thêm vào thư viện của tôi</span></div>`;
+  el.innerHTML = h;
+}
+
 const WANT_QUICK = ['nhóm hỏi câu mở','mọi người cùng tham gia','nhóm chốt được 1 câu vấn đề',
                     'hỏi chéo nhau thay vì chỉ hỏi PP','quay lại đúng nhịp thời gian','PP ra được hành động cụ thể'];
 
@@ -2912,20 +3367,6 @@ function renderIntCard(){
 
   let h = '';
   if(c.step === 1){
-    const stageId = currentSession.session_running.stages[activeIdx()].id;
-    const sig = interventionSignals();
-    const all = libInters();
-    const near = all.filter(x => String(x.stages||'').split(',').map(z=>z.trim()).indexOf(stageId) >= 0);
-    const q = (document.getElementById('intSearch') || {}).value || '';
-    const show = q ? all.filter(x => noAccent(x.name + ' ' + x.what).indexOf(noAccent(q)) >= 0)
-                   : (near.length ? near : all);
-    const opt = x => {
-      const ef = x.used ? `${x.used} lần · ${Math.round((x.ok/x.used)*100)}% ✓` : '';
-      return `<div class="int-opt ${c.point&&c.point.id===x.id?'on':''}" onclick="intChoosePoint('${x.id}')">
-        <span class="st ${esc(x.stream)}" title="${esc(STREAM_VI[x.stream]||'')}">${esc(x.stream)}</span>
-        <span>${esc(x.name.split('–').slice(1).join('–').trim() || x.name)}</span>
-        <span class="ef">${ef}</span></div>`;
-    };
     h += `<div class="int-sec-lab">① Chọn điểm can thiệp</div>
       <div class="int-hint">Liên quan:
         <select onchange="intSet('related',this.value)" style="font-family:var(--font);font-size:12px;padding:2px 6px;border-radius:6px;border:1.5px solid var(--gray-border)">
@@ -2933,20 +3374,11 @@ function renderIntCard(){
           ${colKeys().map(k => { const p = personInfo(k);
             return `<option value="${k}"${c.related===k?' selected':''}>${esc(p.tag)} · ${esc(p.name)}</option>`; }).join('')}
         </select></div>
-      <input type="text" class="filter-input" id="intSearch" placeholder="Tìm điểm can thiệp… (không cần dấu)"
-        value="${esc(q)}" oninput="renderIntCard();document.getElementById('intSearch').focus()">`;
-    if(!q && sig.length){
-      h += `<div class="int-group">💡 Đang xảy ra ngay lúc này</div>` + sig.map(x =>
-        `<div class="int-opt sig" onclick="intChoosePoint('${x.point.id}')">
-           <span class="st ${esc(x.point.stream)}">${esc(x.point.stream)}</span>
-           <span><span class="int-sig-why">⚠ ${esc(x.why)}</span>${esc(x.point.name)}</span></div>`).join('');
-    }
-    h += `<div class="int-group">${q ? 'Kết quả tìm' : (near.length ? 'Hay gặp ở bước '+stageId+' đang chạy' : 'Tất cả')} · ${show.length} mục</div>`;
-    h += show.map(opt).join('') || '<div class="recog-empty">Không thấy mục nào.</div>';
-    if(!q && near.length) h += `<div class="int-opt" onclick="document.getElementById('intSearch').value=' ';renderIntCard()">
-      <span class="co-tick">≡</span><span>Xem tất cả ${all.length} điểm can thiệp</span></div>`;
-    h += `<div class="int-opt" onclick="intCustomPoint()"><span class="co-tick">＋</span>
-      <span>Điểm can thiệp mới — thêm vào thư viện của tôi</span></div>`;
+      <input type="text" class="filter-input" id="intSearch" autocomplete="off" autocorrect="off"
+        spellcheck="false" placeholder="Tìm điểm can thiệp… (không cần dấu)"
+        oninput="intQ=this.value; intShowAll=false; renderIntList()">
+      <div class="int-streams" id="intStreams"></div>
+      <div id="intList"></div>`;
   }
 
   if(c.step === 2){
@@ -3009,6 +3441,11 @@ function renderIntCard(){
   h += `<div class="int-foot"><button class="btn-mini" style="color:var(--danger)" onclick="intDelete()">🗑 Xoá thẻ</button>
         <span style="font-size:11px;color:var(--gray-mid)">Đóng thẻ là tự lưu</span></div>`;
   document.getElementById('intBody').innerHTML = h;
+  if(c.step === 1){
+    const inp = document.getElementById('intSearch');
+    if(inp) inp.value = intQ;          // gán bằng thuộc tính, không dựng lại thẻ -> gõ tiếng Việt không bị đảo chữ
+    renderIntStreams(); renderIntList();
+  }
   document.querySelectorAll('.int-say-t').forEach(t => { t.style.height='auto'; t.style.height=t.scrollHeight+'px'; });
 }
 
@@ -3058,11 +3495,14 @@ function toggleRecog(e){
 function recogItemHTML(it, showWho){
   const p = personInfo(it.credit);
   return `<div class="rg-item" onclick="recogClick(${it.si},'${it.srcWho}',${it.manual==null?-1:it.manual})">
-    <span class="rg-t">${it.t}′</span>
+    <span class="rg-t" title="${clockAt(it.t) ? 'khoảng '+clockAt(it.t) : ''}">${it.t}′</span>
     <div class="rg-c">
       <div class="rg-top">
         <span class="rg-badge ${it.kind}">${KIND_LABEL[it.kind]}</span>
         ${showWho ? `<span class="rg-who">${esc(p.name)} <small>· ${esc(p.comp||'chưa chọn năng lực')}</small></span>` : ''}
+        ${it.manual != null ? `<span class="rg-tools" onclick="event.stopPropagation()">
+           <button class="btn-q" onclick="editRecogManual(${it.manual})" title="Sửa">✏️</button>
+           <button class="btn-q del" onclick="deleteRecogManual(${it.manual})" title="Xoá">🗑</button></span>` : ''}
       </div>
       <div class="rg-row">
         <span class="rg-lab">Biểu hiện</span><span class="rg-val">${esc(it.text)}</span>
@@ -3073,14 +3513,29 @@ function recogItemHTML(it, showWho){
 }
 
 function recogClick(si, who, manualIdx){
-  if(manualIdx >= 0){
-    const r = currentSession.session_running;
-    const x = r.recogManual[manualIdx];
-    const v = prompt('Tác động đến cuộc hội thoại nhóm:', x.impact || '');
-    if(v !== null){ x.impact = v.trim(); renderRecog(); markDirty(); }
-    return;
-  }
+  if(manualIdx >= 0){ editRecogManual(manualIdx); return; }
   switchTab('during'); setActiveStage(si); openEditor(si, who);
+}
+function editRecogManual(idx){
+  const r = currentSession.session_running;
+  const x = (r.recogManual || [])[idx];
+  if(!x) return;
+  const t = prompt('Cử chỉ / hành vi / câu nói:', x.text || '');
+  if(t === null) return;
+  if(!t.trim()){ showToast('Để trống thì bấm 🗑 để xoá','warning'); return; }
+  const v = prompt('Tác động đến cuộc hội thoại nhóm:', x.impact || '');
+  if(v === null) return;
+  x.text = t.trim(); x.impact = v.trim();
+  x.kind = /\?\s*$/.test(x.text) ? 'question' : 'behavior';
+  renderRecog(); renderRecogCards(); markDirty();
+}
+function deleteRecogManual(idx){
+  const r = currentSession.session_running;
+  if(!(r.recogManual || [])[idx]) return;
+  if(!confirm('Xoá ghi nhận này?')) return;
+  r.recogManual.splice(idx, 1);
+  renderRecog(); renderRecogCards(); markDirty();
+  showToast('🗑 Đã xoá ghi nhận','success');
 }
 
 /* Thống kê từng người — suy ra từ chính ghi chú */
@@ -3258,7 +3713,7 @@ function renderRecog(){
     return;
   }
 
-  body.innerHTML = colKeys().map(k => {
+  body.innerHTML = recogKeys().map(k => {
     const mine = items.filter(i => i.credit === k);
     if(!mine.length) return '';
     const p = personInfo(k);
@@ -3271,7 +3726,7 @@ function renderRecog(){
 }
 
 function addRecogManual(){
-  const keys = colKeys();
+  const keys = recogKeys();
   const names = keys.map((k,i) => (i+1)+'. '+personInfo(k).name).join('\n');
   const pick = prompt('Ghi nhận cho ai?\n'+names+'\n\nNhập số:');
   if(pick === null) return;
@@ -3293,7 +3748,7 @@ function recogReadText(){
   const items = collectRecognitions();
   if(!items.length) return '';
   const lines = [];
-  colKeys().forEach(k => {
+  recogKeys().forEach(k => {
     const mine = items.filter(i => i.credit === k);
     if(!mine.length) return;
     const p = personInfo(k);
@@ -3331,17 +3786,18 @@ function renderRecogCards(){
   if(!el) return;
   const r = currentSession.session_running;
   const items = collectRecognitions();
-  const keys = colKeys();
+  const keys = recogKeys();
   el.innerHTML = keys.map(k => {
     const p = personInfo(k);
     const mine = items.filter(i => i.credit === k);
+    const isCoach = k === 'coach';
     return `<div class="card3">
-      <div class="card3-head"><span class="card3-name">${esc(p.name)}</span><span class="card3-comp">${esc(p.comp)}</span></div>
+      <div class="card3-head"><span class="card3-name">${esc(p.tag)} · ${esc(p.name)}</span><span class="card3-comp">${esc(p.comp)}</span></div>
       <div class="card3-grid">
-        <div><div class="card3-lab">Tự nhận (người đó tự đánh giá)</div>
-        <textarea class="form-textarea" oninput="autoResize(this);setRecogSelf('${k}',this.value)" placeholder="Em đã thể hiện năng lực này trong phiên như thế nào?">${esc(r.recogSelf[k]||'')}</textarea></div>
-        <div><div class="card3-lab">Anh em quan sát</div>
-        <textarea class="form-textarea" oninput="autoResize(this);setRecogPeer('${k}',this.value)" placeholder="Anh em quan sát thấy…">${esc(r.recogPeer[k]||'')}</textarea></div>
+        <div><div class="card3-lab">${isCoach ? 'Coach tự vấn' : 'Tự nhận (người đó tự đánh giá)'}</div>
+        <textarea class="form-textarea" oninput="autoResize(this);setRecogSelf('${k}',this.value)" placeholder="${isCoach ? 'Mình đã giữ trung tính, giữ nhịp thế nào?' : 'Em đã thể hiện năng lực này trong phiên như thế nào?'}">${esc(r.recogSelf[k]||'')}</textarea></div>
+        <div><div class="card3-lab">${isCoach ? 'Nhóm phản hồi cho coach' : 'Anh em quan sát'}</div>
+        <textarea class="form-textarea" oninput="autoResize(this);setRecogPeer('${k}',this.value)" placeholder="${isCoach ? 'Nhóm nói gì về cách điều phối…' : 'Anh em quan sát thấy…'}">${esc(r.recogPeer[k]||'')}</textarea></div>
       </div>
       <div class="card3-lab">Coach ghi nhận <span style="font-weight:400;color:var(--gray-mid)">(tự lấy từ các dòng @)</span></div>
       <div class="card3-coach">${mine.length ? mine.map(it =>
@@ -3421,7 +3877,7 @@ async function saveSession(silent){
 async function completeSession(){
   collectBefore(); collectDuring(); collectAfter();
   currentSession.status = 'done';
-  currentSession.session_running.timer.running = false; stopTick();
+  swPause(swState()); stopTick();
   currentSession.updated_at = new Date().toISOString();
   const idx = sessions.findIndex(s => s.session_id === currentSession.session_id);
   if(idx >= 0) sessions[idx] = currentSession; else sessions.unshift(currentSession);
@@ -3496,15 +3952,23 @@ function updateExportUI(){
 
 function recogForSession(s){
   const r = s.session_running || {};
-  const keys = ['pp'].concat((r.members||[]).map((m,i) => 'm'+i));
+  const noteKeys = ['pp'].concat((r.members||[]).map((m,i) => 'm'+i));
+  // báo cáo phải gọi tên ĐỦ người: PP, thành viên, người quan sát có tên, và chính coach
+  const keys = noteKeys
+    .concat((r.observers||[]).map((o,i) => o && o.name ? 'o'+i : null).filter(Boolean))
+    .concat(['coach']);
   const info = k => {
-    if(k === 'pp') return {name:r.pp_name||'PP', comp:r.pp_competency||''};
-    const i = parseInt(k.slice(1),10); const m = (r.members||[])[i]||{};
-    return {name:m.name||('M'+(i+1)), comp:m.competency||''};
+    if(k === 'pp')    return {tag:'PP', name:r.pp_name||'PP', comp:r.pp_competency||''};
+    if(k === 'coach') return {tag:'Coach', name:r.coach_name||s.coach_name||'Coach', comp:'điều phối phiên'};
+    const i = parseInt(k.slice(1),10);
+    if(k.charAt(0) === 'o'){ const o = (r.observers||[])[i]||{};
+      return {tag:'O'+(i+1), name:o.name||('O'+(i+1)), comp:'quan sát'}; }
+    const m = (r.members||[])[i]||{};
+    return {tag:'M'+(i+1), name:m.name||('M'+(i+1)), comp:m.competency||''};
   };
   const out = [];
   (r.stages||[]).forEach(st => {
-    keys.forEach(k => {
+    noteKeys.forEach(k => {
       const p = parseNote(normNote((st.notes||{})[k]));
       p.lines.forEach(l => {
         if(l.empty || !l.star) return;
@@ -3513,9 +3977,11 @@ function recogForSession(s){
       });
     });
   });
-  (r.recogManual||[]).forEach(x => out.push({credit:x.who, t:x.t||0, kind:x.kind||'behavior', text:x.text, impact:x.impact||'', stage:''}));
+  (r.recogManual||[]).forEach(x => out.push({credit:x.who, t:x.t||0, kind:x.kind||'behavior',
+     text:x.text, impact:x.impact||'', stage:((r.stages||[])[x.si]||{}).id||''}));
   out.sort((a,b) => a.t-b.t);
-  return {keys, info, out, r};
+  const hasText = keys.some(k => (r.recogSelf||{})[k] || (r.recogPeer||{})[k]);
+  return {keys, info, out, r, hasText};
 }
 
 function doExport(){
@@ -3594,6 +4060,22 @@ function doExport(){
     <div class="row"><span class="lbl">Loại phiên:</span><span class="val">${e(s.session_type)}</span></div>
     <div class="row"><span class="lbl">Số giờ:</span><span class="val">${parseHours(s.coaching_hours) != null ? e(fmtHours(s.coaching_hours))+' giờ' : '<span style="color:#c00">chưa nhập ở tab Sau phiên</span>'}</span></div>`;
 
+    const tp = (r.teachPrep || {});
+    if(Object.keys(tp).length){
+      let tpHtml = '';
+      TEACH_PREP.forEach(([g, title, items]) => {
+        const rows = items.filter(x => tp[x[0]] && (tp[x[0]].c || String(tp[x[0]].t||'').trim()));
+        if(!rows.length) return;
+        tpHtml += `<p><b>${e(title)}</b></p>`;
+        rows.forEach(([id, lab]) => {
+          const d = tp[id];
+          tpHtml += `<div class="ref"><div class="q">${d.c ? '✓' : '○'} ${e(lab)}</div>`
+                  + (String(d.t||'').trim() ? `<div class="a">${e(d.t)}</div>` : '') + `</div>`;
+        });
+      });
+      if(tpHtml) body += `<h3>Chuẩn bị dẫn giảng (AL 5T)</h3>` + tpHtml;
+    }
+
     if(r.members && r.members.length){
       body += `<h3>Thành viên tham dự</h3><table><thead><tr><th>Vai trò</th><th>Tên</th><th>Năng lực rèn luyện</th></tr></thead><tbody>`;
       if(r.pp_name) body += `<tr><td>PP</td><td>${e(r.pp_name)}</td><td>${e(r.pp_competency)}</td></tr>`;
@@ -3664,22 +4146,28 @@ function doExport(){
     }
 
     // GHI NHẬN
+    // GHI NHẬN — in ra khi có BẤT KỲ phần nào: dòng @, ghi nhận thêm tay,
+    // tự nhận, hay anh em quan sát. Trước đây chỉ có dòng @ mới được in,
+    // nên người chỉ có phần tự nhận / quan sát bị bỏ hẳn khỏi báo cáo.
     const R = recogForSession(s);
-    if(R.out.length){
+    if(R.out.length || R.hasText){
       body += `<h3>Ghi nhận năng lực (Recognition)</h3>`;
       R.keys.forEach(k => {
         const mine = R.out.filter(x => x.credit === k);
-        if(!mine.length) return;
+        const self = (r.recogSelf||{})[k] || '';
+        const peer = (r.recogPeer||{})[k] || '';
+        if(!mine.length && !self && !peer) return;
         const p = R.info(k);
-        body += `<p><b>${e(p.name)}</b> — đang rèn năng lực: ${e(p.comp)||'(chưa chọn)'}</p>`;
+        body += `<p><b>${e(p.tag)} · ${e(p.name)}</b> — ${k==='coach'?'vai trò':'đang rèn năng lực'}: ${e(p.comp)||'(chưa chọn)'}</p>`;
         mine.forEach(x => {
-          const lab = {question:'Câu hỏi', answer:'Câu trả lời', behavior:'Cử chỉ / hành vi'}[x.kind];
-          body += `<div class="rg"><b>Phút ${x.t} · ${lab}</b><br>`
+          const lab = {question:'Câu hỏi', answer:'Câu trả lời', behavior:'Cử chỉ / hành vi'}[x.kind] || 'Biểu hiện';
+          body += `<div class="rg"><b>Phút ${x.t}${x.stage?' · bước '+e(x.stage):''} · ${lab}</b><br>`
                 + `<b>Biểu hiện:</b> ${e(x.text)}<br>`
                 + `<b>Tác động:</b> <i>${x.impact ? e(x.impact) : '(chưa ghi)'}</i></div>`;
         });
-        if((r.recogSelf||{})[k]) body += `<p><b>Tự nhận:</b> ${e(r.recogSelf[k])}</p>`;
-        if((r.recogPeer||{})[k]) body += `<p><b>Anh em quan sát:</b> ${e(r.recogPeer[k])}</p>`;
+        if(!mine.length) body += `<div class="rg"><i>Chưa có dòng @ nào trong phiên</i></div>`;
+        if(self) body += `<p><b>${k==='coach'?'Coach tự vấn':'Tự nhận'}:</b> ${e(self)}</p>`;
+        if(peer) body += `<p><b>${k==='coach'?'Nhóm phản hồi cho coach':'Anh em quan sát'}:</b> ${e(peer)}</p>`;
       });
     }
 
