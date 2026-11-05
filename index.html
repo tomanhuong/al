@@ -258,7 +258,20 @@ input,textarea,select{font-family:var(--font);}
 .int-sc.on{background:var(--primary);color:#fff;}
 .int-sc.on i{opacity:.75;}
 .rg-tools{margin-left:auto;display:flex;gap:3px;}
-.time-clock{font-size:10px;color:var(--teal);font-weight:700;margin-top:2px;}
+.tg{display:grid;grid-template-columns:auto auto 1fr;gap:1px 5px;align-items:baseline;font-size:9.5px;line-height:1.4;}
+.tg-k{font-weight:800;color:var(--gray-mid);letter-spacing:.2px;white-space:nowrap;}
+.tg-k.tt{color:var(--teal);}
+.tg-m{font-weight:700;color:var(--primary);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.tg-c{color:var(--gray-mid);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.tg-m.over,.tg-c.over{color:var(--danger);}
+.tg-m.wait,.tg-c.wait{color:#b9b9c4;font-weight:600;}
+.tg.big{display:block;font-size:10.5px;padding:5px 7px;background:rgba(43,41,109,0.05);border-radius:5px;}
+.tg.big .tgr{display:flex;flex-wrap:wrap;align-items:baseline;gap:1px 6px;}
+.tg.big .tgr + .tgr{margin-top:3px;padding-top:3px;border-top:1px solid rgba(43,41,109,.08);}
+.tg.big .tg-k{min-width:48px;}
+.tg.big .tg-c{color:var(--primary);font-weight:600;}
+.tg.big .tg-c.over{color:var(--danger);}
+.tg.big .tg-c.wait{color:#b9b9c4;}
 .sw-chip{font-size:10px;font-weight:700;padding:3px 8px;border-radius:12px;background:var(--gray-bg);color:var(--gray-mid);border:1.5px solid transparent;}
 .sw-chip.done{background:rgba(0,167,157,.12);color:var(--teal);}
 .sw-chip.cur{background:var(--primary);color:#fff;}
@@ -281,13 +294,13 @@ input,textarea,select{font-family:var(--font);}
 .session-table th{background:var(--primary);color:var(--white);font-size:11px;font-weight:600;padding:6px 9px;text-align:left;vertical-align:middle;position:sticky;top:0;z-index:20;height:50px;}
 .session-table th.member-header{background:var(--primary-light);text-align:center;width:var(--col-w,144px);}
 .session-table th.col-stage{width:134px;left:0;z-index:30;}
-.session-table th.col-time{width:90px;left:134px;z-index:30;}
-.session-table th.col-questions{width:190px;left:224px;z-index:30;}
+.session-table th.col-time{width:148px;left:134px;z-index:30;}
+.session-table th.col-questions{width:190px;left:282px;z-index:30;}
 .session-table th.col-stage,.session-table th.col-time,.session-table th.col-questions{position:sticky;}
 .session-table td{padding:6px 8px;border-bottom:1px solid var(--gray-border);border-right:1px solid var(--gray-border);vertical-align:top;font-size:12px;background:var(--white);}
 .session-table td.col-stage{background:var(--gray-bg);position:sticky;left:0;z-index:10;font-weight:600;color:var(--primary);width:134px;}
-.session-table td.col-time{background:#fafafa;position:sticky;left:134px;z-index:10;width:90px;}
-.session-table td.col-questions{background:var(--white);position:sticky;left:224px;z-index:10;width:190px;}
+.session-table td.col-time{background:#fafafa;position:sticky;left:134px;z-index:10;width:148px;}
+.session-table td.col-questions{background:var(--white);position:sticky;left:282px;z-index:10;width:190px;}
 .session-table tr.dim td{opacity:.62;height:38px;padding:2px 8px;cursor:pointer;}
 .session-table tr.dim td.col-stage{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .session-table tr.dim:hover td{opacity:.9;background:#fcfcfe;}
@@ -1597,6 +1610,8 @@ function renderSw(){
       ? `bắt đầu <b>${clockAt(0)}</b> · bây giờ <b>${clockNow()}</b><br>bước này từ <b>${clockAt(stFrom)}</b>`
       : 'chưa bấm chạy';
   }
+  const tr = document.getElementById('timeRange_'+i);
+  if(tr) tr.innerHTML = stageTimeGrid(i, true);
   document.getElementById('swStageName').textContent = st.id + ' — ' + st.name;
   document.getElementById('swStageMeta').innerHTML =
     `dự kiến ${plan}′ · đã <b class="${over?'over':''}">${inStage}′</b>` + (over ? ` · vượt ${inStage-plan}′` : '');
@@ -2623,25 +2638,51 @@ function chooseComp(name){
 // BẢNG ĐIỀU PHỐI
 // ============================================================
 /* Giờ thực bắt đầu – kết thúc của một bước, suy từ mốc chốt bước */
-function stageClockSpan(si){
+/* Một bước có hai mốc, mỗi mốc đọc được bằng cả hai cách:
+   DỰ KIẾN  — phút cộng dồn theo thời lượng đã đặt, và giờ thực tương ứng
+   THỰC TẾ  — phút cộng dồn theo mốc chốt bước, và giờ thực lúc đó      */
+function stageTimeInfo(si){
   const r = currentSession.session_running, t = swState();
-  if(!t.clockStart) return null;
-  const lap = r.lapAt || {};
-  const from = si > 0 ? ((lap[si-1] != null) ? lap[si-1] : null) : 0;
-  if(from == null) return null;                       // bước trước chưa chốt -> chưa biết
-  const to = lap[si] != null ? lap[si] : null;
-  return {from: clockAt(Math.floor(from/60)), to: to != null ? clockAt(Math.floor(to/60)) : null,
-          running: to == null && si === activeIdx()};
+  const lap = r.lapAt || {}, ai = activeIdx();
+  const range = stageRanges()[si] || {from:0, to:0, dur:0};
+  const live = si === ai;
+
+  let fromSec = si === 0 ? 0 : (lap[si-1] != null ? lap[si-1] : (live ? 0 : null));
+  let toSec   = lap[si] != null ? lap[si] : (live ? swElapsed() : null);
+  const lapped = lap[si] != null;
+
+  const o = {
+    planFrom: range.from, planTo: range.to, planDur: parseInt(r.stages[si].duration) || 0,
+    planClockFrom: clockAt(range.from), planClockTo: clockAt(range.to),
+    live, lapped, started: fromSec != null,
+    actFrom: fromSec == null ? null : Math.floor(fromSec/60),
+    actTo:   toSec   == null ? null : Math.floor(toSec/60),
+    actClockFrom: fromSec == null ? '' : clockAt(Math.floor(fromSec/60)),
+    actClockTo:   toSec   == null ? '' : clockAt(Math.floor(toSec/60)),
+    actDur: (fromSec == null || toSec == null) ? null : Math.max(0, Math.round((toSec-fromSec)/60))
+  };
+  o.over = o.actDur != null && o.actDur > o.planDur;
+  return o;
 }
-function stageClock(si){
-  const c = stageClockSpan(si);
-  if(!c) return '';
-  return `<div class="time-clock">🕐 ${c.from} → ${c.to || (c.running ? 'đang chạy' : '—')}</div>`;
-}
-function stageClockMini(si){
-  const c = stageClockSpan(si);
-  if(!c || !c.to) return '';
-  return `<div class="time-clock">🕐 ${c.from}→${c.to}</div>`;
+/* Bảng 3 cột: nhãn · số phút · giờ thực */
+function stageTimeGrid(si, big){
+  const o = stageTimeInfo(si);
+  const ar = x => x == null ? '—' : x;
+  const planMin = `${ar(o.planFrom)}→${ar(o.planTo)}′`;
+  const planClk = o.planClockFrom ? `${o.planClockFrom}→${o.planClockTo}` : '—';
+  let actMin, actClk, cls = o.over ? 'over' : '';
+  if(!o.started){ actMin = 'chưa tới'; actClk = '—'; cls = 'wait'; }
+  else if(o.lapped){ actMin = `${o.actFrom}→${o.actTo}′`; actClk = o.actClockFrom ? `${o.actClockFrom}→${o.actClockTo}` : '—'; }
+  else if(!o.actClockFrom){ actMin = 'chưa bấm chạy'; actClk = '—'; cls = 'wait'; }
+  else { actMin = `từ ${o.actFrom}′ · đã ${o.actDur}′`; actClk = `${o.actClockFrom}→ đang chạy`; }
+  if(big) return `<div class="tg big">
+    <div class="tgr"><span class="tg-k">DỰ KIẾN</span><span class="tg-m">${planMin}</span><span class="tg-c">${planClk}</span></div>
+    <div class="tgr"><span class="tg-k tt">THỰC TẾ</span><span class="tg-m ${cls}">${actMin}</span><span class="tg-c ${cls}">${actClk}</span></div>
+  </div>`;
+  return `<div class="tg">
+    <span class="tg-k">DK</span><span class="tg-m">${planMin}</span><span class="tg-c">${planClk}</span>
+    <span class="tg-k tt">TT</span><span class="tg-m ${cls}">${actMin}</span><span class="tg-c ${cls}">${actClk}</span>
+  </div>`;
 }
 function colKeys(){
   const r = currentSession.session_running;
@@ -2689,7 +2730,7 @@ function resetNoteFs(){ noteFs = 11; applyNoteFs(); }
 /* ===== BỀ RỘNG CỘT NGƯỜI — tự co khi đông người ===== */
 function applyColWidths(){
   const n = colKeys().length;                       // PP + tối đa 7 thành viên
-  const fixed = 134 + 90 + (hideQCol ? 0 : 190);
+  const fixed = 134 + 148 + (hideQCol ? 0 : 190);
   const avail = Math.max(600, window.innerWidth - 64) - fixed;
   const w = Math.max(112, Math.min(168, Math.floor(avail / Math.max(1,n))));
   document.documentElement.style.setProperty('--col-w', w + 'px');
@@ -2781,16 +2822,14 @@ function renderSessionTable(){
             <input class="time-duration-input" type="number" min="0" value="${stage.duration||0}" oninput="updateDuration(${si},this.value)" title="Thời lượng dự kiến (phút)">
             <span class="time-label">phút</span>
           </div>
-          <div class="time-range-label" id="timeRange_${si}">Phút ${range.from} → ${range.to}</div>
-          ${stageClock(si)}
-          ${(actual!=='' && actual!=null) ? `<div class="time-actual ${over?'over':''}">thực tế ${actual}′${over?' (vượt)':''}</div>` : `<div class="time-label">chưa chốt</div>`}
+          <div id="timeRange_${si}">${stageTimeGrid(si, true)}</div>
+          ${(actual!=='' && actual!=null) ? `<div class="time-actual ${over?'over':''}">đã chốt ${actual}′${over?' · vượt '+(actual-(parseInt(stage.duration)||0))+'′':''}</div>` : `<div class="time-label">chưa chốt</div>`}
         </div></td>`;
     } else {
       stageCell = `<td class="col-stage" onclick="setActiveStage(${si})" title="${esc(stage.name)} — bấm để mở bước này">
         <div class="stage-compact">${stage.id} — ${esc(stage.name)}</div></td>`;
-      timeCell = `<td class="col-time" onclick="setActiveStage(${si})"><div class="time-compact">
-        ${stage.duration||0}′ dự kiến${(actual!=='' && actual!=null) ? ` · <b class="${over?'over':''}">✓${actual}′</b>` : ''}
-        ${stageClockMini(si)}</div></td>`;
+      timeCell = `<td class="col-time" onclick="setActiveStage(${si})">
+        <div id="timeRange_${si}">${stageTimeGrid(si, false)}</div></td>`;
     }
     row = `<tr class="${isCur?'cur':'dim'}">${stageCell}${timeCell}
       ${hideQCol ? '' : `<td class="col-questions"${isCur?'':` onclick="setActiveStage(${si})"`}>${qCell}</td>`}`;
@@ -2895,10 +2934,10 @@ window.addEventListener('resize', fitTable);
 
 function updateDuration(si,v){
   currentSession.session_running.stages[si].duration = parseInt(v) || 0;
-  const ranges = stageRanges();
+  const ai = activeIdx();
   currentSession.session_running.stages.forEach((_,i) => {
     const el = document.getElementById('timeRange_'+i);
-    if(el) el.textContent = `Phút ${ranges[i].from} → ${ranges[i].to}`;
+    if(el) el.innerHTML = stageTimeGrid(i, i === ai);   // đổi 1 bước là lịch các bước sau xê dịch theo
   });
   renderSw(); markDirty();
 }
