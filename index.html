@@ -230,6 +230,51 @@ input,textarea,select{font-family:var(--font);}
 .fs-group{display:inline-flex;gap:2px;}
 .sw-chip-list{display:contents;}
 .fs-btn{padding:2px 7px!important;font-size:10px!important;min-width:26px;}
+.ask-item{border:1.5px solid var(--gray-bg);border-left-width:4px;border-radius:10px;padding:10px 12px;margin-bottom:9px;background:#fcfcfd;}
+.ask-item.s-open{border-left-color:var(--danger);}
+.ask-item.s-sent{border-left-color:var(--accent);}
+.ask-item.s-done{border-left-color:var(--teal);background:#f6fbfa;}
+.ask-top{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px;}
+.ask-st{font-size:10.5px;font-weight:800;padding:2px 9px;border-radius:11px;white-space:nowrap;}
+.ask-st.s-open{background:#ffe9e9;color:#a11;}
+.ask-st.s-sent{background:#FFF0C2;color:#8a6a00;}
+.ask-st.s-done{background:rgba(0,167,157,.14);color:#007a72;}
+.ask-meta{font-size:10.5px;color:var(--gray-mid);}
+.ask-tools{margin-left:auto;display:flex;gap:4px;}
+.ask-tools button{font-size:10px;padding:3px 8px;border-radius:6px;background:var(--gray-bg);color:var(--primary);font-weight:700;}
+.ask-tools button:hover{background:var(--primary);color:#fff;}
+.ask-tools button.del{color:var(--danger);}
+.ask-tools button.del:hover{background:var(--danger);color:#fff;}
+.ask-q{font-size:12.5px;font-weight:700;color:var(--primary);line-height:1.5;}
+.ask-a{margin-top:7px;padding:7px 10px;background:rgba(0,167,157,.08);border-radius:7px;font-size:12px;line-height:1.55;color:#124;}
+.ask-a b{color:#007a72;}
+.ask-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:7px;}
+.ask-row select,.ask-row input{font-family:var(--font);font-size:11px;padding:4px 7px;border:1.5px solid var(--gray-bg);border-radius:7px;outline:none;}
+.ask-row select:focus,.ask-row input:focus{border-color:var(--accent);}
+.ask-sess{font-size:10.5px;font-weight:700;color:var(--primary);background:var(--gray-bg);border-radius:9px;padding:1px 8px;}
+.kb-wrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
+.kb-badge{display:inline-block;margin-left:5px;font-size:10px;font-weight:800;background:var(--danger);color:#fff;border-radius:9px;padding:0 6px;}
+.kb-chip{font-size:11px;font-weight:700;padding:4px 11px;border-radius:13px;background:var(--gray-bg);color:var(--gray-mid);}
+.kb-chip.on{background:var(--primary);color:#fff;}
+.kb-chip:hover{background:var(--accent);color:var(--primary);}
+.kb-empty{padding:28px;text-align:center;color:var(--gray-mid);font-size:13px;}
+.sync-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 12px;padding:9px 14px;border-radius:10px;
+  background:#FFF6DC;border:1.5px solid var(--accent);font-size:12px;color:#6b5400;font-weight:600;}
+.sync-bar.bad{background:#fff1f1;border-color:var(--danger);color:#8a1c1c;}
+.sync-bar button{padding:4px 11px;border-radius:7px;background:var(--primary);color:#fff;font-size:11px;font-weight:700;}
+.sync-bar button.ghost{background:var(--white);color:var(--primary);border:1.5px solid var(--primary);}
+.card-unsync{display:inline-block;margin-left:8px;font-size:10px;font-weight:800;color:#8a6a00;background:#FFF0C2;
+  border-radius:9px;padding:1px 7px;}
+.cp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media (max-width:860px){.cp-wrap{grid-template-columns:1fr;}}
+.cp-col{border:1.5px solid var(--gray-bg);border-radius:10px;padding:10px 12px;background:#fcfcfd;}
+.cp-head{font-size:12px;font-weight:800;color:var(--primary);margin-bottom:8px;}
+.cp-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;min-height:22px;}
+.cp-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 7px 3px 10px;border-radius:12px;background:var(--gray-bg);color:var(--primary);}
+.cp-chip b{font-weight:700;}
+.cp-chip button{font-size:11px;line-height:1;color:var(--danger);padding:0 2px;}
+.cp-empty{font-size:11px;color:var(--gray-mid);font-style:italic;}
+.cp-sug{font-size:10px;font-weight:700;color:var(--teal);margin-left:6px;}
 .tp-progress{margin-left:auto;font-size:11px;font-weight:700;color:var(--teal);}
 .tp-note{font-size:11px;color:var(--gray-mid);margin:-4px 0 10px;}
 .tp-group{border:1.5px solid var(--gray-bg);border-radius:10px;margin-bottom:9px;overflow:hidden;}
@@ -258,6 +303,32 @@ input,textarea,select{font-family:var(--font);}
 .int-sc.on{background:var(--primary);color:#fff;}
 .int-sc.on i{opacity:.75;}
 .rg-tools{margin-left:auto;display:flex;gap:3px;}
+.md-row{margin-bottom:10px;}
+.td-done{flex:none;display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--gray-mid);white-space:nowrap;cursor:pointer;}
+.td-done input{width:15px;height:15px;accent-color:var(--teal);}
+.td-done.on{color:var(--teal);}
+.md-in{display:flex;gap:6px;align-items:center;}
+.md-in .form-input{flex:1;}
+.md-open{flex:none;padding:7px 11px;border-radius:8px;background:var(--gray-bg);color:var(--primary);font-size:11px;font-weight:700;white-space:nowrap;}
+.md-open:hover{background:var(--primary);color:#fff;}
+.md-open.off{opacity:.4;pointer-events:none;}
+.md-head{display:flex;align-items:center;gap:8px;margin:14px 0 8px;}
+.md-n{font-weight:700;color:var(--teal);}
+.md-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(182px,1fr));gap:10px;}
+.md-card{border:1.5px solid var(--gray-bg);border-radius:10px;overflow:hidden;background:#fcfcfd;}
+.md-thumb{height:104px;background:#f1f1f5 center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-size:24px;color:#b9b9c4;}
+.md-card .md-body{padding:7px 8px;display:flex;flex-direction:column;gap:5px;}
+.md-card input{width:100%;font-family:var(--font);font-size:11px;padding:4px 6px;border:1px solid var(--gray-bg);border-radius:6px;outline:none;}
+.md-card input:focus{border-color:var(--accent);}
+.md-tools{display:flex;gap:4px;}
+.md-tools button{flex:1;font-size:10px;padding:3px 0;border-radius:6px;background:var(--gray-bg);color:var(--primary);font-weight:700;}
+.md-tools button:hover{background:var(--primary);color:#fff;}
+.md-tools button.del{color:var(--danger);}
+.md-tools button.del:hover{background:var(--danger);color:#fff;}
+.md-bad{font-size:10px;color:#b45309;}
+.md-vprev{display:flex;align-items:center;gap:9px;margin-top:7px;padding:7px;background:var(--gray-bg);border-radius:9px;}
+.md-vprev img{width:104px;height:58px;object-fit:cover;border-radius:6px;}
+.md-vprev span{font-size:11px;color:var(--gray-mid);}
 .tg{display:grid;grid-template-columns:auto auto 1fr;gap:1px 5px;align-items:baseline;font-size:9.5px;line-height:1.4;}
 .tg-k{font-weight:800;color:var(--gray-mid);letter-spacing:.2px;white-space:nowrap;}
 .tg-k.tt{color:var(--teal);}
@@ -660,10 +731,39 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
     </div>
     <div style="display:flex;gap:8px;">
       <button class="btn-create" onclick="createSession()" style="flex:1">＋ Tạo phiên mới</button>
+      <button class="btn-lib" onclick="openKB()" title="Cẩm nang hỏi đáp — gom câu hỏi mọi phiên">❓ Hỏi đáp <span id="kbBadge" class="kb-badge hidden"></span></button>
       <button class="btn-lib" onclick="openLibrary()">📚 Thư viện</button>
+      <button class="btn-lib" onclick="openBackup()" title="Sao lưu / khôi phục toàn bộ dữ liệu">🗄 Sao lưu</button>
     </div>
   </div>
+  <div id="syncBar" class="sync-bar hidden"></div>
   <div id="sessionList" class="session-list"></div>
+</div>
+
+<!-- CẨM NANG HỎI ĐÁP -->
+<div id="kbScreen" class="hidden">
+  <div class="detail-header">
+    <button class="btn-back" onclick="closeKB()">← Quay lại</button>
+    <div class="detail-title">
+      <h2>❓ Cẩm nang hỏi đáp</h2>
+      <p id="kbStatus" style="opacity:1"></p>
+    </div>
+    <button class="btn-icon" onclick="kbCopyOpen()" title="Chép danh sách câu chưa giải đáp để gửi Thầy">📋</button>
+  </div>
+  <div class="form-section">
+    <div class="toolbar-row" style="margin-bottom:10px;">
+      <input id="kbSearch" class="filter-input filter-search" type="text"
+        placeholder="Tìm trong câu hỏi và lời giải đáp… (không cần dấu)" oninput="renderKB()">
+      <select id="kbSort" class="filter-input" style="width:auto" onchange="renderKB()">
+        <option value="new">Mới nhất trước</option>
+        <option value="old">Cũ nhất trước</option>
+        <option value="sess">Theo phiên</option>
+      </select>
+      <button class="btn-mini" onclick="kbCopyOpen()">📋 Chép danh sách gửi Thầy</button>
+    </div>
+    <div class="kb-wrap" id="kbChips"></div>
+    <div id="kbList"></div>
+  </div>
 </div>
 
 <!-- LIBRARY -->
@@ -768,6 +868,28 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
     </div>
 
     <div class="form-section">
+      <div class="section-title">🎯 Năng lực thực hành đề xuất <span class="section-title-note">Proposed Leadership Competencies</span>
+        <span class="tp-progress" id="cpCount"></span></div>
+      <div class="tp-note">Hai bên cùng đề xuất trước phiên. Vào phiên, danh sách này hiện lên đầu bảng chọn năng lực cho từng người.</div>
+      <div class="cp-wrap">
+        <div class="cp-col">
+          <div class="cp-head">🤝 Đối tác đề xuất</div>
+          <div class="cp-chips" id="cpPartner"></div>
+          <button class="btn-mini" onclick="cpAdd('partner')">＋ Thêm năng lực</button>
+          <textarea class="form-textarea" id="cp_partnerNote" placeholder="Vì sao đối tác muốn rèn những năng lực này…"
+            oninput="autoResize(this);cpSetNote('partnerNote',this.value)"></textarea>
+        </div>
+        <div class="cp-col">
+          <div class="cp-head">🧭 Coach đề xuất</div>
+          <div class="cp-chips" id="cpCoach"></div>
+          <button class="btn-mini" onclick="cpAdd('coach')">＋ Thêm năng lực</button>
+          <textarea class="form-textarea" id="cp_coachNote" placeholder="Quan sát của coach, lý do đề xuất…"
+            oninput="autoResize(this);cpSetNote('coachNote',this.value)"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
       <div class="section-title">🎤 Chuẩn bị dẫn giảng <span class="section-title-note">Quy trình dẫn giảng trong AL — 5T</span>
         <span class="tp-progress" id="tpProgress"></span></div>
       <div class="tp-note">Soạn sẵn lời sẽ nói cho từng mục. Bấm <b>💡</b> để xem lại ghi chú gốc của thầy.</div>
@@ -776,6 +898,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
 
     <div class="action-bar">
       <button class="btn-save" onclick="saveSession()">💾 Lưu</button>
+      <button class="btn-export" onclick="exportBeforePDF()" title="Bản kế hoạch phiên để gửi đối tác — không kèm phần soạn dẫn giảng riêng của coach">📄 Xuất PDF gửi đối tác</button>
       <button class="btn-next-tab" onclick="saveAndSwitchTab('during')">Trong phiên →</button>
     </div>
   </div>
@@ -970,6 +1093,75 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
         <textarea class="form-textarea" id="a_testimonial" oninput="autoResize(this)" placeholder="Ghi lại phản hồi từ thành viên..."></textarea>
       </div>
     </div>
+
+    <div class="form-section">
+      <div class="section-title">📎 Tư liệu phiên <span class="section-title-note">Session Media — ảnh &amp; video để tra cứu sau</span></div>
+      <div class="md-row">
+        <label class="form-label">📁 Thư mục ảnh riêng của phiên</label>
+        <div class="md-in">
+          <input type="text" class="form-input" id="md_folder" placeholder="Dán link thư mục Google Drive của phiên này…"
+            oninput="mdSet('folder',this.value)" onchange="renderMedia()">
+          <button class="md-open" id="md_folder_go" onclick="mdOpen('folder')">↗ Mở</button>
+        </div>
+      </div>
+      <div class="md-row">
+        <label class="form-label">🎬 Video phiên</label>
+        <div class="md-in">
+          <input type="text" class="form-input" id="md_video" placeholder="Dán link YouTube / Google Drive / Zoom…"
+            oninput="mdSet('video',this.value)" onchange="renderMedia()">
+          <button class="md-open" id="md_video_go" onclick="mdOpen('video')">↗ Mở</button>
+        </div>
+        <div id="md_video_prev"></div>
+      </div>
+      <div class="md-head">
+        <span class="form-label" style="margin:0">🖼 Ảnh chụp phiên <span id="mdCount" class="md-n"></span></span>
+        <button class="btn-mini" onclick="mdAddShot()">＋ Thêm ảnh</button>
+        <button class="btn-mini" onclick="mdPasteMany()">⊞ Dán nhiều link</button>
+      </div>
+      <div id="mdShots"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-title">❓ Câu hỏi còn tồn sau phiên <span class="section-title-note">Open Questions — vào cẩm nang hỏi đáp</span>
+        <span class="tp-progress" id="askProgress"></span></div>
+      <div class="tp-note">Thắc mắc nảy ra sau khi kết thúc phiên. Chưa trả lời được thì cứ ghi — trang chủ có mục <b>❓ Cẩm nang hỏi đáp</b> gom lại để hỏi Thầy.</div>
+      <div class="md-head" style="margin-top:0">
+        <button class="btn-mini" onclick="askAdd()">＋ Thêm câu hỏi</button>
+      </div>
+      <div id="askList"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-title">📘 Cập nhật tài liệu dẫn giảng <span class="section-title-note">Rút kinh nghiệm phiên này đưa vào bộ tài liệu dùng chung</span>
+        <span class="tp-progress" id="tdProgress"></span></div>
+      <div class="tp-note">Hai link này dùng chung cho mọi phiên — nhập một lần, phiên sau tự điền sẵn.</div>
+
+      <div class="md-row">
+        <label class="form-label">🔗 Link tài liệu dẫn giảng <span style="font-weight:400;color:var(--gray-mid)">(Drive / Doc / Sheet)</span></label>
+        <div class="md-in">
+          <input type="text" class="form-input" id="td_url" placeholder="Dán link bộ tài liệu dẫn giảng…"
+            oninput="tdSet('url',this.value)" onchange="renderTeachDoc()">
+          <button class="md-open" id="td_url_go" onclick="tdOpen('url')">↗ Mở</button>
+          <label class="td-done"><input type="checkbox" id="td_done" onchange="tdSet('done',this.checked)"> đã cập nhật</label>
+        </div>
+      </div>
+
+      <div class="md-row">
+        <label class="form-label">📊 File PP dẫn giảng <span style="font-weight:400;color:var(--gray-mid)">(PowerPoint / Google Slides)</span></label>
+        <div class="md-in">
+          <input type="text" class="form-input" id="td_ppt" placeholder="Dán link file PP dẫn giảng…"
+            oninput="tdSet('ppt',this.value)" onchange="renderTeachDoc()">
+          <button class="md-open" id="td_ppt_go" onclick="tdOpen('ppt')">↗ Mở</button>
+          <label class="td-done"><input type="checkbox" id="td_pptDone" onchange="tdSet('pptDone',this.checked)"> đã cập nhật</label>
+        </div>
+      </div>
+
+      <div class="form-full">
+        <label class="form-label">✍️ Phiên này đã cập nhật gì vào tài liệu?</label>
+        <textarea class="form-textarea" id="td_note" placeholder="VD: thêm 1 câu hỏi vào slide 6 thành tố · sửa lại phần thiết lập vai trò OB · bổ sung câu trả lời cho câu hay bị hỏi…"
+          oninput="autoResize(this);tdSet('note',this.value)"></textarea>
+      </div>
+    </div>
     <div class="action-bar">
       <button class="btn-save" onclick="saveSession()">💾 Lưu</button>
       <button class="btn-complete" onclick="completeSession()">✅ Hoàn thành phiên</button>
@@ -1032,6 +1224,21 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
       <button class="btn-cancel" onclick="closeEndModal()">Ở lại xem bảng</button>
       <button class="btn-export" onclick="endGoAfter()">Sang tab Sau phiên →</button>
     </div>
+  </div>
+</div>
+
+<!-- BACKUP MODAL -->
+<div id="backupModal" class="export-modal hidden">
+  <div class="export-box">
+    <div class="export-title">🗄 Sao lưu &amp; khôi phục</div>
+    <div class="export-note">Bản sao nguội để cất ngoài máy — phòng khi trình duyệt bị xoá dữ liệu.</div>
+    <div id="backupInfo" style="margin:10px 0;padding:9px 12px;background:var(--gray-bg);border-radius:8px;font-size:12px;line-height:1.6;"></div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button class="btn-export" onclick="exportBackup()">⬇️ Tải toàn bộ dữ liệu ra file .json</button>
+      <button class="btn-lib" onclick="document.getElementById('backupFile').click()">⬆️ Nhập lại từ file .json</button>
+      <input type="file" id="backupFile" accept=".json,application/json" class="hidden" onchange="importBackup(this)">
+    </div>
+    <div class="export-actions"><button class="btn-cancel" onclick="closeBackup()">Đóng</button></div>
   </div>
 </div>
 
@@ -1792,6 +1999,97 @@ function libCountUse(pointId, ok){
 // ============================================================
 let libTab = 'competency', libEditing = null;
 
+/* ===== CẨM NANG HỎI ĐÁP — gom câu hỏi của mọi phiên ===== */
+let kbFilter = 'all';
+
+function kbAll(){
+  const out = [];
+  (sessions || []).forEach(S => {
+    const r = S.session_running || {};
+    (r.askList || []).forEach(it => { if(it && it.q) out.push({it, S}); });
+  });
+  return out;
+}
+function kbCounts(){
+  const c = {all:0, open:0, sent:0, done:0};
+  kbAll().forEach(({it}) => { c.all++; if(c[it.st] != null) c[it.st]++; });
+  return c;
+}
+function kbBadge(){
+  const el = document.getElementById('kbBadge');
+  if(!el) return;
+  const c = kbCounts();
+  const n = c.open + c.sent;
+  el.textContent = n;
+  el.classList.toggle('hidden', !n);
+}
+function openKB(){
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('kbScreen').classList.remove('hidden');
+  renderKB(); window.scrollTo(0,0);
+}
+function closeKB(){
+  document.getElementById('kbScreen').classList.add('hidden');
+  document.getElementById('homeScreen').classList.remove('hidden');
+  renderHome();
+}
+function kbSetFilter(f){ kbFilter = f; renderKB(); }
+
+function renderKB(){
+  const box = document.getElementById('kbList');
+  if(!box) return;
+  const c = kbCounts();
+  document.getElementById('kbChips').innerHTML =
+    [['all','Tất cả',c.all], ['open','Chưa giải đáp',c.open], ['sent','Đã gửi Thầy',c.sent], ['done','Đã giải đáp',c.done]]
+      .map(([k,n,v]) => `<button class="kb-chip ${kbFilter===k?'on':''}" onclick="kbSetFilter('${k}')">${n} ${v}</button>`).join('');
+
+  const q = noAccent((document.getElementById('kbSearch') || {}).value || '');
+  const sort = (document.getElementById('kbSort') || {}).value || 'new';
+  let list = kbAll();
+  if(kbFilter !== 'all') list = list.filter(x => x.it.st === kbFilter);
+  if(q) list = list.filter(x => noAccent(x.it.q + ' ' + (x.it.a||'') + ' ' + (x.it.src||'') + ' ' + (x.S.client_name||'') + ' ' + x.S.session_id).indexOf(q) >= 0);
+
+  const t = x => Date.parse(x.it.at || x.S.created_at || '') || 0;
+  if(sort === 'new') list.sort((a,b) => t(b) - t(a));
+  else if(sort === 'old') list.sort((a,b) => t(a) - t(b));
+  else list.sort((a,b) => String(b.S.session_id).localeCompare(String(a.S.session_id)));
+
+  document.getElementById('kbStatus').textContent =
+    c.all ? `${c.all} câu hỏi · ${c.open} chưa giải đáp · ${c.sent} đã gửi Thầy · ${c.done} đã xong` : 'Chưa có câu hỏi nào';
+  box.innerHTML = list.length
+    ? list.map(({it, S}) => askRowHTML(it, S, true)).join('')
+    : `<div class="kb-empty">Không có câu hỏi nào ở mục này.<br><span style="font-size:12px">Ghi câu hỏi ở tab <b>Sau phiên</b> của từng phiên.</span></div>`;
+  kbBadge();
+}
+
+/* Chép danh sách câu chưa giải đáp thành văn bản để dán vào tin nhắn gửi Thầy */
+function kbCopyOpen(){
+  const list = kbAll().filter(x => x.it.st !== 'done');
+  if(!list.length){ showToast('Không còn câu nào chưa giải đáp','success'); return; }
+  list.sort((a,b) => String(a.S.session_id).localeCompare(String(b.S.session_id)));
+  const lines = ['CÂU HỎI CẦN NHỜ THẦY GIẢI ĐÁP', 'Toma Nhưỡng · ' + dateVN(new Date().toISOString().slice(0,10)), ''];
+  let n = 0;
+  list.forEach(({it, S}) => {
+    n++;
+    lines.push(n + '. ' + it.q);
+    lines.push('   (phiên ' + S.session_id + (S.client_name ? ' · ' + S.client_name : '')
+             + (S.session_date ? ' · ' + dateVN(S.session_date) : '') + ' · ' + askWhoName(S, it.who) + ')');
+    lines.push('');
+  });
+  const text = lines.join('\n');
+  const done = () => showToast('📋 Đã chép ' + n + ' câu hỏi — dán vào tin nhắn gửi Thầy', 'success');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(() => kbFallbackCopy(text, done));
+  } else kbFallbackCopy(text, done);
+}
+function kbFallbackCopy(text, done){
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch(e){ prompt('Chép thủ công:', text); }
+  document.body.removeChild(ta);
+}
+
 function openLibrary(){
   document.getElementById('homeScreen').classList.add('hidden');
   document.getElementById('libraryScreen').classList.remove('hidden');
@@ -1958,6 +2256,12 @@ async function apiPost(body){
 // ============================================================
 // INIT
 // ============================================================
+/* Mở được app cả khi mất mạng — cần file sw.js đặt cùng thư mục với trang web */
+if('serviceWorker' in navigator && location.protocol.indexOf('http') === 0){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 document.addEventListener('DOMContentLoaded', () => {
   setupFilterListeners();
   setupHotkeys();
@@ -1967,18 +2271,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('beforeunload', e => {
-  if(dirty){ e.preventDefault(); e.returnValue = ''; }
+  if(dirty || queueCount()){ e.preventDefault(); e.returnValue = ''; }
 });
 
 async function loadData(){
-  loadOffline(); renderHome();
+  loadOffline(); renderHome(); renderSyncBar();
   setSyncStatus('pending');
-  try {
-    const res = await apiGet('get_all_sessions');
-    if(res && res.status === 'success' && res.sessions){
-      sessions = normAll(res.sessions); saveOffline(); renderHome(); setSyncStatus('ok');
-    } else setSyncStatus('ok');
-  } catch(e){ setSyncStatus('offline'); }
+  await pullFromServer();
+  renderHome(); renderSyncBar();
+  if(queueCount()) flushQueue(true);      // mở app lên là gửi nốt những gì còn tồn
 }
 // Ô ngày/giờ từ Google Sheet có thể về dạng "2026-10-07T17:00:00.000Z".
 // Đổi lại theo múi giờ của máy để ra đúng ngày, nếu không ô ngày sẽ trống
@@ -2029,12 +2330,70 @@ function normSession(s){
 }
 function normAll(list){ (list||[]).forEach(normSession); return list; }
 
+/* ============================================================
+   KHO MÁY & ĐỒNG BỘ — nguyên tắc: MÁY LÀ NGUỒN CHÂN LÝ.
+   Bản trên Sheet chỉ được nhận cho những phiên KHÔNG còn thay đổi chờ gửi
+   và thật sự mới hơn. Không bao giờ thay cả mảng bằng bản server.
+   ============================================================ */
+const LS_MAIN = 'al_sessions_v3', LS_BAK = 'al_sessions_bak', LS_Q = 'al_queue_v1';
+let storageFull = false;      // localStorage ghi không được
+let netOk = true;             // lần gọi API gần nhất có thành công không
+let lastBak = 0;
+
+function lsSet(k, v){
+  try { localStorage.setItem(k, v); storageFull = false; return true; }
+  catch(e){ storageFull = true; renderSyncBar(); return false; }
+}
 function loadOffline(){
-  try { const l = localStorage.getItem('al_sessions_v3'); sessions = normAll(l ? JSON.parse(l) : []); }
-  catch(e){ sessions = []; }
+  let raw = null;
+  try { raw = localStorage.getItem(LS_MAIN); } catch(e){}
+  let list = null;
+  try { list = raw ? JSON.parse(raw) : []; } catch(e){ list = null; }
+  if(!Array.isArray(list)){                       // kho chính hỏng -> lấy bản lùi
+    try { const bak = JSON.parse(localStorage.getItem(LS_BAK) || 'null');
+      if(Array.isArray(bak) && bak.length){
+        list = bak;
+        setTimeout(() => showToast('♻️ Kho máy lỗi — đã khôi phục từ bản lùi gần nhất','warning'), 800);
+      }
+    } catch(e){}
+  }
+  sessions = normAll(Array.isArray(list) ? list : []);
 }
 function saveOffline(){
-  try { localStorage.setItem('al_sessions_v3', JSON.stringify(sessions)); } catch(e){}
+  // giữ một bản lùi, tối đa 1 phút một lần, để cứu nếu kho chính hỏng
+  const now = Date.now();
+  if(now - lastBak > 60000){
+    try { const cur = localStorage.getItem(LS_MAIN); if(cur) localStorage.setItem(LS_BAK, cur); } catch(e){}
+    lastBak = now;
+  }
+  lsSet(LS_MAIN, JSON.stringify(sessions));
+}
+
+/* ---------- Hàng đợi gửi lại: { id: {op, at} } ---------- */
+function queueGet(){
+  let q = {};
+  try { q = JSON.parse(localStorage.getItem(LS_Q) || '{}'); } catch(e){ q = {}; }
+  if(Array.isArray(q)){ const o = {}; q.forEach(id => o[id] = {op:'upsert', at:Date.now()}); q = o; }
+  try { const old = JSON.parse(localStorage.getItem('al_pending_v3') || '[]');   // chuyển từ bản cũ
+    if(Array.isArray(old) && old.length){ old.forEach(id => { if(!q[id]) q[id] = {op:'upsert', at:Date.now()}; });
+      localStorage.removeItem('al_pending_v3'); lsSet(LS_Q, JSON.stringify(q)); }
+  } catch(e){}
+  return q && typeof q === 'object' ? q : {};
+}
+function queueSet(q){ lsSet(LS_Q, JSON.stringify(q)); renderSyncBar(); }
+function queueAdd(id, op){ const q = queueGet(); q[id] = {op, at: Date.now()}; queueSet(q); }
+function queueDel(id){ const q = queueGet(); delete q[id]; queueSet(q); }
+function queueCount(){ return Object.keys(queueGet()).length; }
+function queueIds(){ return Object.keys(queueGet()); }
+
+/* ---------- Gọi API, có ghi nhận tình trạng mạng ---------- */
+async function trySend(body){
+  try {
+    const res = await apiPost(body);
+    const ok = !!(res && res.status === 'success');
+    netOk = true;                         // gọi được tới server
+    return ok;
+  } catch(e){ netOk = false; return false; }
 }
 
 async function apiSave(session){
@@ -2042,44 +2401,101 @@ async function apiSave(session){
   if(idx >= 0) sessions[idx] = session; else sessions.unshift(session);
   saveOffline();
   setSyncStatus('pending');
-  try {
-    const res = await apiPost({action:'upsert_session', session});
-    setSyncStatus(res && res.status === 'success' ? 'ok' : 'offline');
-  } catch(e){ setSyncStatus('offline'); markPendingSync(session.session_id); }
+  const ok = await trySend({action:'upsert_session', session});
+  if(ok){ queueDel(session.session_id); setSyncStatus('ok'); }
+  else  { queueAdd(session.session_id, 'upsert'); setSyncStatus('offline'); }
+  renderSyncBar();
 }
 async function apiDelete(id){
   sessions = sessions.filter(s => s.session_id !== id); saveOffline();
   setSyncStatus('pending');
-  try { await apiPost({action:'delete_session', session_id:id}); setSyncStatus('ok'); }
-  catch(e){ setSyncStatus('offline'); }
+  const ok = await trySend({action:'delete_session', session_id:id});
+  if(ok){ queueDel(id); setSyncStatus('ok'); }
+  else  { queueAdd(id, 'delete'); setSyncStatus('offline'); }   // xoá offline cũng phải xếp hàng
+  renderSyncBar();
 }
-function markPendingSync(id){
-  const p = JSON.parse(localStorage.getItem('al_pending_v3') || '[]');
-  if(!p.includes(id)) p.push(id);
-  localStorage.setItem('al_pending_v3', JSON.stringify(p));
-}
-async function retryPendingSync(){
-  const p = JSON.parse(localStorage.getItem('al_pending_v3') || '[]');
-  if(!p.length) return;
-  for(const sid of p){
-    const s = sessions.find(x => x.session_id === sid);
-    if(!s) continue;
-    try { await apiPost({action:'upsert_session', session:s}); } catch(e){ return; }
-  }
-  localStorage.removeItem('al_pending_v3'); setSyncStatus('ok');
-  showToast('✅ Đã đồng bộ dữ liệu pending!', 'success');
-}
-window.addEventListener('online', retryPendingSync);
 
-setInterval(async () => {
-  if(document.hidden || !navigator.onLine) return;
-  if(currentSession || dirty) return;      // không ghi đè khi đang điều phối
+/* ---------- Gửi lại: một mục hỏng KHÔNG chặn mục khác ---------- */
+let flushing = false;
+async function flushQueue(quiet){
+  if(flushing) return;
+  const q = queueGet();
+  const ids = Object.keys(q);
+  if(!ids.length) return;
+  flushing = true;
+  let sent = 0, left = 0;
+  for(const id of ids){
+    const item = q[id] || {};
+    let ok = false;
+    if(item.op === 'delete') ok = await trySend({action:'delete_session', session_id:id});
+    else {
+      const s = sessions.find(x => x.session_id === id);
+      if(!s){ queueDel(id); continue; }           // phiên không còn -> bỏ khỏi hàng đợi
+      ok = await trySend({action:'upsert_session', session:s});
+    }
+    if(ok){ queueDel(id); sent++; } else left++;
+  }
+  flushing = false;
+  renderSyncBar();
+  if(sent){
+    setSyncStatus(left ? 'offline' : 'ok');
+    if(!quiet) showToast('☁️ Đã gửi lên Sheet ' + sent + ' phiên' + (left ? ' · còn ' + left : ''), left ? 'warning' : 'success');
+  } else if(!quiet && left){
+    showToast('📴 Chưa gửi được — vẫn giữ đủ trong máy, app sẽ tự thử lại', 'warning');
+  }
+}
+window.addEventListener('online', () => flushQueue(true));
+setInterval(() => { if(!document.hidden && queueCount()) flushQueue(true); }, 20000);
+
+/* ---------- Gộp bản server vào bản máy, theo TỪNG PHIÊN ---------- */
+function tnum(x){ const t = Date.parse(x || ''); return isNaN(t) ? 0 : t; }
+function mergeServerSessions(list){
+  if(!Array.isArray(list)) return 0;
+  const pend = queueGet();
+  const byId = {};
+  sessions.forEach(s => byId[s.session_id] = s);
+  let changed = 0;
+  list.forEach(srv => {
+    const id = srv.session_id;
+    if(!id) return;
+    if(pend[id]) return;                       // còn thay đổi chờ gửi -> GIỮ BẢN MÁY
+    const loc = byId[id];
+    if(!loc){ sessions.push(normSession(srv)); byId[id] = srv; changed++; return; }
+    if(tnum(srv.updated_at) > tnum(loc.updated_at)){   // chỉ nhận khi server thật sự mới hơn
+      Object.assign(loc, normSession(srv)); changed++;
+    }
+  });
+  // phiên xoá ở máy khác: chỉ dọn khi server có dữ liệu và phiên đó không chờ gửi
+  if(list.length){
+    const srvIds = {}; list.forEach(x => srvIds[x.session_id] = 1);
+    const before = sessions.length;
+    sessions = sessions.filter(s => srvIds[s.session_id] || pend[s.session_id]);
+    changed += before - sessions.length;
+  }
+  sessions.sort((a,b) => tnum(b.created_at) - tnum(a.created_at));
+  return changed;
+}
+
+async function pullFromServer(){
   try {
     const res = await apiGet('get_all_sessions');
-    if(res && res.status === 'success' && res.sessions && res.sessions.length >= sessions.length){
-      sessions = normAll(res.sessions); saveOffline(); renderHome(); setSyncStatus('ok');
+    netOk = true;
+    if(res && res.status === 'success' && res.sessions){
+      const n = mergeServerSessions(normAll(res.sessions));
+      saveOffline();
+      if(n) renderHome();
+      setSyncStatus(queueCount() ? 'offline' : 'ok');
+      return true;
     }
-  } catch(e){}
+  } catch(e){ netOk = false; setSyncStatus('offline'); }
+  return false;
+}
+
+setInterval(async () => {
+  if(document.hidden) return;              // KHÔNG dùng navigator.onLine: Wi-Fi còn mà internet chết thì nó vẫn báo true
+  if(currentSession || dirty) return;
+  await pullFromServer();
+  if(queueCount()) flushQueue(true);
 }, 30000);
 
 // ============================================================
@@ -2115,9 +2531,11 @@ function renderHome(){
     c.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📋</div><h3>${src.length===0?'Chưa có phiên nào':'Không tìm thấy phiên phù hợp'}</h3><p>${src.length===0?'Bấm "+ Tạo phiên mới" để bắt đầu':'Thử điều chỉnh bộ lọc'}</p></div>`;
     return;
   }
+  const pend = queueGet();
   const icons = {draft:'📝', in_progress:'🔄', done:'✅'};
   const labels = {draft:'Chuẩn bị', in_progress:'Đang diễn ra', done:'Hoàn thành'};
   const badges = {draft:'badge-draft', in_progress:'badge-in_progress', done:'badge-done'};
+  renderSyncBar(); kbBadge();
   c.innerHTML = filtered.map(s => `
     <div class="session-card status-${s.status}" onclick="openSession('${s.session_id}')">
       <div class="session-card-icon">${icons[s.status]||'📋'}</div>
@@ -2126,6 +2544,7 @@ function renderHome(){
           <span class="session-id">${esc(s.session_id)}</span>
           <span class="session-client">${esc(s.client_name)||'Chưa có tên KH'}</span>
           <span class="status-badge ${badges[s.status]}">${labels[s.status]||''}</span>
+          ${pend[s.session_id] ? '<span class="card-unsync">📴 chưa lên Sheet</span>' : ''}
         </div>
         <div class="session-card-bottom">Coach: ${esc(s.coach_name)||'—'} &nbsp;·&nbsp; ${dateVN(s.session_date)||'—'} &nbsp;·&nbsp; PP: ${esc((s.session_running&&s.session_running.pp_name))||'—'}${
           ((s.session_running||{}).timer||{}).startedAt ? `<span class="sw-run-badge" data-run="${esc(s.session_id)}">⏱ đang chạy ${fmtClock(swElapsedOf(s.session_running.timer))}</span>` : ''}</div>
@@ -2148,6 +2567,86 @@ setInterval(() => {
     if(t && t.startedAt) el.textContent = '⏱ đang chạy ' + fmtClock(swElapsedOf(t));
   });
 }, 1000);
+
+/* ===== THANH TRẠNG THÁI ĐỒNG BỘ ===== */
+function renderSyncBar(){
+  const el = document.getElementById('syncBar');
+  if(!el) return;
+  const n = queueCount();
+  if(!n && !storageFull){ el.classList.add('hidden'); el.innerHTML = ''; return; }
+  el.classList.remove('hidden');
+  el.classList.toggle('bad', storageFull);
+  let h = '';
+  if(storageFull){
+    h += `<span>🛑 <b>Bộ nhớ trình duyệt đã đầy — không ghi thêm được.</b> Hãy tải dữ liệu ra file rồi xoá bớt phiên cũ.</span>
+          <button onclick="openBackup()">🗄 Sao lưu ngay</button>`;
+  }
+  if(n){
+    h += `<span>📴 <b>${n} phiên chưa lên Google Sheet</b> — dữ liệu vẫn nằm đủ trong máy này.</span>
+          <button onclick="flushQueue(false)">☁️ Gửi lại ngay</button>
+          <button class="ghost" onclick="openBackup()">🗄 Tải ra file</button>`;
+  }
+  el.innerHTML = h;
+}
+
+/* ===== SAO LƯU RA FILE ===== */
+function backupBlob(){
+  return JSON.stringify({
+    app:'MASTER ACTION LEARNING', version:1, exported_at:new Date().toISOString(),
+    sessions: sessions, library: LIB,
+    queue: queueGet()
+  }, null, 1);
+}
+function openBackup(){
+  const n = queueCount();
+  let size = 0;
+  try { size = (localStorage.getItem(LS_MAIN)||'').length + (localStorage.getItem('al_library_v1')||'').length; } catch(e){}
+  document.getElementById('backupInfo').innerHTML =
+    `Đang giữ <b>${sessions.length}</b> phiên · <b>${libComps().length}</b> năng lực · <b>${libInters().length}</b> điểm can thiệp<br>`
+    + `Dung lượng trong máy: <b>${(size/1024).toFixed(0)} KB</b>`
+    + (n ? `<br><span style="color:#b45309">⚠️ ${n} phiên chưa lên Sheet — nên tải ra file trước</span>` : '')
+    + (storageFull ? `<br><span style="color:#b91c1c">🛑 Bộ nhớ trình duyệt đã đầy</span>` : '');
+  document.getElementById('backupModal').classList.remove('hidden');
+}
+function closeBackup(){ document.getElementById('backupModal').classList.add('hidden'); }
+function exportBackup(){
+  const blob = new Blob([backupBlob()], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'master-action-learning-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 20000);
+  showToast('⬇️ Đã tải file sao lưu — cất vào Drive cho chắc','success');
+}
+function importBackup(input){
+  const f = input.files && input.files[0];
+  input.value = '';
+  if(!f) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    let d = null;
+    try { d = JSON.parse(rd.result); } catch(e){ showToast('File không đọc được','error'); return; }
+    if(!d || !Array.isArray(d.sessions)){ showToast('File không đúng định dạng sao lưu','error'); return; }
+    const byId = {}; sessions.forEach(x => byId[x.session_id] = x);
+    let add = 0, upd = 0;
+    d.sessions.forEach(srv => {
+      const loc = byId[srv.session_id];
+      if(!loc){ sessions.push(normSession(srv)); add++; }
+      else if(tnum(srv.updated_at) > tnum(loc.updated_at)){ Object.assign(loc, normSession(srv)); upd++; }
+    });
+    if(!confirm('Nhập từ file: thêm ' + add + ' phiên, cập nhật ' + upd + ' phiên.\nPhiên trong máy mới hơn sẽ được giữ nguyên. Tiếp tục?')){
+      loadOffline(); renderHome(); return;
+    }
+    sessions.sort((a,b) => tnum(b.created_at) - tnum(a.created_at));
+    saveOffline();
+    sessions.forEach(x => queueAdd(x.session_id, 'upsert'));   // đẩy lại lên Sheet
+    renderHome(); renderSyncBar(); closeBackup();
+    showToast('⬆️ Đã nhập ' + (add+upd) + ' phiên — đang gửi lên Sheet','success');
+    flushQueue(true);
+  };
+  rd.readAsText(f);
+}
 
 function setupFilterListeners(){
   document.getElementById('filterKeyword').addEventListener('input', renderHome);
@@ -2235,11 +2734,26 @@ function ensureSessionStructure(){
   if(!String(r.coach_name || '').trim()) r.coach_name = s.coach_name || defaultCoach();
   if(!r.timer) r.timer = {};
   normTimer(r.timer);
+  // Phiên bỏ dở mà quên tắt đồng hồ: mở lại sau nhiều giờ thì KHÔNG cộng thêm
+  // khoảng thời gian bỏ trống đó, chỉ dừng lại ở con số cũ.
+  if(r.timer.startedAt && Date.now() - r.timer.startedAt > 6*3600*1000){
+    r.timer.startedAt = null; r.timer.running = false;
+    setTimeout(() => showToast('⏱ Phiên này quên tắt đồng hồ — đã dừng ở '+fmtClock(swElapsedOf(r.timer))+', bấm ⟲ nếu muốn đặt lại','warning'), 600);
+  }
   if(r.activeStage == null) r.activeStage = 0;
   if(!r.lapAt) r.lapAt = {};
   if(!r.recogManual) r.recogManual = [];
   if(!r.interventions) r.interventions = [];
   if(!r.teachPrep) r.teachPrep = {};
+  if(!r.media || typeof r.media !== 'object') r.media = {folder:'', video:'', shots:[]};
+  if(!Array.isArray(r.media.shots)) r.media.shots = [];
+  if(!Array.isArray(r.askList)) r.askList = [];
+  if(!r.compProposal || typeof r.compProposal !== 'object') r.compProposal = {partner:[], coach:[], partnerNote:'', coachNote:''};
+  if(!Array.isArray(r.compProposal.partner)) r.compProposal.partner = [];
+  if(!Array.isArray(r.compProposal.coach)) r.compProposal.coach = [];
+  if(!r.teachDoc || typeof r.teachDoc !== 'object') r.teachDoc = {url:'', ppt:'', note:'', done:false, pptDone:false};
+  if(!r.teachDoc.url) r.teachDoc.url = localStorage.getItem('al_teachDocUrl') || '';
+  if(!r.teachDoc.ppt) r.teachDoc.ppt = localStorage.getItem('al_teachPptUrl') || '';
   if(!r.mini) r.mini = {dur:120, remain:120, endAt:null, done:false};
   if(!r.recogSelf) r.recogSelf = {};
   if(!r.recogPeer) r.recogPeer = {};
@@ -2254,6 +2768,7 @@ function ensureSessionStructure(){
 let tabLoadedFor = {before:null, during:null, after:null};
 function sameSession(k){ return currentSession && tabLoadedFor[k] === currentSession.session_id; }
 function openDetailScreen(tab){
+  blurActive();            // nếu không, ô đang đặt con trỏ sẽ bị bỏ qua lúc nạp -> hiện trống
   document.getElementById('homeScreen').classList.add('hidden');
   document.getElementById('detailScreen').classList.remove('hidden');
   document.getElementById('detailSessionId').textContent = currentSession.session_id;
@@ -2280,10 +2795,15 @@ function goHome(){
   document.getElementById('detailScreen').classList.add('hidden');
   renderHome();
 }
+function blurActive(){
+  const a = document.activeElement;
+  if(a && a.blur && a !== document.body) a.blur();
+}
 function clearDetailFields(){
+  blurActive();
   ['b_date','b_coach','b_client','b_time_start','b_time_end','b_location',
    'd_pp','d_coach2','a_reflect1','a_reflect2','a_reflect3','a_reflect4',
-   'a_hours','a_problem','a_personal','a_testimonial']
+   'a_hours','a_problem','a_personal','a_testimonial','md_folder','md_video','td_url','td_ppt','td_note']
     .forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
 }
 function switchTab(tab){
@@ -2293,7 +2813,7 @@ function switchTab(tab){
     document.getElementById('tab'+cap(t)).classList.toggle('active', t === tab);
   });
   if(tab === 'during'){ renderSw(); renderMini(); renderRecog(); renderFlow(); renderIntStrip(); setTimeout(pinTable, 60); }
-  if(tab === 'after'){ renderRecogCards(); renderIntAfter(); }
+  if(tab === 'after'){ renderRecogCards(); renderIntAfter(); renderMedia(); renderTeachDoc(); renderAskList(); }
 }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
 function saveAndSwitchTab(t){ saveSession(); switchTab(t); }
@@ -2341,7 +2861,11 @@ const TEACH_PREP = [
    'Sống chết gì cũng cần tổng kết, để thấy lại giá trị nhận được so với thời gian bỏ ra.\nKhông lan man, không đặt câu hỏi. TRÌNH TỰ ĐÚNG — PHẦN NÀO RA PHẦN ĐÓ.'],
   ['b5_2','5.2 Khẳng định kết quả từ buổi gặp, ghi nhận người tham dự', ''],
   ['b5_3','5.3 Giới thiệu kênh kết nối, hoạt động sắp tới', ''],
-  ['b5_4','5.4 Chụp hình lưu niệm', '']]]
+  ['b5_4','5.4 Chụp hình lưu niệm', ''],
+  ['b5_5','5.5 Gởi tóm tắt buổi gặp đến nhóm (nếu là KH doanh nghiệp, Team)',
+   'Bản tóm tắt gửi nhóm nên bám đúng những gì đã diễn ra: vấn đề đã làm sáng tỏ, hành động đã cam kết, bài học nhóm rút ra.\nGửi sớm khi mọi người còn nóng cảm xúc của buổi gặp.'],
+  ['b5_6','5.6 Follow up với PP về Actions',
+   'Hẹn trước ngay trong phiên: bao giờ hỏi lại, hỏi bằng kênh nào.\nHỏi về hành động đã cam kết, không hỏi về vấn đề — "Việc bạn hẹn làm trước thứ Sáu, giờ đang ở đâu?"']]]
 ];
 const TEACH_IDS = TEACH_PREP.reduce((a,g) => a.concat(g[2].map(x => x[0])), []);
 /* Lần đầu: mở sẵn B1, gập B2–B5 cho màn hình đỡ dài */
@@ -2386,6 +2910,52 @@ function renderTeachPrepHeads(){
   const p = document.getElementById('tpProgress');
   if(p) p.textContent = done + '/' + TEACH_IDS.length + ' mục đã chuẩn bị';
 }
+/* ===== NĂNG LỰC THỰC HÀNH ĐỀ XUẤT — hai bên cùng đề xuất trước phiên ===== */
+function cpData(){
+  const r = currentSession.session_running;
+  if(!r.compProposal) r.compProposal = {partner:[], coach:[], partnerNote:'', coachNote:''};
+  const c = r.compProposal;
+  if(!Array.isArray(c.partner)) c.partner = [];
+  if(!Array.isArray(c.coach)) c.coach = [];
+  return c;
+}
+function cpSetNote(k, v){ cpData()[k] = String(v || ''); markDirty(); }
+function cpAdd(side){ openCompModal('proposal', side); }
+function cpRemove(side, i){ cpData()[side].splice(i, 1); renderCompProposal(); markDirty(); }
+/* Tên năng lực đã được đề xuất cho phiên này — dùng để đẩy lên đầu bảng chọn */
+function cpSuggested(){
+  if(!currentSession) return [];
+  const c = cpData();
+  const out = [];
+  c.partner.concat(c.coach).forEach(n => { if(out.indexOf(n) < 0) out.push(n); });
+  return out;
+}
+function cpSide(n){
+  const c = cpData();
+  const p = c.partner.indexOf(n) >= 0, k = c.coach.indexOf(n) >= 0;
+  return p && k ? 'cả hai đề xuất' : (p ? 'đối tác đề xuất' : (k ? 'coach đề xuất' : ''));
+}
+function renderCompProposal(){
+  if(!currentSession) return;
+  const box = document.getElementById('cpPartner');
+  if(!box) return;
+  const c = cpData();
+  [['partner','cpPartner'], ['coach','cpCoach']].forEach(([side, id]) => {
+    const el = document.getElementById(id);
+    el.innerHTML = c[side].length
+      ? c[side].map((n, i) => `<span class="cp-chip"><b>${esc(n)}</b>
+          <button onclick="cpRemove('${side}',${i})" title="Bỏ khỏi đề xuất">✕</button></span>`).join('')
+      : '<span class="cp-empty">chưa có đề xuất nào</span>';
+  });
+  [['cp_partnerNote','partnerNote'], ['cp_coachNote','coachNote']].forEach(([id, k]) => {
+    const el = document.getElementById(id);
+    if(el && document.activeElement !== el){ el.value = c[k] || ''; autoResize(el); }
+  });
+  const n = cpSuggested().length;
+  const lab = document.getElementById('cpCount');
+  if(lab) lab.textContent = n ? (n + ' năng lực đề xuất') : '';
+}
+
 function renderTeachPrep(){
   const box = document.getElementById('teachPrepList');
   if(!box || !currentSession) return;
@@ -2434,7 +3004,7 @@ function loadBeforeTab(){
       <textarea class="form-textarea" placeholder="Ghi chú (Notes)..." oninput="autoResize(this);updateCBNote(${i},this.value)">${esc(it.note)}</textarea>
     </div>`).join('');
   setTimeout(() => document.querySelectorAll('#checklistBeforeList .form-textarea').forEach(autoResize), 30);
-  renderTeachPrep();
+  renderCompProposal(); renderTeachPrep();
 }
 function toggleCB(i,v){ currentSession.checklist_before[i].checked = v; document.getElementById('cbItem'+i).classList.toggle('checked',v); markDirty(); }
 function updateCBNote(i,v){ currentSession.checklist_before[i].note = v; markDirty(); }
@@ -2463,6 +3033,9 @@ function initStages(){
 }
 function initSessionRunning(){
   return { pp_name:'', pp_competency:'', coach_name: defaultCoach(), members:[], observers:[],
+           teachDoc:{url: localStorage.getItem('al_teachDocUrl')||'', ppt: localStorage.getItem('al_teachPptUrl')||'',
+                     note:'', done:false, pptDone:false},
+           media:{folder:'', video:'', shots:[]},
            stages: initStages(), timer:{accum:0, startedAt:null, clockStart:null, running:false},
            activeStage:0, lapAt:{}, recogManual:[], recogSelf:{}, recogPeer:{}, interventions:[] };
 }
@@ -2559,14 +3132,27 @@ function closeCompModal(){ document.getElementById('compModal').classList.add('h
 function currentCompValue(){
   const t = currentCompTarget; if(!t) return '';
   if(t.type === 'pp') return currentSession.session_running.pp_competency || '';
+  if(t.type === 'proposal') return '';
   return (currentSession.session_running.members[t.index] || {}).competency || '';
 }
 
 function compMatches(){
   const q = noAccent(document.getElementById('compSearch').value);
-  const list = libComps();
-  if(!q) return list;
-  return list.filter(c => noAccent(c.name).indexOf(q) >= 0);
+  let list = libComps();
+  if(q) list = list.filter(c => noAccent(c.name).indexOf(q) >= 0);
+  // năng lực đã đề xuất trước phiên nổi lên đầu bảng
+  const sug = cpSuggested();
+  if(!sug.length) return list;
+  // mục đã đề xuất mà thư viện không còn (bị ẩn/xoá) vẫn phải chọn được
+  const have = {}; list.forEach(c => have[c.name] = 1);
+  sug.forEach(n => {
+    if(have[n]) return;
+    if(q && noAccent(n).indexOf(q) < 0) return;
+    list = list.concat([{name:n, origin:'proposal', used:0}]);
+  });
+  const a = [], b = [];
+  list.forEach(c => (sug.indexOf(c.name) >= 0 ? a : b).push(c));
+  return a.concat(b);
 }
 
 function renderCompList(){
@@ -2579,6 +3165,7 @@ function renderCompList(){
          onclick="chooseComp('${esc(c.name).replace(/'/g,"&#39;")}')" onmouseenter="compIdx=${i};markCompHi()">
       <span class="co-tick">${c.name===cur?'✓':''}</span>
       <span class="co-name">${esc(c.name)}</span>
+      ${cpSide(c.name)?`<span class="cp-sug">★ ${cpSide(c.name)}</span>`:''}
       ${c.origin==='custom'?'<span class="co-tag">của tôi</span>':''}
       ${c.used?`<span class="co-use">${c.used} lần</span>`:''}
     </div>`).join('');
@@ -2620,6 +3207,12 @@ function addCompFromSearch(){
 function chooseComp(name){
   if(!currentCompTarget) return closeCompModal();
   const {type, index} = currentCompTarget;
+  if(type === 'proposal'){
+    const arr = cpData()[index];
+    if(arr.indexOf(name) < 0) arr.push(name);
+    renderCompProposal(); markDirty(); closeCompModal();
+    return;
+  }
   if(type === 'pp'){
     currentSession.session_running.pp_competency = name;
     document.getElementById('ppCompText').textContent = name;
@@ -3819,6 +4412,284 @@ function copyRecog(){
 function initChecklistAfter(){
   return CHECKLIST_AFTER.map((it,i) => ({id:i+1, label:it.label, en:it.en, checked:false}));
 }
+/* ===== TƯ LIỆU PHIÊN — ảnh & video, lưu dạng LINK nên không đụng giới hạn ô Sheet ===== */
+function mdData(){
+  const r = currentSession.session_running;
+  if(!r.media) r.media = {folder:'', video:'', shots:[]};
+  if(!Array.isArray(r.media.shots)) r.media.shots = [];
+  return r.media;
+}
+/* chỉ nhận http/https — chặn javascript: và dữ liệu lạ */
+function safeUrl(u){
+  const t = String(u || '').trim();
+  return /^https?:\/\//i.test(t) ? t : '';
+}
+function driveId(u){
+  const m = String(u||'').match(/\/file\/d\/([-\w]{10,})/) || String(u||'').match(/[?&]id=([-\w]{10,})/);
+  return m ? m[1] : '';
+}
+function ytId(u){
+  const t = String(u||'');
+  const m = t.match(/youtu\.be\/([-\w]{6,})/) || t.match(/[?&]v=([-\w]{6,})/) || t.match(/youtube\.com\/(?:embed|shorts)\/([-\w]{6,})/);
+  return m ? m[1] : '';
+}
+function mdThumb(u){
+  const t = safeUrl(u); if(!t) return '';
+  const y = ytId(t); if(y) return 'https://img.youtube.com/vi/' + y + '/mqdefault.jpg';
+  if(/drive\.google\.com\/drive\/folders\//.test(t)) return '';
+  const d = driveId(t); if(d) return 'https://drive.google.com/thumbnail?id=' + d + '&sz=w320';
+  if(/\.(jpe?g|png|webp|gif|avif)(\?|#|$)/i.test(t)) return t;
+  return '';
+}
+function mdKind(u){
+  const t = safeUrl(u); if(!t) return '';
+  if(ytId(t)) return 'YouTube';
+  if(/drive\.google\.com\/drive\/folders\//.test(t)) return 'Thư mục Drive';
+  if(/drive\.google\.com/.test(t)) return 'Google Drive';
+  if(/photos\.(google|app\.goo)/.test(t)) return 'Google Photos';
+  if(/zoom\.us/.test(t)) return 'Zoom';
+  return 'Link';
+}
+function mdSet(k, v){ mdData()[k] = String(v || '').trim(); markDirty(); }
+function mdSetShot(i, k, v){
+  const sh = mdData().shots[i]; if(!sh) return;
+  sh[k] = String(v || '').trim(); markDirty();     // KHÔNG vẽ lại ở đây, nếu không con trỏ nhảy về đầu
+}
+function mdOpen(k){
+  const u = safeUrl(mdData()[k]);
+  if(u) window.open(u, '_blank', 'noopener');
+}
+function mdOpenShot(i){
+  const sh = mdData().shots[i];
+  const u = sh && safeUrl(sh.u);
+  if(u) window.open(u, '_blank', 'noopener');
+}
+function mdAddShot(){
+  mdData().shots.push({u:'', c:''});
+  renderMedia(); markDirty();
+  setTimeout(() => { const els = document.querySelectorAll('#mdShots .md-url'); const last = els[els.length-1]; if(last) last.focus(); }, 40);
+}
+function mdDelShot(i){
+  const sh = mdData().shots[i];
+  if(sh && (sh.u || sh.c) && !confirm('Xoá ảnh này khỏi tư liệu phiên?')) return;
+  mdData().shots.splice(i, 1);
+  renderMedia(); markDirty();
+}
+function mdPasteMany(){
+  const raw = prompt('Dán nhiều link, mỗi dòng một link.\nMuốn kèm chú thích thì viết:  link | chú thích');
+  if(raw === null) return;
+  let n = 0;
+  raw.split(/\r?\n/).forEach(line => {
+    const p = line.split('|');
+    const u = safeUrl(p[0]);
+    if(!u) return;
+    mdData().shots.push({u, c: (p.slice(1).join('|') || '').trim()});
+    n++;
+  });
+  renderMedia(); markDirty();
+  showToast(n ? ('🖼 Đã thêm ' + n + ' link') : 'Không thấy link http(s) nào', n ? 'success' : 'warning');
+}
+function renderMedia(){
+  if(!currentSession) return;
+  const box = document.getElementById('mdShots');
+  if(!box) return;
+  const m = mdData();
+
+  const f = document.getElementById('md_folder'), v = document.getElementById('md_video');
+  if(f && document.activeElement !== f) f.value = m.folder || '';
+  if(v && document.activeElement !== v) v.value = m.video || '';
+  const fg = document.getElementById('md_folder_go'), vg = document.getElementById('md_video_go');
+  if(fg) fg.classList.toggle('off', !safeUrl(m.folder));
+  if(vg) vg.classList.toggle('off', !safeUrl(m.video));
+
+  const vp = document.getElementById('md_video_prev');
+  if(vp){
+    const u = safeUrl(m.video), th = mdThumb(u);
+    vp.innerHTML = !u ? (String(m.video||'').trim() ? '<div class="md-bad">Link phải bắt đầu bằng http:// hoặc https://</div>' : '')
+      : `<div class="md-vprev">${th ? `<img src="${esc(th)}" alt="" onerror="this.style.display='none'">` : ''}
+           <span>${esc(mdKind(u))} · <a href="${esc(u)}" target="_blank" rel="noopener">mở video phiên</a></span></div>`;
+  }
+
+  document.getElementById('mdCount').textContent = m.shots.length ? '(' + m.shots.length + ')' : '';
+  box.innerHTML = !m.shots.length
+    ? '<div class="recog-empty">Chưa có ảnh nào. Bấm <b>＋ Thêm ảnh</b> để dán link, hoặc <b>⊞ Dán nhiều link</b> một lượt.</div>'
+    : '<div class="md-grid">' + m.shots.map((sh, i) => {
+        const u = safeUrl(sh.u), th = mdThumb(u);
+        return `<div class="md-card">
+          <div class="md-thumb" ${th ? `style="background-image:url('${esc(th)}')"` : ''}>${th ? '' : '🖼'}</div>
+          <div class="md-body">
+            <input class="md-url" type="text" value="${esc(sh.u||'')}" placeholder="Dán link ảnh…"
+              oninput="mdSetShot(${i},'u',this.value)" onchange="renderMedia()">
+            <input type="text" value="${esc(sh.c||'')}" placeholder="Chú thích (ai, lúc nào, bước nào…)"
+              oninput="mdSetShot(${i},'c',this.value)">
+            ${(!u && String(sh.u||'').trim()) ? '<div class="md-bad">Link phải bắt đầu bằng http(s)</div>' : ''}
+            <div class="md-tools">
+              <button ${u ? `onclick="mdOpenShot(${i})"` : 'disabled style="opacity:.4"'}>↗ Mở</button>
+              <button class="del" onclick="mdDelShot(${i})">🗑 Xoá</button>
+            </div>
+          </div></div>`;
+      }).join('') + '</div>';
+}
+
+/* ===== CẬP NHẬT TÀI LIỆU DẪN GIẢNG — link dùng chung mọi phiên ===== */
+function tdData(){
+  const r = currentSession.session_running;
+  if(!r.teachDoc) r.teachDoc = {url:'', ppt:'', note:'', done:false, pptDone:false};
+  return r.teachDoc;
+}
+function tdSet(k, v){
+  const d = tdData();
+  d[k] = (typeof v === 'boolean') ? v : String(v || '').trim();
+  if(k === 'url')  localStorage.setItem('al_teachDocUrl', d.url);   // nhớ cho phiên sau
+  if(k === 'ppt')  localStorage.setItem('al_teachPptUrl', d.ppt);
+  if(k === 'done' || k === 'pptDone') renderTeachDoc();
+  markDirty();
+}
+function tdOpen(k){
+  const u = safeUrl(tdData()[k]);
+  if(u) window.open(u, '_blank', 'noopener');
+}
+function renderTeachDoc(){
+  if(!currentSession) return;
+  const d = tdData();
+  [['td_url','url'], ['td_ppt','ppt'], ['td_note','note']].forEach(([id, k]) => {
+    const el = document.getElementById(id);
+    if(el && document.activeElement !== el) el.value = d[k] || '';
+  });
+  [['td_done','done'], ['td_pptDone','pptDone']].forEach(([id, k]) => {
+    const el = document.getElementById(id);
+    if(el){ el.checked = !!d[k]; if(el.parentElement) el.parentElement.classList.toggle('on', !!d[k]); }
+  });
+  const g1 = document.getElementById('td_url_go'), g2 = document.getElementById('td_ppt_go');
+  if(g1) g1.classList.toggle('off', !safeUrl(d.url));
+  if(g2) g2.classList.toggle('off', !safeUrl(d.ppt));
+  const p = document.getElementById('tdProgress');
+  if(p){
+    const n = (d.done ? 1 : 0) + (d.pptDone ? 1 : 0);
+    p.textContent = n === 2 ? '✓ đã cập nhật cả hai' : (n ? '1/2 đã cập nhật' : 'chưa cập nhật');
+    p.style.color = n === 2 ? 'var(--teal)' : 'var(--gray-mid)';
+  }
+}
+
+/* ===== CÂU HỎI CÒN TỒN — cẩm nang hỏi đáp =====
+   Lưu trong session_running.askList nên không phải đổi Code.gs hay thêm cột Sheet. */
+const ASK_ST = {open:'Chưa giải đáp', sent:'Đã gửi Thầy', done:'Đã giải đáp'};
+const ASK_ORDER = ['open','sent','done'];
+
+function askData(sess){
+  const r = (sess || currentSession).session_running;
+  if(!Array.isArray(r.askList)) r.askList = [];
+  return r.askList;
+}
+function askNewId(){ return 'q' + Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+/* Người có thể là tác giả câu hỏi, lấy từ chính phiên đó */
+function askPeople(sess){
+  const s = sess || currentSession, r = s.session_running || {};
+  const out = [{v:'coach', n:(r.coach_name || s.coach_name || 'Coach') + ' (Coach)'}];
+  if(r.pp_name) out.push({v:'pp', n:r.pp_name + ' (PP)'});
+  (r.members||[]).forEach((m,i) => { if(m && m.name) out.push({v:'m'+i, n:m.name + ' (M'+(i+1)+')'}); });
+  (r.observers||[]).forEach((o,i) => { if(o && o.name) out.push({v:'o'+i, n:o.name + ' (O'+(i+1)+')'}); });
+  out.push({v:'khac', n:'Người khác'});
+  return out;
+}
+function askWhoName(sess, v){
+  const p = askPeople(sess).find(x => x.v === v);
+  return p ? p.n : (v === 'khac' ? 'Người khác' : (v || '—'));
+}
+function askAdd(){
+  const q = prompt('Câu hỏi / thắc mắc sau phiên:');
+  if(q === null || !q.trim()) return;
+  askData().push({id:askNewId(), q:q.trim(), who:'coach', st:'open', a:'', src:'',
+                  at:new Date().toISOString(), doneAt:''});
+  renderAskList(); markDirty();
+  showToast('❓ Đã thêm vào cẩm nang hỏi đáp','success');
+}
+function askFind(sess, id){ return askData(sess).find(x => x.id === id); }
+function askSetField(id, k, v, sess){
+  const it = askFind(sess, id); if(!it) return;
+  it[k] = v;
+  if(k === 'st'){ if(v === 'done' && !it.doneAt) it.doneAt = new Date().toISOString();
+                  if(v !== 'done') it.doneAt = ''; }
+  if(sess && sess !== currentSession) askSaveOther(sess);
+  else markDirty();
+}
+function askEditQ(id, sess){
+  const it = askFind(sess, id); if(!it) return;
+  const q = prompt('Sửa câu hỏi:', it.q);
+  if(q === null || !q.trim()) return;
+  it.q = q.trim();
+  if(sess && sess !== currentSession){ askSaveOther(sess); renderKB(); }
+  else { renderAskList(); markDirty(); }
+}
+function askAnswer(id, sess){
+  const it = askFind(sess, id); if(!it) return;
+  const a = prompt('Lời giải đáp:', it.a || '');
+  if(a === null) return;
+  const src = prompt('Nguồn giải đáp (Thầy Minh, tự tìm, nhóm…):', it.src || 'Thầy Minh');
+  it.a = a.trim();
+  if(src !== null) it.src = src.trim();
+  if(it.a){ it.st = 'done'; it.doneAt = new Date().toISOString(); }
+  if(sess && sess !== currentSession){ askSaveOther(sess); renderKB(); }
+  else { renderAskList(); markDirty(); }
+}
+function askDel(id, sess){
+  if(!confirm('Xoá câu hỏi này?')) return;
+  const arr = askData(sess);
+  const i = arr.findIndex(x => x.id === id);
+  if(i < 0) return;
+  arr.splice(i, 1);
+  if(sess && sess !== currentSession){ askSaveOther(sess); renderKB(); }
+  else { renderAskList(); markDirty(); }
+}
+/* Sửa câu hỏi của một phiên KHÁC phiên đang mở -> lưu riêng phiên đó */
+function askSaveOther(sess){
+  sess.updated_at = new Date().toISOString();
+  saveOffline();
+  apiSave(sess);
+}
+
+function askRowHTML(it, sess, showSess){
+  const S = sess || currentSession;
+  const people = askPeople(S);
+  return `<div class="ask-item s-${it.st}">
+    <div class="ask-top">
+      <span class="ask-st s-${it.st}">${ASK_ST[it.st] || it.st}</span>
+      ${showSess ? `<span class="ask-sess">${esc(S.session_id)}${S.client_name ? ' · ' + esc(S.client_name) : ''}${S.session_date ? ' · ' + dateVN(S.session_date) : ''}</span>` : ''}
+      <span class="ask-meta">${esc(askWhoName(S, it.who))}</span>
+      <span class="ask-tools">
+        <button onclick="askEditQ('${it.id}'${showSess ? `,sessById('${esc(S.session_id)}')` : ''})">✏️ Sửa</button>
+        <button onclick="askAnswer('${it.id}'${showSess ? `,sessById('${esc(S.session_id)}')` : ''})">💡 Giải đáp</button>
+        <button class="del" onclick="askDel('${it.id}'${showSess ? `,sessById('${esc(S.session_id)}')` : ''})">🗑</button>
+      </span>
+    </div>
+    <div class="ask-q">${esc(it.q)}</div>
+    ${it.a ? `<div class="ask-a"><b>Giải đáp${it.src ? ' · ' + esc(it.src) : ''}:</b> ${esc(it.a)}</div>` : ''}
+    <div class="ask-row">
+      <select onchange="askSetField('${it.id}','st',this.value${showSess ? `,sessById('${esc(S.session_id)}')` : ''});${showSess ? 'renderKB()' : 'renderAskList()'}">
+        ${ASK_ORDER.map(k => `<option value="${k}"${it.st===k?' selected':''}>${ASK_ST[k]}</option>`).join('')}
+      </select>
+      <select onchange="askSetField('${it.id}','who',this.value${showSess ? `,sessById('${esc(S.session_id)}')` : ''})">
+        ${people.map(p => `<option value="${p.v}"${it.who===p.v?' selected':''}>${esc(p.n)}</option>`).join('')}
+      </select>
+    </div>
+  </div>`;
+}
+function sessById(id){ return sessions.find(x => x.session_id === id); }
+
+function renderAskList(){
+  if(!currentSession) return;
+  const box = document.getElementById('askList');
+  if(!box) return;
+  const arr = askData();
+  const open = arr.filter(x => x.st !== 'done').length;
+  const lab = document.getElementById('askProgress');
+  if(lab) lab.textContent = arr.length ? (open ? open + '/' + arr.length + ' chưa giải đáp' : '✓ đã giải đáp hết') : '';
+  if(lab) lab.style.color = arr.length && open ? 'var(--danger)' : 'var(--teal)';
+  box.innerHTML = arr.length
+    ? arr.map(it => askRowHTML(it, currentSession, false)).join('')
+    : '<div class="recog-empty">Chưa có câu hỏi nào. Bấm <b>＋ Thêm câu hỏi</b> để ghi thắc mắc còn treo sau phiên.</div>';
+}
+
 function renderRecogCards(){
   if(!currentSession) return;
   const el = document.getElementById('recogCards');
@@ -3875,7 +4746,7 @@ function loadAfterTab(){
   document.getElementById('a_personal').value = s.personal_learning || '';
   document.getElementById('a_testimonial').value = s.testimonial || '';
   document.querySelectorAll('input[name="sessionType"]').forEach(r => { r.checked = r.value === s.session_type; });
-  renderRecogCards(); renderIntAfter();
+  renderRecogCards(); renderIntAfter(); renderMedia(); renderTeachDoc(); renderAskList();
   setTimeout(() => document.querySelectorAll('#tabContentAfter .form-textarea').forEach(autoResize), 30);
 }
 function toggleCA(i,v){ currentSession.checklist_after[i].checked = v; document.getElementById('caItem'+i).classList.toggle('checked',v); markDirty(); }
@@ -3989,6 +4860,45 @@ function updateExportUI(){
   document.getElementById('exportPreview').textContent = preview;
 }
 
+const PDF_CSS = `
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:Arial,sans-serif;font-size:12pt;color:#222;background:#fff;padding:16px;}
+    h1{font-size:14pt;color:#fff;background:#2B296D;padding:10px 14px;margin-bottom:14px;}
+    h2{font-size:12pt;color:#2B296D;border-left:4px solid #FDB913;padding:5px 10px;background:#F4F4F6;margin:16px 0 8px;}
+    h3{font-size:11pt;color:#00A79D;margin:10px 0 5px;}
+    p{font-size:10pt;margin:4px 0;line-height:1.5;}
+    .row{width:100%;border-bottom:1px solid #eee;padding:4px 0;overflow:hidden;}
+    .row .lbl{display:inline-block;width:180px;color:#666;font-size:9pt;font-weight:bold;vertical-align:top;}
+    .row .val{display:inline-block;width:calc(100% - 185px);font-size:10pt;vertical-align:top;}
+    .ref{margin:5px 0;padding:6px 10px;background:#F4F4F6;border-left:3px solid #2B296D;}
+    .ref .q{font-weight:bold;font-size:9pt;color:#2B296D;}
+    .ref .a{font-size:10pt;color:#333;line-height:1.5;}
+    .rg{margin:4px 0 8px;padding:6px 10px;background:#FFF6DC;border-left:3px solid #E0A500;}
+    .md{margin:4px 0;padding:5px 10px;background:#F4F4F6;border-left:3px solid #00A79D;font-size:10pt;}
+    .md b{color:#2B296D;}
+    .md .cap{color:#555;font-size:9pt;}
+    a{color:#1a56c4;}
+    .rg b{color:#8a6a00;}
+    .rg i{color:#7a5d00;}
+    table{width:100%;border-collapse:collapse;margin:8px 0;font-size:9pt;}
+    th{background:#2B296D;color:#fff;padding:4px 7px;text-align:left;font-size:9pt;}
+    td{padding:4px 7px;border-bottom:1px solid #ddd;font-size:9pt;vertical-align:top;}
+    tr:nth-child(even) td{background:#f9f9f9;}
+    tfoot td{font-weight:bold;background:#e8eaf6;font-size:9pt;}
+    .pb{page-break-after:always;height:1px;}
+    @media print{body{padding:8px;}h1,h2,h3{page-break-after:avoid;}.ref,.rg{page-break-inside:avoid;}tr{page-break-inside:avoid;}}
+`;
+
+/* Mở một tab in dùng chung cho mọi bản PDF */
+function openPrintWindow(html){
+  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
+  if(!win){ const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.click(); }
+  setTimeout(() => URL.revokeObjectURL(url), 90000);
+  showToast('📄 Tab mới đã mở — chọn Máy in đích: Lưu dưới dạng PDF','success');
+}
+
 function recogForSession(s){
   const r = s.session_running || {};
   const noteKeys = ['pp'].concat((r.members||[]).map((m,i) => 'm'+i));
@@ -4023,6 +4933,81 @@ function recogForSession(s){
   return {keys, info, out, r, hasText};
 }
 
+/* ===== PDF TRƯỚC PHIÊN — bản gửi đối tác =====
+   Chỉ gồm những gì đối tác cần biết. KHÔNG kèm phần soạn dẫn giảng của coach. */
+function hhmmPlus(start, mins){
+  const m = String(start||'').match(/^(\d{1,2}):(\d{2})$/);
+  if(!m) return '';
+  const d = new Date(2000, 0, 1, +m[1], +m[2] + mins);
+  return p2(d.getHours()) + ':' + p2(d.getMinutes());
+}
+function exportBeforePDF(){
+  if(!currentSession){ showToast('Hãy mở một phiên trước đã','warning'); return; }
+  try { collectBefore(); collectDuring(); collectAfter(); } catch(e){ console.error(e); }
+  const s = currentSession, r = s.session_running || {}, e = esc;
+  const cp = (r.compProposal || {partner:[], coach:[]});
+  const ranges = stageRanges();
+  const totalPlan = ranges.length ? ranges[ranges.length-1].to : 0;
+
+  let b = `<h2>Thông tin phiên</h2>`;
+  const row = (k, v) => `<div class="row"><span class="lbl">${k}:</span><span class="val">${v || '—'}</span></div>`;
+  b += row('Mã phiên', e(s.session_id));
+  b += row('Khách hàng', e(s.client_name));
+  b += row('Ngày', dateVN(s.session_date));
+  b += row('Thời gian', (s.time_start ? e(toTimeStr(s.time_start)) + ' → ' + e(toTimeStr(s.time_end) || hhmmPlus(s.time_start, totalPlan)) : '') + ` · dự kiến ${totalPlan} phút`);
+  b += row('Hình thức', e(s.format) + (s.location ? ' · ' + e(s.location) : ''));
+  b += row('AL Coach', e(s.coach_name));
+
+  const mem = (r.members || []).filter(x => x && x.name);
+  const obs = (r.observers || []).filter(x => x && x.name);
+  if(r.pp_name || mem.length || obs.length){
+    b += `<h2>Vai trò &amp; người tham dự</h2><table><thead><tr><th>Vai trò</th><th>Tên</th><th>Năng lực sẽ rèn</th></tr></thead><tbody>`;
+    if(r.pp_name) b += `<tr><td>PP — Người trình bày</td><td>${e(r.pp_name)}</td><td>${e(r.pp_competency) || '—'}</td></tr>`;
+    mem.forEach((m, i) => b += `<tr><td>M${i+1} — Thành viên</td><td>${e(m.name)}</td><td>${e(m.competency) || '—'}</td></tr>`);
+    obs.forEach((o, i) => b += `<tr><td>O${i+1} — Người quan sát</td><td>${e(o.name)}</td><td>—</td></tr>`);
+    b += `</tbody></table>`;
+  }
+
+  if(cp.partner.length || cp.coach.length || cp.partnerNote || cp.coachNote){
+    b += `<h2>Năng lực thực hành đề xuất</h2>`;
+    b += `<h3>🤝 Đối tác đề xuất</h3>`;
+    b += cp.partner.length ? `<p>${cp.partner.map(e).join(' · ')}</p>` : `<p><i>chưa có đề xuất</i></p>`;
+    if(cp.partnerNote) b += `<div class="ref"><div class="a">${e(cp.partnerNote)}</div></div>`;
+    b += `<h3>🧭 Coach đề xuất</h3>`;
+    b += cp.coach.length ? `<p>${cp.coach.map(e).join(' · ')}</p>` : `<p><i>chưa có đề xuất</i></p>`;
+    if(cp.coachNote) b += `<div class="ref"><div class="a">${e(cp.coachNote)}</div></div>`;
+  }
+
+  b += `<h2>Lịch trình phiên</h2><table><thead><tr><th>Bước</th><th>Mục tiêu bước</th><th>Phút</th><th>Giờ dự kiến</th></tr></thead><tbody>`;
+  (r.stages || []).forEach((st, i) => {
+    const g1 = hhmmPlus(s.time_start, ranges[i].from), g2 = hhmmPlus(s.time_start, ranges[i].to);
+    b += `<tr><td><b>${e(st.id)}</b> — ${e(st.name)}<br><span style="color:#777">${e(st.en)}</span></td>
+      <td>${e(st.result)}</td><td>${ranges[i].from}→${ranges[i].to}′<br><span style="color:#777">${st.duration||0}′</span></td>
+      <td>${g1 ? g1 + ' → ' + g2 : '—'}</td></tr>`;
+  });
+  b += `</tbody><tfoot><tr><td colspan="2" style="text-align:right">TỔNG</td><td>${totalPlan}′</td>
+    <td>${s.time_start ? e(toTimeStr(s.time_start)) + ' → ' + hhmmPlus(s.time_start, totalPlan) : '—'}</td></tr></tfoot></table>`;
+
+  const cb = (s.checklist_before || []).filter(x => x.checked || String(x.note||'').trim());
+  if(cb.length){
+    b += `<h2>Việc chuẩn bị</h2>`;
+    cb.forEach(x => {
+      b += `<div class="ref"><div class="q">${x.checked ? '✓' : '○'} ${e(x.label)}</div>`
+         + (String(x.note||'').trim() ? `<div class="a">${e(x.note)}</div>` : '') + `</div>`;
+    });
+  }
+
+  const html = `<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Kế hoạch phiên ${e(s.session_id)}${s.client_name ? ' — ' + e(s.client_name) : ''}</title>
+    <style>${PDF_CSS}</style></head><body>
+    <h1>MASTER ACTION LEARNING — Yêu Thương · Hiện Diện &nbsp;|&nbsp; Kế hoạch phiên</h1>
+    ${b}
+    <script>window.addEventListener('load',function(){setTimeout(function(){window.print();},250);});<\/script>
+    </body></html>`;
+  openPrintWindow(html);
+}
+
 function doExport(){
   const type = (document.querySelector('input[name="exportType"]:checked')||{}).value;
   // lấy những gì đang gõ dở trên màn hình vào phiên đang mở, rồi mới dựng báo cáo
@@ -4048,30 +5033,7 @@ function doExport(){
 
   const dateStr = new Date().toLocaleDateString('vi-VN');
   const e = esc;
-  const css = `
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:Arial,sans-serif;font-size:12pt;color:#222;background:#fff;padding:16px;}
-    h1{font-size:14pt;color:#fff;background:#2B296D;padding:10px 14px;margin-bottom:14px;}
-    h2{font-size:12pt;color:#2B296D;border-left:4px solid #FDB913;padding:5px 10px;background:#F4F4F6;margin:16px 0 8px;}
-    h3{font-size:11pt;color:#00A79D;margin:10px 0 5px;}
-    p{font-size:10pt;margin:4px 0;line-height:1.5;}
-    .row{width:100%;border-bottom:1px solid #eee;padding:4px 0;overflow:hidden;}
-    .row .lbl{display:inline-block;width:180px;color:#666;font-size:9pt;font-weight:bold;vertical-align:top;}
-    .row .val{display:inline-block;width:calc(100% - 185px);font-size:10pt;vertical-align:top;}
-    .ref{margin:5px 0;padding:6px 10px;background:#F4F4F6;border-left:3px solid #2B296D;}
-    .ref .q{font-weight:bold;font-size:9pt;color:#2B296D;}
-    .ref .a{font-size:10pt;color:#333;line-height:1.5;}
-    .rg{margin:4px 0 8px;padding:6px 10px;background:#FFF6DC;border-left:3px solid #E0A500;}
-    .rg b{color:#8a6a00;}
-    .rg i{color:#7a5d00;}
-    table{width:100%;border-collapse:collapse;margin:8px 0;font-size:9pt;}
-    th{background:#2B296D;color:#fff;padding:4px 7px;text-align:left;font-size:9pt;}
-    td{padding:4px 7px;border-bottom:1px solid #ddd;font-size:9pt;vertical-align:top;}
-    tr:nth-child(even) td{background:#f9f9f9;}
-    tfoot td{font-weight:bold;background:#e8eaf6;font-size:9pt;}
-    .pb{page-break-after:always;height:1px;}
-    @media print{body{padding:8px;}h1,h2,h3{page-break-after:avoid;}.ref,.rg{page-break-inside:avoid;}tr{page-break-inside:avoid;}}
-  `;
+  const css = PDF_CSS;
 
   const dVN = v => dateVN(v) || '—';
   let body = '';
@@ -4217,6 +5179,39 @@ function doExport(){
       if(s.reflect_3) body += `<div class="ref"><div class="q">3. Làm sao để tốt hơn?</div><div class="a">${e(s.reflect_3)}</div></div>`;
       if(s.reflect_4) body += `<div class="ref"><div class="q">4. Điểm chính đã học được?</div><div class="a">${e(s.reflect_4)}</div></div>`;
     }
+    // TƯ LIỆU PHIÊN — link bấm mở được ngay trong bản PDF
+    const md = r.media || {};
+    const u = x => /^https?:\/\//i.test(String(x||'').trim()) ? String(x).trim() : '';
+    const shots = (md.shots || []).filter(x => u(x.u));
+    if(u(md.folder) || u(md.video) || shots.length){
+      body += `<h3>Tư liệu phiên (Session Media)</h3>`;
+      if(u(md.folder)) body += `<div class="md">📁 <b>Thư mục ảnh:</b> <a href="${e(u(md.folder))}">${e(u(md.folder))}</a></div>`;
+      if(u(md.video))  body += `<div class="md">🎬 <b>Video phiên:</b> <a href="${e(u(md.video))}">${e(u(md.video))}</a></div>`;
+      shots.forEach((x, i) => {
+        body += `<div class="md">🖼 <b>Ảnh ${i+1}.</b> <a href="${e(u(x.u))}">${e(u(x.u))}</a>`
+              + (String(x.c||'').trim() ? `<br><span class="cap">${e(x.c)}</span>` : '') + `</div>`;
+      });
+    }
+
+    const asks = (r.askList || []).filter(x => x && x.q);
+    if(asks.length){
+      body += `<h3>Câu hỏi còn tồn sau phiên</h3>`;
+      asks.forEach(x => {
+        const lab = {open:'Chưa giải đáp', sent:'Đã gửi Thầy', done:'Đã giải đáp'}[x.st] || x.st;
+        body += `<div class="ref"><div class="q">[${lab}] ${e(x.q)}</div>`
+              + (x.a ? `<div class="a"><b>Giải đáp${x.src ? ' · ' + e(x.src) : ''}:</b> ${e(x.a)}</div>` : '')
+              + `</div>`;
+      });
+    }
+
+    const td = r.teachDoc || {};
+    if(u(td.url) || u(td.ppt) || String(td.note||'').trim()){
+      body += `<h3>Cập nhật tài liệu dẫn giảng</h3>`;
+      if(u(td.url)) body += `<div class="md">🔗 <b>Tài liệu dẫn giảng:</b> <a href="${e(u(td.url))}">${e(u(td.url))}</a> — ${td.done?'đã cập nhật':'CHƯA cập nhật'}</div>`;
+      if(u(td.ppt)) body += `<div class="md">📊 <b>File PP dẫn giảng:</b> <a href="${e(u(td.ppt))}">${e(u(td.ppt))}</a> — ${td.pptDone?'đã cập nhật':'CHƯA cập nhật'}</div>`;
+      if(String(td.note||'').trim()) body += `<div class="ref"><div class="q">Đã cập nhật gì</div><div class="a">${e(td.note)}</div></div>`;
+    }
+
     if(s.problem_presented) body += `<h3>Vấn đề trình bày</h3><div class="ref"><div class="a">${e(s.problem_presented)}</div></div>`;
     if(s.personal_learning) body += `<h3>Lắng đọng cá nhân (Personal Learning)</h3><div class="ref"><div class="a">${e(s.personal_learning)}</div></div>`;
     if(s.testimonial) body += `<h3>Phản hồi người tham dự (Testimonials)</h3><div class="ref"><div class="a">${e(s.testimonial)}</div></div>`;
@@ -4230,13 +5225,8 @@ function doExport(){
     <script>window.addEventListener('load',function(){setTimeout(function(){window.print();},250);});<\/script>
     </body></html>`;
 
-  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const win = window.open(url, '_blank');
-  if(!win){ const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.click(); }
-  setTimeout(() => URL.revokeObjectURL(url), 90000);
   closeExport();
-  showToast('📄 Tab mới đã mở — chọn Máy in đích: Lưu dưới dạng PDF','success');
+  openPrintWindow(html);
 }
 
 // ============================================================
