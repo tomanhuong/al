@@ -275,6 +275,32 @@ input,textarea,select{font-family:var(--font);}
 .cp-chip button{font-size:11px;line-height:1;color:var(--danger);padding:0 2px;}
 .cp-empty{font-size:11px;color:var(--gray-mid);font-style:italic;}
 .cp-sug{font-size:10px;font-weight:700;color:var(--teal);margin-left:6px;}
+.mt-src{font-size:11px;color:var(--gray-mid);margin:-4px 0 9px;}
+.mt-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:11px;color:var(--gray-mid);}
+.mt-g{border:1.5px solid var(--gray-bg);border-radius:10px;margin-bottom:9px;overflow:hidden;}
+.mt-g.truoc{border-left:4px solid var(--primary);}
+.mt-g.trong{border-left:4px solid var(--accent);}
+.mt-g.sau{border-left:4px solid var(--teal);}
+.mt-head{display:flex;align-items:center;gap:8px;padding:9px 12px;background:#f7f7fa;cursor:pointer;}
+.mt-head:hover{background:#f0f0f5;}
+.mt-title{font-size:12.5px;font-weight:800;color:var(--primary);}
+.mt-n{margin-left:auto;font-size:10.5px;color:var(--gray-mid);font-weight:700;}
+.mt-body{padding:2px 12px 10px;}
+.mt-g.folded .mt-body{display:none;}
+.mt-i{padding:8px 0;border-top:1px solid #f0f0f3;}
+.mt-i:first-child{border-top:0;}
+.mt-row{display:flex;align-items:flex-start;gap:8px;}
+.mt-cb{width:15px;height:15px;margin-top:2px;accent-color:var(--teal);flex:none;}
+.mt-tx{font-size:12px;line-height:1.5;color:var(--dark);flex:1;}
+.mt-i.done .mt-tx{color:var(--teal);}
+.mt-on{flex:none;font-size:9.5px;font-weight:800;color:#1d4ed8;background:#e5edff;border-radius:9px;padding:1px 6px;white-space:nowrap;}
+.mt-tip-btn{flex:none;font-size:11px;padding:1px 6px;border-radius:6px;background:var(--gray-bg);}
+.mt-tip-btn:hover{background:var(--accent);}
+.mt-tip{display:none;margin:6px 0 0 23px;padding:7px 10px;background:#FFF8E5;border-left:3px solid var(--accent);border-radius:0 7px 7px 0;font-size:11px;line-height:1.5;color:#6b5400;}
+.mt-i.tip-on .mt-tip{display:block;}
+.mt-i.hid{display:none;}
+.btn-mt{padding:4px 10px;border-radius:7px;background:var(--gray-bg);color:var(--primary);font-size:11px;font-weight:700;white-space:nowrap;}
+.btn-mt:hover{background:var(--primary);color:#fff;}
 .tp-progress{margin-left:auto;font-size:11px;font-weight:700;color:var(--teal);}
 .tp-note{font-size:11px;color:var(--gray-mid);margin:-4px 0 10px;}
 .tp-group{border:1.5px solid var(--gray-bg);border-radius:10px;margin-bottom:9px;overflow:hidden;}
@@ -868,6 +894,18 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
     </div>
 
     <div class="form-section">
+      <div class="section-title">🧭 Lưu ý của Thầy <span class="section-title-note">Kinh nghiệm tiến hành phiên AL</span>
+        <span class="tp-progress" id="mtProgress"></span></div>
+      <div class="mt-src">Nguyễn Duy Minh · <i>Tips for AL Demo</i> · V01 05.2024 · PALC Mentoring — 37 điểm, chia theo trước · trong · sau phiên.</div>
+      <div class="mt-bar">
+        <span id="mtFormatNote"></span>
+        <button class="btn-mini" onclick="mtToggleAllOnline()" id="mtOnlineBtn"></button>
+        <button class="btn-mini" onclick="mtFoldAll()" id="mtFoldBtn">▸ Thu gọn tất cả</button>
+      </div>
+      <div id="mentorTipsList"></div>
+    </div>
+
+    <div class="form-section">
       <div class="section-title">🎯 Năng lực thực hành đề xuất <span class="section-title-note">Proposed Leadership Competencies</span>
         <span class="tp-progress" id="cpCount"></span></div>
       <div class="tp-note">Hai bên cùng đề xuất trước phiên. Vào phiên, danh sách này hiện lên đầu bảng chọn năng lực cho từng người.</div>
@@ -980,6 +1018,7 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
           </span>
           <button class="btn-mini" onclick="toggleHelp()" id="btnHelp" style="padding:2px 9px;font-size:10px;">⌨ ? @ =</button>
           <button class="btn-mini" onclick="toggleQCol()" id="btnQCol" style="padding:2px 9px;font-size:10px;">Ẩn cột câu hỏi</button>
+          <button class="btn-mini" onclick="openMtModal()" title="Lưu ý của Thầy — phần Trong phiên" style="padding:2px 9px;font-size:10px;">🧭 Lưu ý Thầy</button>
         </div>
       </div>
 
@@ -1224,6 +1263,16 @@ kbd{background:var(--white);border:1px solid var(--gray-border);border-bottom-wi
       <button class="btn-cancel" onclick="closeEndModal()">Ở lại xem bảng</button>
       <button class="btn-export" onclick="endGoAfter()">Sang tab Sau phiên →</button>
     </div>
+  </div>
+</div>
+
+<!-- LƯU Ý CỦA THẦY — MỞ NHANH TRONG PHIÊN -->
+<div id="mtModal" class="export-modal hidden">
+  <div class="export-box" style="max-width:640px;max-height:84vh;overflow:auto;">
+    <div class="export-title">🧭 Lưu ý của Thầy — phần Trong phiên</div>
+    <div class="export-note">Nguyễn Duy Minh · Tips for AL Demo · V01 05.2024</div>
+    <div id="mtModalBody" style="margin-top:10px;"></div>
+    <div class="export-actions"><button class="btn-cancel" onclick="closeMtModal()">Đóng</button></div>
   </div>
 </div>
 
@@ -2748,6 +2797,7 @@ function ensureSessionStructure(){
   if(!r.media || typeof r.media !== 'object') r.media = {folder:'', video:'', shots:[]};
   if(!Array.isArray(r.media.shots)) r.media.shots = [];
   if(!Array.isArray(r.askList)) r.askList = [];
+  if(!r.mentorTips || typeof r.mentorTips !== 'object') r.mentorTips = {};
   if(!r.compProposal || typeof r.compProposal !== 'object') r.compProposal = {partner:[], coach:[], partnerNote:'', coachNote:''};
   if(!Array.isArray(r.compProposal.partner)) r.compProposal.partner = [];
   if(!Array.isArray(r.compProposal.coach)) r.compProposal.coach = [];
@@ -2956,6 +3006,166 @@ function renderCompProposal(){
   if(lab) lab.textContent = n ? (n + ' năng lực đề xuất') : '';
 }
 
+/* ===== LƯU Ý CỦA THẦY =====
+   Nguyên văn 37 điểm từ: Nguyễn Duy Minh · "Tips for AL Demo" · V01 05.2024 · PALC Mentoring.
+   Phần in nghiêng dưới nút 💡 là ghi chú nối với app — [Claude bổ sung], không phải lời Thầy. */
+const MENTOR_TIPS = [
+ ["M1", "TRƯỚC PHIÊN · Con người", [
+  ["m1_1", "Mời nhiều hơn số thành viên tối thiểu (4 người) để dự phòng 1–2 người vắng phút cuối", false, ""],
+  ["m1_2", "Có sẵn người đóng vai PP — khảo sát trước buổi để nắm vấn đề/thử thách cần giúp, và hỏi sự tình nguyện trước", false, "Chuẩn bị sẵn vẫn hơn. Khảo sát trước giúp mình biết vấn đề có đủ thật, đủ lớn, có thuộc trách nhiệm của họ không."],
+  ["m1_3", "Hoặc chọn PP ngay trong buổi — cho 1–2 phút để từng người viết ra một vấn đề trăn trở rồi hỏi xung phong", false, ""],
+  ["m1_4", "Số người: 1 PP và 3–4 thành viên. Dư ra thì cho làm quan sát viên và giao nhiệm vụ cụ thể", false, "Nối với luật của thầy ở phần dẫn giảng: giao cho người quan sát KHÔNG QUÁ 2 nhiệm vụ."],
+  ["m1_5", "Chuẩn bị trước danh sách năng lực để thành viên chọn và thực hành", false, "Trong app: dùng khối “🎯 Năng lực thực hành đề xuất” ngay bên dưới."]
+ ]],
+ ["M2", "TRƯỚC PHIÊN · Chỗ ngồi & đồ dùng", [
+  ["m2_1", "Giấy note, ít giấy A4 trắng, bút bi dự phòng cho người tham dự", false, ""],
+  ["m2_2", "Chọn địa điểm yên tĩnh, dễ tập trung", false, ""],
+  ["m2_3", "Mọi người ngồi vòng quanh bàn — tròn hoặc vuông, đừng quá nhỏ hoặc quá rộng", false, ""],
+  ["m2_4", "Coach chọn vị trí ngồi phù hợp cho mình và PP — ở vị trí dễ để thành viên khác nhìn và tương tác", false, ""],
+  ["m2_5", "Coach và PP KHÔNG ngồi sát nhau — ngồi đối diện PP hoặc cách PP vài thành viên", false, "Ngồi sát PP làm nhóm cảm giác coach đang đứng về phía PP, mất trung tính."],
+  ["m2_6", "Chuẩn bị thiết bị để dẫn giảng kiến thức AL — laptop hoặc LCD/màn chiếu", false, ""],
+  ["m2_7", "Bố trí nước uống lên trước và đủ cho mọi người — tránh gọi nước làm xao nhãng lúc đang dẫn giảng", false, ""]
+ ]],
+ ["M3", "TRƯỚC PHIÊN · Coach tự chuẩn bị", [
+  ["m3_1", "Đọc trước format Report để nắm yêu cầu", false, ""],
+  ["m3_2", "Đọc phần notes trong slide PPT và bật trước slide để nắm hiệu ứng", false, ""],
+  ["m3_3", "Phân bổ thời gian cho phiên coaching tối thiểu 90 phút — nếu cần làm phiên cho report", false, "Trong app: nhập tổng số phút ở ô “Tổng” trên thanh đồng hồ, các bước tự chia theo tỉ lệ."],
+  ["m3_4", "Chuẩn bị sẵn phần lắng đọng, chia sẻ sau khi kết thúc phiên để nhận thêm phản hồi và testimonial cho report", false, ""],
+  ["m3_5", "Yêu cầu thành viên test âm thanh, hình ảnh, gõ chữ vào ô chat đầu phiên để kiểm tra hệ thống", true, ""],
+  ["m3_6", "Yêu cầu thành viên 100% bật camera khi tham gia — trừ người quan sát", true, ""],
+  ["m3_7", "Thông báo trước: nếu thành viên hoặc coach bị rớt mạng thì cứ bình tĩnh vào lại", true, ""],
+  ["m3_8", "Lường trước: tương tác Online cần nhiều thời gian hơn Offline, vì thành viên tương tác qua hệ thống chứ không trực tiếp", true, ""]
+ ]],
+ ["M4", "TRONG PHIÊN · Mở đầu & dẫn giảng", [
+  ["m4_1", "Tạo không khí đầu buổi sôi nổi hơn lúc mở đầu — vỗ tay để bắt đầu, giọng coach to rõ và cao hơn bình thường một chút, vì online tĩnh lặng hơn offline", true, ""],
+  ["m4_2", "Dẫn giảng nhanh gọn kiến thức AL — hạn chế nói quá chi tiết. Thành viên đặt câu hỏi khi đang dẫn giảng thì nhắn để dành sau phiên trải nghiệm", false, "Trùng với luật ở khối “🎤 Chuẩn bị dẫn giảng” mục 3.2: sai lầm thường gặp là giới thiệu dài quá."],
+  ["m4_3", "Phần cần giải thích KỸ là chọn và thực hành năng lực — có ví dụ cho thành viên dễ hiểu, nói rõ ý nghĩa của phần này", false, ""],
+  ["m4_4", "Thiết lập bối cảnh cho team: cùng nhau giúp PP giải quyết và thấu rõ vấn đề, và cùng nhau học hỏi", false, ""],
+  ["m4_5", "Khi chọn năng lực, mời thành viên đổi tên hiển thị — sau tên thêm tên năng lực chọn thực hành", true, ""]
+ ]],
+ ["M5", "TRONG PHIÊN · Điều phối & can thiệp", [
+  ["m5_1", "PP trình bày quá NGẮN hay quá DÀI đều phải can thiệp. Quá ngắn thì mời chia sẻ thêm thông tin. Quá dài thì hỏi: điều gì trong câu chuyện của mình mà bạn thấy khó khăn nhất?", false, ""],
+  ["m5_2", "Chọn năng lực · ghi lại năng lực · nhắc tất cả thành viên ghi lại năng lực của nhau để quan sát và đưa phản hồi · nhắc lại 3 cách để thực hành năng lực · can thiệp khi thành viên không thực hành năng lực", false, ""],
+  ["m5_3", "Phần viết ra câu phát biểu vấn đề: can thiệp SÂU HƠN nếu đó là câu mục tiêu, câu giải pháp, hay câu triệu chứng. Hỏi thành viên đó: theo bạn đâu là nguyên nhân của tình trạng PP đang gặp?", false, "Rồi hỏi PP hai câu: “Điều gì là hữu ích khi bạn nghe câu phát biểu vấn đề từ tất cả mọi người?” và “Theo bạn đâu là nguyên nhân gốc rễ của vấn đề của bạn?”"],
+  ["m5_4", "Can thiệp thêm vào nhóm khi cần, bốn chỗ: Sự tập trung · Chất lượng câu hỏi · Chất lượng câu trả lời · Hiệu quả làm việc nhóm", false, "Trong app: bấm “🎯 + Thẻ mới” để mở thẻ can thiệp, thư viện 44 điểm đã chia theo 6 thành tố WIAL."],
+  ["m5_5", "Phân bổ thời gian, nhắc nhở về thời gian, di chuyển nhóm theo đúng khung đã phân bổ để đủ thời gian cho tất cả các phần", false, ""],
+  ["m5_6", "Thông báo khi di chuyển nhóm sang phần khác, để thành viên chuẩn bị tâm lý", false, ""],
+  ["m5_7", "Mời thành viên đưa phản hồi năng lực thì mời lần lượt từ trái sang phải (hoặc phải sang trái) để không bị sót ai", true, ""],
+  ["m5_8", "Khi hỏi câu có thang điểm 1–10, gọi luôn tên từng thành viên bất kỳ để hỏi cho nhanh", true, ""]
+ ]],
+ ["M6", "SAU PHIÊN · Lắng đọng & đúc kết", [
+  ["m6_1", "Tạo lắng đọng Actions cụ thể cho PP", false, ""],
+  ["m6_2", "Tạo lắng đọng Learning cụ thể cho từng thành viên và cho cả nhóm", false, ""],
+  ["m6_3", "Đúc kết buổi gặp tự tin, hào hứng, cảm ơn sự tham gia của tất cả thành viên, vỗ tay báo hiệu kết thúc phiên", false, ""],
+  ["m6_4", "Sau khi kết thúc, giữ lại phần chia sẻ để nhận thêm phản hồi từ thành viên — và testimonial nếu có, để đưa vào report", false, "Trong app: ghi vào ô “Phản hồi từ người tham dự” ở tab Sau phiên."]
+ ]],
+];
+const MT_IDS = MENTOR_TIPS.reduce((a,g) => a.concat(g[2].map(x => x[0])), []);
+const MT_KIND = {M1:'truoc', M2:'truoc', M3:'truoc', M4:'trong', M5:'trong', M6:'sau'};
+let mtFolded = {};
+try { mtFolded = JSON.parse(localStorage.getItem('al_mtFold') || '{}'); } catch(e){ mtFolded = {}; }
+let mtShowOnline = null;          // null = theo ô Hình thức của phiên
+
+function mtData(){
+  const r = currentSession.session_running;
+  if(!r.mentorTips || typeof r.mentorTips !== 'object') r.mentorTips = {};
+  return r.mentorTips;
+}
+function mtIsOnline(){
+  if(mtShowOnline != null) return mtShowOnline;
+  const f = document.querySelector('input[name="format"]:checked');
+  return (f ? f.value : (currentSession.format || '')) === 'Online';
+}
+function mtSet(id, v){
+  mtData()[id] = !!v;
+  const el = document.getElementById('mt_' + id);
+  if(el) el.classList.toggle('done', !!v);
+  mtHeads(); markDirty();
+}
+function mtTip(id){ const el = document.getElementById('mt_' + id); if(el) el.classList.toggle('tip-on'); }
+function mtFoldG(g){
+  mtFolded[g] = !mtFolded[g];
+  try { localStorage.setItem('al_mtFold', JSON.stringify(mtFolded)); } catch(e){}
+  const el = document.getElementById('mtg_' + g);
+  if(el) el.classList.toggle('folded', !!mtFolded[g]);
+}
+function mtFoldAll(){
+  const anyOpen = MENTOR_TIPS.some(([g]) => !mtFolded[g]);
+  MENTOR_TIPS.forEach(([g]) => mtFolded[g] = anyOpen);
+  try { localStorage.setItem('al_mtFold', JSON.stringify(mtFolded)); } catch(e){}
+  renderMentorTips();
+}
+function mtToggleAllOnline(){
+  mtShowOnline = !mtIsOnline();
+  renderMentorTips();
+}
+function mtHeads(){
+  const on = mtIsOnline(), d = mtData();
+  let done = 0, tot = 0;
+  MENTOR_TIPS.forEach(([g, , items]) => {
+    const vis = items.filter(x => on || !x[2]);
+    const n = vis.filter(x => d[x[0]]).length;
+    done += n; tot += vis.length;
+    const el = document.getElementById('mtn_' + g);
+    if(el) el.textContent = n + '/' + vis.length;
+  });
+  const p = document.getElementById('mtProgress');
+  if(p){ p.textContent = done + '/' + tot + ' đã rà'; p.style.color = done === tot ? 'var(--teal)' : 'var(--gray-mid)'; }
+}
+function mtItemHTML(it, d){
+  const [id, txt, on, hint] = it;
+  return `<div class="mt-i ${d[id] ? 'done' : ''}" id="mt_${id}">
+    <div class="mt-row">
+      <input type="checkbox" class="mt-cb" ${d[id] ? 'checked' : ''} onchange="mtSet('${id}',this.checked)">
+      <span class="mt-tx">${esc(txt)}</span>
+      ${on ? '<span class="mt-on">🖥 Online</span>' : ''}
+      ${hint ? `<button class="mt-tip-btn" onclick="mtTip('${id}')" title="Ghi chú nối với app">💡</button>` : ''}
+    </div>
+    ${hint ? `<div class="mt-tip">${esc(hint)}</div>` : ''}
+  </div>`;
+}
+function renderMentorTips(){
+  const box = document.getElementById('mentorTipsList');
+  if(!box || !currentSession) return;
+  const d = mtData(), on = mtIsOnline();
+  box.innerHTML = MENTOR_TIPS.map(([g, title, items]) => {
+    const vis = items.filter(x => on || !x[2]);
+    if(!vis.length) return '';
+    return `<div class="mt-g ${MT_KIND[g]} ${mtFolded[g] ? 'folded' : ''}" id="mtg_${g}">
+      <div class="mt-head" onclick="mtFoldG('${g}')">
+        <span class="tp-caret">${mtFolded[g] ? '▸' : '▾'}</span>
+        <span class="mt-title">${esc(title)}</span>
+        <span class="mt-n" id="mtn_${g}"></span>
+      </div>
+      <div class="mt-body">${vis.map(x => mtItemHTML(x, d)).join('')}</div>
+    </div>`;
+  }).join('');
+  const nOn = MT_IDS.length - MENTOR_TIPS.reduce((a,g) => a + g[2].filter(x => !x[2]).length, 0);
+  const note = document.getElementById('mtFormatNote');
+  if(note) note.textContent = on
+    ? 'Đang hiện cả ' + nOn + ' lưu ý riêng cho phiên Online.'
+    : 'Phiên Trực tiếp — đang ẩn ' + nOn + ' lưu ý riêng cho phiên Online.';
+  const ob = document.getElementById('mtOnlineBtn');
+  if(ob) ob.textContent = on ? '🖥 Ẩn lưu ý Online' : '🖥 Hiện lưu ý Online';
+  const fb = document.getElementById('mtFoldBtn');
+  if(fb) fb.textContent = MENTOR_TIPS.some(([g]) => !mtFolded[g]) ? '▸ Thu gọn tất cả' : '▾ Mở tất cả';
+  mtHeads();
+}
+/* Mở nhanh phần Trong phiên lúc đang điều phối */
+function openMtModal(){
+  if(!currentSession) return;
+  const d = mtData(), on = mtIsOnline();
+  document.getElementById('mtModalBody').innerHTML =
+    MENTOR_TIPS.filter(([g]) => MT_KIND[g] === 'trong').map(([g, title, items]) => {
+      const vis = items.filter(x => on || !x[2]);
+      return `<div class="mt-g trong" style="margin-bottom:8px">
+        <div class="mt-head" style="cursor:default"><span class="mt-title">${esc(title)}</span></div>
+        <div class="mt-body">${vis.map(x => mtItemHTML(x, d)).join('')}</div></div>`;
+    }).join('');
+  document.getElementById('mtModal').classList.remove('hidden');
+}
+function closeMtModal(){ document.getElementById('mtModal').classList.add('hidden'); }
+
 function renderTeachPrep(){
   const box = document.getElementById('teachPrepList');
   if(!box || !currentSession) return;
@@ -2993,7 +3203,10 @@ function loadBeforeTab(){
   document.getElementById('b_time_start').value = s.time_start || '';
   document.getElementById('b_time_end').value = s.time_end || '';
   document.getElementById('b_location').value = s.location || '';
-  document.querySelectorAll('input[name="format"]').forEach(r => { r.checked = r.value === (s.format||'Trực tiếp'); });
+  document.querySelectorAll('input[name="format"]').forEach(r => {
+    r.checked = r.value === (s.format||'Trực tiếp');
+    r.onchange = () => { mtShowOnline = null; renderMentorTips(); markDirty(); };
+  });
   const list = s.checklist_before || initChecklistBefore();
   document.getElementById('checklistBeforeList').innerHTML = list.map((it,i) => `
     <div class="checklist-item ${it.checked?'checked':''}" id="cbItem${i}">
@@ -3004,7 +3217,7 @@ function loadBeforeTab(){
       <textarea class="form-textarea" placeholder="Ghi chú (Notes)..." oninput="autoResize(this);updateCBNote(${i},this.value)">${esc(it.note)}</textarea>
     </div>`).join('');
   setTimeout(() => document.querySelectorAll('#checklistBeforeList .form-textarea').forEach(autoResize), 30);
-  renderCompProposal(); renderTeachPrep();
+  renderCompProposal(); renderMentorTips(); renderTeachPrep();
 }
 function toggleCB(i,v){ currentSession.checklist_before[i].checked = v; document.getElementById('cbItem'+i).classList.toggle('checked',v); markDirty(); }
 function updateCBNote(i,v){ currentSession.checklist_before[i].note = v; markDirty(); }
@@ -4674,7 +4887,10 @@ function askRowHTML(it, sess, showSess){
     </div>
   </div>`;
 }
-function sessById(id){ return sessions.find(x => x.session_id === id); }
+function sessById(id){
+  if(currentSession && currentSession.session_id === id) return currentSession;
+  return sessions.find(x => x.session_id === id);
+}
 
 function renderAskList(){
   if(!currentSession) return;
@@ -4987,6 +5203,24 @@ function exportBeforePDF(){
   });
   b += `</tbody><tfoot><tr><td colspan="2" style="text-align:right">TỔNG</td><td>${totalPlan}′</td>
     <td>${s.time_start ? e(toTimeStr(s.time_start)) + ' → ' + hhmmPlus(s.time_start, totalPlan) : '—'}</td></tr></tfoot></table>`;
+
+  const mt = r.mentorTips || {};
+  const mtOn = (s.format || '') === 'Online';
+  const mtDone = [];
+  MENTOR_TIPS.forEach(([g, title, items]) => {
+    const rows = items.filter(x => (mtOn || !x[2]) && mt[x[0]]);
+    if(rows.length) mtDone.push([title, rows]);
+  });
+  if(mtDone.length){
+    const tot = MENTOR_TIPS.reduce((a,g) => a + g[2].filter(x => mtOn || !x[2]).length, 0);
+    const n = mtDone.reduce((a,x) => a + x[1].length, 0);
+    b += `<h2>Lưu ý của Thầy đã rà <span style="font-size:10pt;font-weight:400">(${n}/${tot})</span></h2>`;
+    b += `<p style="font-size:9pt;color:#777">Nguyễn Duy Minh · Tips for AL Demo · V01 05.2024 · PALC Mentoring</p>`;
+    mtDone.forEach(([title, rows]) => {
+      b += `<p><b>${e(title)}</b></p>`;
+      rows.forEach(x => b += `<div class="md">✓ ${e(x[1])}</div>`);
+    });
+  }
 
   const cb = (s.checklist_before || []).filter(x => x.checked || String(x.note||'').trim());
   if(cb.length){
